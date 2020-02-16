@@ -19,6 +19,7 @@ pipeline {
                 script {
                     unstash 'distfiles'
                     sh 'ls -l -R'
+                    sh 'pwd'
                     dockerImage = docker.build "justdevnoops/frontend-oasis:$BUILD_NUMBER"
                 }
             }
