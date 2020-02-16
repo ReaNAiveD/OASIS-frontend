@@ -15,6 +15,7 @@ pipeline {
         }
 
         stage("build image") {
+            options { timeout(time: 15, unit: 'MINUTES') }
             steps {
                 script {
                     unstash 'distfiles'
