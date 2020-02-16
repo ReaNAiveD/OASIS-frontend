@@ -19,6 +19,7 @@ pipeline {
                 script {
                     unstash 'distfiles'
                     sh 'ls -l -R'
+                    echo "$BUILD_NUMBER"
                 }
             }
         }
