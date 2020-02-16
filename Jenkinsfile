@@ -10,7 +10,7 @@ pipeline {
             }
             steps {
                 sh 'npm install && npm run build'
-                stash includes: 'dist/*', name: 'distfiles'
+                stash includes: 'dist/**', name: 'distfiles'
             }
         }
 
