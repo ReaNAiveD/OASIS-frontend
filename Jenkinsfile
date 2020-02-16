@@ -22,6 +22,8 @@ pipeline {
                     sh 'ls -l -R'
                     sh 'pwd'
                     dockerImage = docker.build "justdevnoops/frontend-oasis:$BUILD_NUMBER"
+                    sh './clear-deploy.sh'
+                    sh 'docker run --name frontend-oasis -d -p 8088:80 justdevnoops/frontend-oasis:$BUILD_NUMBER'
                 }
             }
         }
