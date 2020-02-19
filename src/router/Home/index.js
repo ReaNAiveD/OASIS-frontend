@@ -1,4 +1,4 @@
 export default {
     path:'/home',
-    component:()=>import('@/views/Home')
+    component:()=>import('@/views/Home/index.vue')
 }

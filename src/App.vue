@@ -2,18 +2,20 @@
     <div id="app">
 <!--        <img alt="Vue logo" src="./assets/logo.png">-->
 <!--        <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-        <DocumentList></DocumentList>
+        <router-view></router-view>
+<!--        <DocumentList></DocumentList>-->
     </div>
 </template>
 
 <script>
     // import HelloWorld from './components/HelloWorld.vue'
 
-    import DocumentList from "@/components/DocumentList/index";
+    // import DocumentList from "@/components/DocumentList/index";
     export default {
         name: 'App',
         components: {
-            DocumentList
+            // DocumentList,
+
             // HelloWorld
         }
     }
