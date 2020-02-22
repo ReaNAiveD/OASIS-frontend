@@ -19,6 +19,10 @@
             <el-col class="document-year" :md="2" :xs="8">
                 {{year}}
             </el-col>
+            <el-col>
+                <span>Keywords:</span>
+                <el-tag  type="gray" hit="true" v-for="(keyword,index) in keywords" :key="index">{{keyword}}</el-tag>
+            </el-col>
         </el-row>
     </div>
 </template>
@@ -48,6 +52,10 @@
             year: {
                 type: String,
                 default: ""
+            },
+            keywords:{
+              type:Array,
+              default:()=>{return ['Topping','Computer hardware','Engineering']}
             }
         }
     }
@@ -86,5 +94,15 @@
 
     .document-author {
         font-size: 14px;
+    }
+
+    .el-tag{
+        float: left;
+        margin: 5px;
+    }
+
+    .el-col span{
+        margin: 5px;
+        float: left;
     }
 </style>

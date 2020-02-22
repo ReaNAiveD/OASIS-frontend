@@ -1,12 +1,5 @@
 <template>
     <div class="document-list-container">
-        <div class="document-list-head-search">
-            <el-select class="document-list-search" v-model="searchType">
-                <el-option v-for="type in searchTypes" :key="type.value" :value="type.value" :label="type.label"/>
-            </el-select>
-            <el-input class="document-list-search search-input" v-model="searchKeyword" placeholder="请输入搜索内容"></el-input>
-            <el-button class="document-list-search" type="primary">搜索</el-button>
-        </div>
         <div class="list-container">
             <DocumentListItem v-for="document in documents" :key="document.id" :title="document.title" :id="document.id"
                               :authors="document.authors" :abstract="document.abstract" :year="document.year"/>
