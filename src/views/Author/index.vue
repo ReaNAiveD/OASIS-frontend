@@ -1,7 +1,9 @@
 <template>
-    <el-row>
+    <el-row :gutter="16">
         <el-col :md="6" :sm="24">
-            <AuthorInfo/>
+            <el-card>
+                <AuthorInfo/>
+            </el-card>
         </el-col>
         <el-col :md="18" :sm="24">
             <DocumentList/>
@@ -19,5 +21,4 @@
 </script>
 
 <style scoped>
-
 </style>
