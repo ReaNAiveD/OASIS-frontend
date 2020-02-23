@@ -16,7 +16,7 @@
 
         <div class="list-container">
             <DocumentListItem v-for="document in documents" :key="document.id" :title="document.title" :id="document.id"
-                              :authors="document.authors" :abstract="document.abstract" :year="document.year"/>
+                              :authors="document.authors" :abstract="document.abstract" :year="document.year" :keywords="document.keywords.split(';')"/>
         </div>
     </div>
 </template>
@@ -64,7 +64,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -87,7 +87,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+            keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -110,7 +110,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -133,7 +133,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -156,7 +156,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -179,7 +179,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -202,7 +202,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -225,7 +225,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -248,7 +248,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
@@ -271,7 +271,7 @@
               id: '123456789'
             }],
             abstract: 'Software Engineering in practice deals with scale in a variety of dimensions. We build large scale systems operating on vast amount of data. We have millions of customers with billions of queries and transactions. We have distributed teams making thousands of changes, running millions of tests and releasing multiple times per day. These dimensions of scale interact to provide challenges for software development tools and processes. The panelists will describe the challenging aspects of scale in their specific problem domains and discuss which software engineering methods work and which leave room for improvement.',
-            keywords: 'SoftwareConferencesSoftware engineeringSecurityCommitteesIndustriesCollaboration',
+              keywords: 'Software;Conferences;Software engineering;Security;Committees;Industries;Collaboration',
             publication: '2013 28th IEEE/ACM International Conference on Automated Software Engineering (ASE)',
             year: '2013',
             startPage: 'xxiii',
