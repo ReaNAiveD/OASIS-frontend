@@ -2,19 +2,20 @@
     <div id="app">
 <!--        <img alt="Vue logo" src="./assets/logo.png">-->
 <!--        <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-        <Search></Search>
-
-<!--        <router-view></router-view>-->
+        <router-view></router-view>
+<!--        <DocumentList></DocumentList>-->
     </div>
 </template>
 
 <script>
     // import HelloWorld from './components/HelloWorld.vue'
-    import Search from './views/Search'
+
+    // import DocumentList from "@/components/DocumentList/index";
     export default {
         name: 'App',
         components: {
-            Search
+            // DocumentList,
+
             // HelloWorld
         }
     }
@@ -30,6 +31,4 @@
         /*margin-top: 60px;*/
         height: 100%;
     }
-
-
 </style>
