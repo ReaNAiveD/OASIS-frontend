@@ -9,8 +9,16 @@ Vue.use(VueRouter);
 
 // 路由的数组
 const routes = [
-        homeRouter,
-        searchRouter
+    {
+        path: "/",
+        redirect: "/home"
+    },
+    homeRouter,
+    searchRouter,
+    {
+        path: "/author",
+        component: () =>import('@/views/Author')
+    }
 ];
 
 const router = new VueRouter({
