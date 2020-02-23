@@ -112,6 +112,6 @@
 
     .box-card {
         /*width: 480px;*/
-        margin: 10px;
+        margin-top: 10px;
     }
 </style>

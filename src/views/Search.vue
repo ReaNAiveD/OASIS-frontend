@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <SearchHeader></SearchHeader>
-
         <el-container>
             <el-aside>
                 <FilterBy></FilterBy>
@@ -38,6 +37,10 @@
 </script>
 
 <style scoped>
+    .el-aside::-webkit-scrollbar {
+        display: none
+    }
+
     .el-header, .el-footer {
         background-color: #B3C0D1;
         color: #333;
@@ -54,7 +57,7 @@
         color: #333;
         text-align: left;
         /*line-height: 200px;*/
-        width: 270px;
+        width: 200px;
         margin: 10px;
     }
 
@@ -64,7 +67,6 @@
         text-align: center;
         /*line-height: 160px;*/
         margin: 10px;
-
     }
 
     body > .el-container {

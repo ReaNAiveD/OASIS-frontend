@@ -1,5 +1,6 @@
 <template>
     <div class="filter-by-container">
+        <div>Filter By</div>
         <FilterByYear></FilterByYear>
         <FilterByPublicationType></FilterByPublicationType>
     </div>
@@ -8,9 +9,10 @@
 <script>
   import FilterByYear from '@/components/FilterBy/FilterByYear'
   import FilterByPublicationType from '@/components/FilterBy/FilterByPublicationType'
+
   export default {
     name: 'index',
-    components:{
+    components: {
       FilterByYear,
       FilterByPublicationType
     }
@@ -18,5 +20,4 @@
 </script>
 
 <style scoped>
-
 </style>
