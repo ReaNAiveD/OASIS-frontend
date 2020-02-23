@@ -2,16 +2,13 @@
     <div class="container">
         <SearchHeader></SearchHeader>
         <el-container>
-            <el-aside>
+            <el-aside style="width: 250px">
                 <FilterBy></FilterBy>
             </el-aside>
             <el-main>
                 <DocumentList></DocumentList>
-                <DocumentList></DocumentList>
-                <DocumentList></DocumentList>
-                <DocumentList></DocumentList>
             </el-main>
-            <el-aside>
+            <el-aside style="width: 260px">
                 <Recommendation></Recommendation>
             </el-aside>
         </el-container>
@@ -37,10 +34,6 @@
 </script>
 
 <style scoped>
-    .el-aside::-webkit-scrollbar {
-        display: none
-    }
-
     .el-header, .el-footer {
         background-color: #B3C0D1;
         color: #333;
@@ -50,6 +43,7 @@
 
     .el-container {
         background-color: whitesmoke;
+        padding-top: 50px;
     }
 
     .el-aside {
@@ -57,7 +51,7 @@
         color: #333;
         text-align: left;
         /*line-height: 200px;*/
-        width: 200px;
+        /*width: 200px;*/
         margin: 10px;
     }
 
@@ -67,17 +61,10 @@
         text-align: center;
         /*line-height: 160px;*/
         margin: 10px;
+        padding: 0;
     }
 
     body > .el-container {
         margin-bottom: 40px;
-    }
-
-    .container {
-        height: 100%;
-    }
-
-    .el-container {
-        height: 100%;
     }
 </style>

@@ -1,108 +1,149 @@
 <template>
-    <div class="item-container">
-        <el-row :gutter="10">
-            <el-col :md="16" :sm="24">
-                <div class="document-title">
-                    {{title}}
-                </div>
-                <div class="document-abstract">
+    <el-card class="box-card">
+        <div class="item-container">
+            <div class="document-title">
+                {{title}}
+            </div>
+
+            <div class="author_year">
+                <el-link :underline="false" v-for="(author, index) in authors" :key="index">
+                    {{author.name}}
+                </el-link>
+                <span>{{year}}</span>
+            </div>
+
+            <div>
+                <p class="document-abstract">
                     {{abstract}}
-                </div>
-            </el-col>
-            <el-col :md="6" :xs="16">
-                <ul>
-                    <li class="document-author" v-for="(author, index) in authors" :key="index">
-                        {{author.name}}
-                    </li>
-                </ul>
-            </el-col>
-            <el-col class="document-year" :md="2" :xs="8">
-                {{year}}
-            </el-col>
-            <el-col>
-                <span>Keywords:</span>
-                <el-tag  type="gray" hit="true" v-for="(keyword,index) in keywords" :key="index">{{keyword}}</el-tag>
-            </el-col>
-        </el-row>
-    </div>
+                </p>
+
+            </div>
+
+
+            <div class="keywords">
+                <span style="line-height: 25px">Keywords:</span>
+                <el-tag type="info" effect="plain" hit="true" v-for="(keyword,index) in keywords" :key="index">
+                    {{keyword}}
+                </el-tag>
+            </div>
+        </div>
+        <div>
+            <el-button type="text"><i class="el-icon-link"></i>Cite</el-button>
+            <el-button type="text"><i class="el-icon-folder"></i>Save</el-button>
+            <el-button type="text" class="citations">Citations ({{citations}})</el-button>
+            <div></div>
+        </div>
+        <div style="height: 26px"></div>
+
+    </el-card>
+
+
 </template>
 
 <script>
-    export default {
-        name: "DocumentListItem",
-        props: {
-            title: {
-                type: String,
-                default: "Document"
-            },
-            id: {
-                type: Number,
-                default: -1
-            },
-            authors: {
-                type: Array,
-                default: () => {
-                    return []
-                }
-            },
-            abstract: {
-                type: String,
-                default: ""
-            },
-            year: {
-                type: String,
-                default: ""
-            },
-            keywords:{
-              type:Array,
-              default:()=>{return ['Topping','Computer hardware','Engineering']}
-            }
+  export default {
+    name: 'DocumentListItem',
+    props: {
+      title: {
+        type: String,
+        default: 'Document'
+      },
+      id: {
+        type: Number,
+        default: -1
+      },
+      authors: {
+        type: Array,
+        default: () => {
+          return []
         }
+      },
+      abstract: {
+        type: String,
+        default: ''
+      },
+      year: {
+        type: String,
+        default: ''
+      },
+      keywords: {
+        type: Array,
+        default: () => {return ['Topping', 'Computer hardware', 'Engineering']}
+      },
+      citations: {
+        type: Number,
+        default: 0
+      }
     }
+  }
 </script>
 
 <style scoped>
+    .box-card {
+        margin-bottom: 10px;
+    }
     .item-container {
-        border-style: solid;
+        border-bottom-style: solid;
         border-width: 1px 0;
         border-color: rgba(105, 105, 105, 0.32);
-        padding: 20px 10px;
     }
 
     .document-title {
         text-align: left;
-        font-size: 36px;
+        font-size: 25px;
         margin: 5px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .author_year {
+        text-align: left;
+        font-size: 15px;
+        color: dimgrey;
+    }
+
+    .author_year > * {
+        margin: 5px;
     }
 
     .document-abstract {
         text-align: left;
         font-size: 14px;
-        margin: 0 0 0 10px;
+        margin: 5px;
         color: dimgrey;
-        overflow: hidden;
+
+        word-break: break-all;
         text-overflow: ellipsis;
-        white-space: nowrap;
+        display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+        -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+        -webkit-line-clamp: 4; /** 显示的行数 **/
+        overflow: hidden; /** 隐藏超出的内容 **/
     }
 
-    .document-year {
-        margin: 20px 0;
+    .keywords {
+        text-align: left;
+        overflow: hidden;
     }
 
-    .document-author {
-        font-size: 14px;
-    }
-
-    .el-tag{
-        float: left;
+    .keywords span {
         margin: 5px;
+        font-size: 13px;
+        height: 25px;
+        line-height: 25px;
     }
 
-    .el-col span{
-        margin: 5px;
+    .el-button {
+        margin-left: 5px;
+        padding: 5px;
         float: left;
+        color: lightslategray;
     }
-</style>
+
+    .citations {
+        margin-right: 0;
+        float: right;
+        cursor: text;
+    }
+
+</style >

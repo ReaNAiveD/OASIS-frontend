@@ -20,4 +20,10 @@
 </script>
 
 <style scoped>
+    .filter-by-container div:first-child{
+        height: 35px;
+        line-height: 35px;
+        color: darkgray;
+        font-size: 15px;
+    }
 </style>

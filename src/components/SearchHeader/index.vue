@@ -15,6 +15,7 @@
 </script>
 
 <style scoped>
+
     .document-list-search {
         display: inline-block;
         margin: 5px;
@@ -27,6 +28,9 @@
 
     .document-list-head-search {
         /*float: right;*/
+        position: fixed;
+        width: 100%;
+        background-color: white;
     }
 
     .list-container {

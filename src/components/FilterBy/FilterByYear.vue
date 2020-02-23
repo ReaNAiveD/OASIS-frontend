@@ -41,7 +41,7 @@
 
     .box-card {
         /*width: 480px;*/
-        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     .el-link {

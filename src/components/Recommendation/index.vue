@@ -63,8 +63,15 @@
 </script>
 
 <style scoped>
+    .recommendation-container> div:first-child {
+        height: 35px;
+        line-height: 35px;
+        color: darkgray;
+        font-size: 15px;
+    }
     .statistic {
         text-align: center;
+        font-size: 16px;
     }
 
     .statistic .left {
@@ -107,6 +114,6 @@
     }
 
     .el-card {
-        margin-top: 10px;
+        margin-bottom: 10px;
     }
 </style>
