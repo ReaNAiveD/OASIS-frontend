@@ -20,7 +20,18 @@
         components: {DocumentList, AuthorInfo},
         data: function () {
             return {
-                authorDetail: null
+                authorDetail: {
+                    "id":10448,
+                    "name":"",
+                    "firstName":"",
+                    "lastName":"",
+                    "affiliation":"",
+                    "authorKeywords":"",
+                    "ieeeId":"",
+                    "coworkers":[],
+                    "documentCount":0,
+                    "documents": []
+                }
             }
         },
         created: function () {

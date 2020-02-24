@@ -42,6 +42,7 @@
         },
         computed: {
             authorKeywords: function () {
+                if (this.info.authorKeywords === "") return [];
                 return this.info.authorKeywords.split(";");
             }
         }
