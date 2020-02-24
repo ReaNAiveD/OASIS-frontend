@@ -16,7 +16,8 @@ const routes = [
     homeRouter,
     searchRouter,
     {
-        path: "/author",
+        path: "/author/:id",
+        name: "Author",
         component: () =>import('@/views/Author')
     }
 ];

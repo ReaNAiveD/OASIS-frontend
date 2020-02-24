@@ -2,7 +2,7 @@
     <el-row :gutter="16">
         <el-col :md="6" :sm="24">
             <el-card>
-                <AuthorInfo/>
+                <AuthorInfo :info="authorDetail"/>
             </el-card>
         </el-col>
         <el-col :md="18" :sm="24">
@@ -14,9 +14,24 @@
 <script>
     import AuthorInfo from "@/components/AuthorInfo";
     import DocumentList from "@/components/DocumentList/index";
+    import { detail as getAuthorDetail } from '@/api/author';
     export default {
         name: "index",
-        components: {DocumentList, AuthorInfo}
+        components: {DocumentList, AuthorInfo},
+        data: function () {
+            return {
+                authorDetail: null
+            }
+        },
+        created: function () {
+            console.log(this.$route.params.id);
+            getAuthorDetail(this.$route.params.id).then(response => {
+                console.log(response);
+                this.authorDetail = response.data;
+            }).catch(error =>{
+                console.log(error)
+            })
+        }
     }
 </script>
 
