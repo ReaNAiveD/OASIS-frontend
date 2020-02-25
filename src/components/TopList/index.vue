@@ -8,27 +8,30 @@
             </div>
         </div>
         <div class="top-list">
-            <ul><li><div class="item-top"><a class="left" href="/authorDetail/1105485177" target="_blank">Jiawei Han</a> <div class="right">
-                201
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 100%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1310125507" target="_blank">Lei Chen</a> <div class="right">
-                182
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="90.54726368159204" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 90.54%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1189518347" target="_blank">Maarten de Rijke</a> <div class="right">
-                144
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="71.64179104477611" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 71.64%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1240533752" target="_blank">Jeffrey Xu Yu</a> <div class="right">
-                141
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="70.1492537313433" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 70.14%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1000287790" target="_blank">Xuemin Lin</a> <div class="right">
-                138
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="68.65671641791044" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 68.65%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1222792523" target="_blank">Christos Faloutsos</a> <div class="right">
-                125
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="62.189054726368155" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 62.18%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1053387713" target="_blank">Guoliang Li</a> <div class="right">
-                115
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="57.2139303482587" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 57.21%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1349930362" target="_blank">Christian S. Jensen</a> <div class="right">
-                101
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="50.24875621890548" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 50.24%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1307499293" target="_blank">Xiaofang Zhou</a> <div class="right">
-                101
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="50.24875621890548" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 50.24%;"><!----></div></div></div><!----></div></div></li><li><div class="item-top"><a class="left" href="/authorDetail/1484292905" target="_blank">Hui Xiong</a> <div class="right">
-                97
-                <span>Papers</span></div></div> <div class="item-bottom"><div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="48.258706467661696" aria-valuemin="0" aria-valuemax="100"><div class="el-progress-bar"><div class="el-progress-bar__outer" style="height: 6px;"><div class="el-progress-bar__inner" style="width: 48.25%;"><!----></div></div></div><!----></div></div></li></ul>
+            <ul>
+                <li  v-for="(author, index) in authors" :key="index">
+                    <div class="item-top">
+                        <a class="left" :href="'/authorDetail/'+author.id" target="_blank">
+                            {{author.name}}
+                        </a>
+                        <div class="right">
+                            {{author.document_count}}
+                            <span>Papers</span>
+                        </div>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                            <div class="el-progress-bar">
+                                <div class="el-progress-bar__outer" style="height: 6px;">
+                                    <div class="el-progress-bar__inner" :style="'width:'+author.document_count/authors[0].document_count*100+'%'">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
         </div>
     </div>
 </template>
@@ -38,11 +41,70 @@
         name: 'TopList',
         data() {
             return {
-
+                authors: [
+                    {
+                        "name": "John Penix0",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "255"
+                    },
+                    {
+                        "name": "John Penix1",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "225"
+                    },
+                    {
+                        "name": "John Penix2",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "165"
+                    },
+                    {
+                        "name": "John Penix3",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "145"
+                    },
+                    {
+                        "name": "John Penix4",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "105"
+                    },
+                    {
+                        "name": "John Penix4",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "85"
+                    },
+                    {
+                        "name": "John Penix5",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "65"
+                    },
+                    {
+                        "name": "John Penix6",
+                        "affiliation": "Google, USA",
+                        "id": "123456789",
+                        "keywords": "",
+                        "document_count": "55"
+                    },
+                    ]
             };
         },
         methods: {
 
+        },
+        computed:{
         }
 
     }
