@@ -6,7 +6,7 @@
             </div>
 
             <div class="author_year">
-                <el-link :underline="false" v-for="(author, index) in authors" :key="index">
+                <el-link :underline="false" v-for="(author, index) in authors" :key="index" @click="$router.push('/author/' + author.id)">
                     {{author.name}}
                 </el-link>
                 <span>{{year}}</span>
