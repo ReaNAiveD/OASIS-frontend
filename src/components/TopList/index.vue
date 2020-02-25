@@ -3,7 +3,7 @@
         <div class="top-name">
             <div class="top-name-title">
                 <strong>Top Author</strong>
-                <div style="width: 100% ;font-size: 16px;margin-top: 4px">view more</div>
+                <div style="width: 100% ;font-size: 14px;margin-top: 4px"  >view more</div>
 
             </div>
         </div>
@@ -11,7 +11,7 @@
             <ul>
                 <li  v-for="(author, index) in authors" :key="index">
                     <div class="item-top">
-                        <a class="left" :href="'/authorDetail/'+author.id" target="_blank">
+                        <a class="left" :href="'/author/:'+author.id" target="_blank">
                             {{author.name}}
                         </a>
                         <div class="right">
@@ -45,7 +45,7 @@
                     {
                         "name": "John Penix0",
                         "affiliation": "Google, USA",
-                        "id": "123456789",
+                        "id": "123",
                         "keywords": "",
                         "document_count": "255"
                     },
@@ -135,15 +135,17 @@
 }
 .top-name-title{
     /*padding-left: 15px;*/
-    margin: 10% auto;
+    margin: 6% auto;
     width: 80%;
     color: white;
+    text-align:left;
     /*box-sizing: border-box;*/
 }
 .top-list {
         width: 100%;
         padding: 10px 30px 20px;
         box-sizing: border-box;
+    text-align:left;
     }
 
 .top-item{
@@ -166,7 +168,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
+        text-decoration: none;
+
+
+    }
 .right {
     width: 40%;
     text-align: right;
@@ -189,6 +194,7 @@
         overflow: hidden;
     padding: 0;
     margin-top: -5px;
+
     }
 
 

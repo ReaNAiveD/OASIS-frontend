@@ -5,6 +5,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import homeRouter from './Home';
 import searchRouter from './Search';
+import authorRouter from './Author';
 Vue.use(VueRouter);
 
 // 路由的数组
@@ -15,11 +16,7 @@ const routes = [
     },
     homeRouter,
     searchRouter,
-    {
-        path: "/author/:id",
-        name: "Author",
-        component: () =>import('@/views/Author')
-    }
+    authorRouter
 ];
 
 const router = new VueRouter({

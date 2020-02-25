@@ -13,7 +13,7 @@
                                 <el-option label="出版社" value="2"></el-option>
                                 <el-option label="论文标题" value="3"></el-option>
                             </el-select>
-                            <el-button slot="append" type="primary" icon="el-icon-search"></el-button>
+                            <el-button slot="append" type="primary" icon="el-icon-search" @click="search"></el-button>
                         </el-input>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                 <TopList  ></TopList>
                 <TopList  ></TopList>
                 <TopList  ></TopList>
-                
+
             </div>
 
 
@@ -48,9 +48,15 @@
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "2000px ",
                     marginTop: "5px",
-                    searchInput: '',
-                    select: ''
-                }
+                },
+                searchInput: '',
+                select: 'random'
+            }
+        },
+        methods:{
+            search(){
+                console.log("search");
+                this.$router.push({path: '/search', query: {input: this.searchInput}});
             }
         },
         components: {
