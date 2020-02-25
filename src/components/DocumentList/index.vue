@@ -23,7 +23,7 @@
 
 <script>
   import DocumentListItem from '@/components/DocumentList/DocumentListItem'
-
+  // todo：router-view
   export default {
     name: 'DocumentList',
     components: { DocumentListItem },
@@ -80,7 +80,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '12346',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -103,7 +103,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '12456',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -126,7 +126,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '1456',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -149,7 +149,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '1234567',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -172,7 +172,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '23456',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -195,7 +195,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '1234596',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -218,7 +218,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '1234560',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -241,7 +241,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '56',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -264,7 +264,7 @@
           },
           {
             title: 'Big problems in industry (panel)',
-            id: '123456',
+            id: '3456',
             authors: [{
               name: 'John Penix',
               affiliation: 'Google, USA',
@@ -286,6 +286,14 @@
             ref: []
           },
         ]
+      }
+    },
+    watch:{
+      $route:{
+        handler: function (val) {
+          // 监听路由变化
+          console.log(val.query.year)
+        }
       }
     }
   }

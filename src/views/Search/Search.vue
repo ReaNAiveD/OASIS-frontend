@@ -22,6 +22,7 @@
   import FilterBy from '@/components/FilterBy/index'
   import Recommendation from '@/components/Recommendation/index'
 
+  //todo: 从path中获取搜索的条件keywords？
   export default {
     name: 'Search',
     components: {
@@ -29,7 +30,8 @@
       FilterBy,
       DocumentList,
       Recommendation
-    }
+    },
+
   }
 </script>
 

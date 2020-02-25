@@ -22,7 +22,7 @@
 
             <div class="keywords">
                 <span style="line-height: 25px">Keywords:</span>
-                <el-tag type="info" effect="plain" hit="true" v-for="(keyword,index) in keywords" :key="index">
+                <el-tag type="info" effect="plain" :hit=true v-for="(keyword,index) in keywords" :key="index">
                     {{keyword}}
                 </el-tag>
             </div>
@@ -50,7 +50,7 @@
         default: 'Document'
       },
       id: {
-        type: Number,
+        type: String,
         default: -1
       },
       authors: {

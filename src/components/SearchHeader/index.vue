@@ -12,7 +12,14 @@
 
 <script>
   export default {
-    name: 'SearchHeader'
+    name: 'SearchHeader',
+    data(){
+      return {
+        searchType:'',
+        searchTypes:[''],
+        searchKeyword:''
+      }
+    }
   }
 </script>
 

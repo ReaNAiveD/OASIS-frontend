@@ -4,10 +4,9 @@
             <span>Publication Type</span>
         </div>
 
-        <el-collapse v-model="activeNames" @change="handleChange">
-            <el-collapse-item v-for="(type,index) in publicationTypes" :key="index" :title="type.category"
-                              :name="index">
-                <el-link v-for="(item,index_) in type.items" :key="index_">{{item.name}}({{item.amount}})</el-link>
+        <el-collapse v-model="activeNames" @change="handleChange" accordion>
+            <el-collapse-item v-for="(type,index) in publicationTypes" :key="index" :title="type.category" :name="index">
+                <el-link v-for="(item,index_) in type.children" :key="index_" @click="clickType(item.name)">{{item.name}}({{item.amount}})</el-link>
             </el-collapse-item>
         </el-collapse>
 
@@ -19,11 +18,11 @@
     name: 'FilterByPublicationType',
     data () {
       return {
-        activeNames: ['1'],
+        activeNames: [],
         publicationTypes: [
           {
             category: 'Journal/Magazine Names',
-            items: [
+            children: [
               {
                 name: 'Communications of the ACM',
                 amount: 7890
@@ -37,7 +36,7 @@
             ]
           }, {
             category: 'Journal/Magazine Names',
-            items: [
+            children: [
               {
                 name: 'Communications of the ACM',
                 amount: 7890
@@ -51,7 +50,7 @@
             ]
           }, {
             category: 'Journal/Magazine Names',
-            items: [
+            children: [
               {
                 name: 'Communications of the ACM',
                 amount: 7890
@@ -65,7 +64,7 @@
             ]
           }, {
             category: 'Journal/Magazine Names',
-            items: [
+            children: [
               {
                 name: 'Communications of the ACM',
                 amount: 7890
@@ -78,13 +77,31 @@
               }
             ]
           }
-
         ]
       }
+    },
+    created(){
+      // this.getFilterByType()
     },
     methods: {
       handleChange (val) {
         console.log(val)
+      },
+      clickType(id){
+        console.log("id:",id)
+        let params = this.$route.params
+        params.type=id
+        this.$router.params=params
+        console.log(this.$route.params)
+      },
+      // 获取Type
+      async getFilterByType () {
+        // 解构赋值
+        const { data: res } = await this.$http.get('publicationType')
+        console.log(res)
+        // 将获取到的数据挂载到组件的私有data中
+        if (res.meta.status !== 200) {return this.$message.error(res.meta.msg)}
+        this.publicationTypes=res.data
       }
     }
   }
