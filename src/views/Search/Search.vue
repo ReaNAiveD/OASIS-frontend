@@ -17,10 +17,10 @@
 </template>
 
 <script>
-  import SearchHeader from '@/components/SearchHeader'
-  import DocumentList from '@/components/DocumentList'
-  import FilterBy from '@/components/FilterBy'
-  import Recommendation from '@/components/Recommendation'
+  import SearchHeader from '@/components/SearchHeader/index'
+  import DocumentList from '@/components/DocumentList/index'
+  import FilterBy from '@/components/FilterBy/index'
+  import Recommendation from '@/components/Recommendation/index'
 
   export default {
     name: 'Search',

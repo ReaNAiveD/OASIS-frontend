@@ -7,7 +7,7 @@
         <el-collapse v-model="activeNames" @change="handleChange">
             <el-collapse-item v-for="(type,index) in publicationTypes" :key="index" :title="type.category"
                               :name="index">
-                <div v-for="(item,index_) in type.items" :key="index_">{{item.name}}({{item.amount}})</div>
+                <el-link v-for="(item,index_) in type.items" :key="index_">{{item.name}}({{item.amount}})</el-link>
             </el-collapse-item>
         </el-collapse>
 

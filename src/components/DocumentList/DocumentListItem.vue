@@ -27,6 +27,7 @@
                 </el-tag>
             </div>
         </div>
+        <!--下方3个小按钮-->
         <div>
             <el-button type="text"><i class="el-icon-link"></i>Cite</el-button>
             <el-button type="text"><i class="el-icon-folder"></i>Save</el-button>
@@ -82,6 +83,12 @@
     .box-card {
         margin-bottom: 10px;
     }
+
+    .box-card:hover {
+        cursor: pointer;
+        background-color: #f3f3f3;
+    }
+
     .item-container {
         border-bottom-style: solid;
         border-width: 1px 0;
@@ -146,4 +153,4 @@
         cursor: text;
     }
 
-</style >
+</style>
