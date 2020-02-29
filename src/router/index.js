@@ -19,6 +19,11 @@ const routes = [
         path: "/author/:id",
         name: "Author",
         component: () =>import('@/views/Author')
+    },
+    {
+        path: "/document/:id",
+        name: "DocumentDetail",
+        component: () =>import('@/views/DocumentDetail')
     }
 ];
 
