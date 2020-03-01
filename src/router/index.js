@@ -5,17 +5,23 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import homeRouter from './Home';
 import searchRouter from './Search';
+import authorRouter from './Author';
 Vue.use(VueRouter);
 
 // 路由的数组
 const routes = [
-        homeRouter,
-        searchRouter
+    {
+        path: "/",
+        redirect: "/home"
+    },
+    homeRouter,
+    searchRouter,
+    authorRouter
 ];
 
 const router = new VueRouter({
-    routes:routes,
-    mode:'history'
+    mode:'history',
+    routes
 });
 export default router;
 
