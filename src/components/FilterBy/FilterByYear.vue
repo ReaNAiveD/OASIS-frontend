@@ -19,25 +19,33 @@
         <!--            <el-link @click="clickYear(-1)" :class="{'clicked':year_index===-1}">No Limitation</el-link>-->
         <!--            &lt;!&ndash;            <el-radio v-model="radio" label="3"></el-radio>&ndash;&gt;-->
         <!--        </div>-->
+        <el-form>
+            <div class="container">
+                <div class="block">
+                    <span class="demonstration">起始年份</span>
+                    <el-date-picker size="small"
+                                    v-model="yearFrom"
+                                    type="year"
+                                    placeholder="选择年">
+                    </el-date-picker>
+                </div>
+                <div class="block">
+                    <span class="demonstration">截止年份</span>
+                    <el-date-picker size="small"
+                                    v-model="yearTo"
+                                    type="year"
+                                    placeholder="选择年">
+                    </el-date-picker>
+                </div>
+            </div>
 
-        <div class="container">
-            <div class="block">
-                <span class="demonstration">起始年份</span>
-                <el-date-picker size="small"
-                        v-model="yearFrom"
-                        type="year"
-                        placeholder="选择年">
-                </el-date-picker>
-            </div>
-            <div class="block">
-                <span class="demonstration">截止年份</span>
-                <el-date-picker size="small"
-                        v-model="yearTo"
-                        type="year"
-                        placeholder="选择年">
-                </el-date-picker>
-            </div>
-        </div>
+<!--            <el-form-item label="机构">-->
+<!--                <el-checkbox-group v-model="sizeForm.type">-->
+<!--                    <el-checkbox-button label="ICSE" name="type"></el-checkbox-button>-->
+<!--                    <el-checkbox-button label="ASE" name="type"></el-checkbox-button>-->
+<!--                </el-checkbox-group>-->
+<!--            </el-form-item>-->
+        </el-form>
 
     </el-card>
 </template>
@@ -49,8 +57,8 @@
       return {
         radio: '1',
         year_index: -1,
-        yearFrom: '',
-        yearTo: ''
+        yearFrom: '1970',
+        yearTo: '2020'
       }
     },
     methods: {
@@ -106,5 +114,15 @@
         font-size: 14px;
         color: #8492a6;
         text-align: center;
+    }
+
+    .el-input{
+        /*年份选择框的宽度*/
+        width: 100px;
+        margin-left: 25px;
+    }
+
+    .block {
+        margin-bottom: 10px;
     }
 </style>

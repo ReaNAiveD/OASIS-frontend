@@ -1,9 +1,16 @@
 import request from '@/utils/request'
 
-export function fetchList(param) {
+export function fetchList(data) {
     return request({
-        url:'/document/list',
-        method: 'get',
-        params: param
+        url:'/document/fetch',
+        method: 'post',
+        data: data
+    })
+}
+
+export function getDocumentDetail(id){
+    return request({
+        url:'/document/detail?id='+id,
+        method:'get',
     })
 }

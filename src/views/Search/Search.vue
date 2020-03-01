@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <SearchHeader></SearchHeader>
+        <SearchHeader v-on:clickSearch="clickSearch"></SearchHeader>
         <el-container>
             <el-aside style="width: 250px">
-                <FilterBy></FilterBy>
+                <FilterBy v-on:clickFilter="clickFilter"></FilterBy>
             </el-aside>
             <el-main>
-                <DocumentList></DocumentList>
+                <DocumentList :documents="documents" :search-count="searchCount" v-on:clickSortBy="clickSortBy"></DocumentList>
             </el-main>
             <el-aside style="width: 260px">
                 <Recommendation></Recommendation>
@@ -31,6 +31,67 @@
       DocumentList,
       Recommendation
     },
+    data () {
+      return {
+        // 查询参数：由子组件来更新这些参数
+        params: {
+          'combined': '',
+          'title': '',
+          'author': 'Yuexing Wang',
+          'abstract': '',
+          'affiliation': '',
+          'publicationTitle': '',
+          'yearFrom': '',
+          'yearTo': '',
+          'publisher': '',
+          'conference': '',
+          'orderby': 'default',
+          'pageSize': '',
+          'page': ''
+        },
+        searchCount:0,
+        documents:[]
+      }
+    },
+    created () {
+      this.fetchList()
+      // this.$api.getDocumentDetail(4322).then(res=>{
+      //   console.log(res)
+      // })
+    },
+    methods: {
+      fetchList () {
+        this.$api.fetchList(this.params).then(res => {
+          this.documents=res.data.content
+          this.searchCount=this.documents.length
+          console.log("documentList: ",this.documents)
+        },err=>{
+          console.log(err)
+        })
+      },
+      clickSearch(combined,title,author,affiliation){
+        this.params.combined=combined
+        this.params.title=title
+        this.params.author=author
+        this.params.affiliation=affiliation
+        console.log(1111)
+        this.fetchList()
+      },
+      clickSortBy(orderby){
+        this.params.orderby=orderby
+        this.fetchList()
+      },
+      clickFilter(yearFrom,yearTo){
+        this.params.yearFrom = yearFrom
+        this.params.yearTo=yearTo
+
+        console.log(this.params.yearFrom)
+        console.log(this.params.yearTo)
+
+        this.fetchList()
+      }
+
+    }
 
   }
 </script>

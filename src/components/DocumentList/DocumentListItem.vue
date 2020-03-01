@@ -6,15 +6,15 @@
             </div>
 
             <div class="author_year">
+                <el-link>{{publicationYear}}</el-link>
                 <el-link :underline="false" v-for="(author, index) in authors" :key="index" @click="$router.push('/author/' + author.id)">
                     {{author.name}}
                 </el-link>
-                <span>{{year}}</span>
             </div>
 
             <div>
                 <p class="document-abstract">
-                    {{abstract}}
+                    {{docuAbstract}}
                 </p>
 
             </div>
@@ -31,7 +31,7 @@
         <div>
             <el-button type="text"><i class="el-icon-link"></i>Cite</el-button>
             <el-button type="text"><i class="el-icon-folder"></i>Save</el-button>
-            <el-button type="text" class="citations">Citations ({{citations}})</el-button>
+            <el-button type="text" class="citations">Citations ({{referenceCount}})</el-button>
             <div></div>
         </div>
         <div style="height: 26px"></div>
@@ -50,7 +50,7 @@
         default: 'Document'
       },
       id: {
-        type: String,
+        type: Number,
         default: -1
       },
       authors: {
@@ -59,19 +59,19 @@
           return []
         }
       },
-      abstract: {
+      docuAbstract: {
         type: String,
         default: ''
       },
-      year: {
-        type: String,
-        default: ''
+      publicationYear: {
+        type: Number,
+        default: 2020
       },
       keywords: {
         type: Array,
         default: () => {return ['Topping', 'Computer hardware', 'Engineering']}
       },
-      citations: {
+      referenceCount: {
         type: Number,
         default: 0
       }
@@ -112,6 +112,23 @@
 
     .author_year > * {
         margin: 5px;
+        height: 20px;
+    }
+
+    .author_year .el-link:after{
+        content:","
+    }
+
+    .author_year .el-link:first-child:after{
+        content:""
+    }
+
+    .author_year .el-link:first-child{
+        margin-right: 20px;
+    }
+
+    .author_year .el-link:last-child:after{
+        content:""
     }
 
     .document-abstract {
