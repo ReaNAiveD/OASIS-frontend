@@ -1,7 +1,7 @@
 <template>
     <div class="document-list-head-search">
         <img src="@/assets/logo.png" width="40" alt="">
-        <span>CEMAP</span>
+        <span>CSEIII</span>
         <el-select class="document-list-search" v-model="searchType">
             <el-option v-for="type in searchTypes" :key="type.value" :value="type.value" :label="type.label"/>
         </el-select>
@@ -13,11 +13,21 @@
 <script>
   export default {
     name: 'SearchHeader',
-    data(){
+    data () {
       return {
-        searchType:'',
-        searchTypes:[''],
-        searchKeyword:''
+        searchType: '',
+        searchTypes: [
+          {
+            value: '1',
+            label: '作者名称'
+          }, {
+            value: '2',
+            label: '出版社'
+          }, {
+            value: '3',
+            label: '论文标题'
+          }],
+        searchKeyword: ''
       }
     }
   }
@@ -48,10 +58,10 @@
         /*justify-content: center;*/
     }
 
-    .document-list-head-search >* {
+    .document-list-head-search > * {
     }
 
-    .el-select{
+    .el-select {
         margin-left: 90px;
     }
 

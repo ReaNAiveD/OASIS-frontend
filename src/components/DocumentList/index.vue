@@ -38,9 +38,6 @@
         }, {
           value: '选项3',
           label: 'Most Early'
-        }, {
-          value: '选项4',
-          label: 'Most Citation'
         }],
         value: '选项1',
         searchKeyword: '',
