@@ -16,7 +16,12 @@ const routes = [
     },
     homeRouter,
     searchRouter,
-    authorRouter
+    authorRouter,
+    {
+        path: "/document/:id",
+        name: "DocumentDetail",
+        component: () =>import('@/views/DocumentDetail')
+    }
 ];
 
 const router = new VueRouter({

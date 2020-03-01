@@ -14,3 +14,13 @@ export function getDocumentDetail(id){
         method:'get',
     })
 }
+
+export function getDocumentDetail(id) {
+    return request({
+        url: '/document/detail',
+        method: 'get',
+        params: {
+            id: id
+        }
+    })
+}
