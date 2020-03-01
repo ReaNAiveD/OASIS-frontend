@@ -7,3 +7,13 @@ export function fetchList(param) {
         params: param
     })
 }
+
+export function getDocumentDetail(id) {
+    return request({
+        url: '/document/detail',
+        method: 'get',
+        params: {
+            id: id
+        }
+    })
+}
