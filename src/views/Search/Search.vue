@@ -7,7 +7,7 @@
 			</el-aside>
 			<el-main>
 				<Loading v-if="isLoading"></Loading>
-				<DocumentList :documents="documents" :search-count="searchCount" v-on:clickSortBy="clickSortBy"></DocumentList>
+				<DocumentList :documents="documents" :document-count="searchCount" v-on:clickSortBy="clickSortBy"></DocumentList>
 			</el-main>
 			<el-aside style="width: 260px">
 				<Recommendation></Recommendation>
