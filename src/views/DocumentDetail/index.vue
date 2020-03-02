@@ -53,7 +53,6 @@
             }
         },
         created: function () {
-            console.log(this.$route.params.id);
             getDocumentDetail(this.$route.params.id).then(response => {
                 console.log(response);
                 this.documentInfo = response.data;
