@@ -79,9 +79,9 @@
                 this.$router.push({path: '/search', query: {combined: this.combined,title:this.title,author:this.author,affiliation:this.affiliation}});
             },
             getTopList(){
-                getAuthorTOPList(12).then(res=>{
+                getAuthorTOPList(30).then(res=>{
                     this.topAuthors=res.data;
-                    console.log(this.topAuthors);
+                    //console.log(this.topAuthors);
                 })
             }
         },
