@@ -1,13 +1,16 @@
 <template>
     <el-card class="box-card">
         <div class="item-container">
-            <div class="document-title">
+            <div class="document-title clickable" v-if="id!=null && id>=0" @click="docRedirect(id)">
+                {{title}}
+            </div>
+            <div class="document-title" v-else>
                 {{title}}
             </div>
 
             <div class="author_year">
                 <el-link>{{publicationYear}}</el-link>
-                <el-link :underline="false" v-for="(author, index) in authors" :key="index" @click="$router.push('/author/' + author.id)">
+                <el-link :underline="false" v-for="(author, index) in authors" :key="index" @click="authorRedirect(author.id)">
                     {{author.name}}
                 </el-link>
             </div>
@@ -42,41 +45,49 @@
 </template>
 
 <script>
-  export default {
-    name: 'DocumentListItem',
-    props: {
-      title: {
-        type: String,
-        default: 'Document'
-      },
-      id: {
-        type: Number,
-        default: -1
-      },
-      authors: {
-        type: Array,
-        default: () => {
-          return []
+    export default {
+        name: 'DocumentListItem',
+        props: {
+            title: {
+                type: String,
+                default: 'Document'
+            },
+            id: {
+                type: Number,
+                default: -1
+            },
+            authors: {
+                type: Array,
+                default: () => {
+                    return []
+                }
+            },
+            docuAbstract: {
+                type: String,
+                default: ''
+            },
+            publicationYear: {
+                type: Number,
+                default: 2020
+            },
+            keywords: {
+                type: Array,
+                default: () => {return ['Topping', 'Computer hardware', 'Engineering']}
+            },
+            referenceCount: {
+                type: Number,
+                default: 0
+            }
+        },
+        methods: {
+            docRedirect: function (id) {
+                window.open(this.$router.resolve('/document/' + id).href, '_blank');
+            },
+            authorRedirect: function (id) {
+                window.open(this.$router.resolve('/author/' + id).href, '_blank');
+            }
         }
-      },
-      docuAbstract: {
-        type: String,
-        default: ''
-      },
-      publicationYear: {
-        type: Number,
-        default: 2020
-      },
-      keywords: {
-        type: Array,
-        default: () => {return ['Topping', 'Computer hardware', 'Engineering']}
-      },
-      referenceCount: {
-        type: Number,
-        default: 0
-      }
     }
-  }
 </script>
 
 <style scoped>
@@ -85,7 +96,6 @@
     }
 
     .box-card:hover {
-        cursor: pointer;
         background-color: #f3f3f3;
     }
 
@@ -168,6 +178,12 @@
         margin-right: 0;
         float: right;
         cursor: text;
+    }
+
+    .clickable:hover {
+        cursor: pointer;
+        color: dodgerblue;
+        text-decoration: underline;
     }
 
 </style>
