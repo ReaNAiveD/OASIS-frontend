@@ -6,16 +6,17 @@
             </el-card>
         </el-col>
         <el-col :md="18" :sm="24">
-            <DocumentList/>
+            <DocumentList :documents="authorDetail.documents" :document-count="authorDetail.documentCount"></DocumentList>
         </el-col>
     </el-row>
 </template>
 
 <script>
-    import AuthorInfo from "@/components/AuthorInfo";
-    import DocumentList from "@/components/DocumentList/index";
-    import { detail as getAuthorDetail } from '@/api/author';
-    export default {
+  import AuthorInfo from '@/components/AuthorInfo'
+  import DocumentList from '@/components/DocumentList/index'
+  import { detail as getAuthorDetail } from '@/api/author'
+
+  export default {
         name: "index",
         components: {DocumentList, AuthorInfo},
         data: function () {

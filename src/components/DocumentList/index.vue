@@ -1,7 +1,7 @@
 <template>
     <div class="document-list-container">
         <div class="head-container">
-            <span class="left">Papers({{searchCount}})</span>
+            <span class="left">Papers({{documentCount}})</span>
             <el-select class="right" size="small" v-model="orderby" placeholder="请选择">
                 <el-option
                         v-for="item in options"
@@ -37,7 +37,7 @@
         type:Array,
         default: ()=>[]
       },
-      searchCount: {
+      documentCount: {
         type:Number,
         default:0
       }

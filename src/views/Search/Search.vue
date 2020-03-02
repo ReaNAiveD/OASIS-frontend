@@ -54,6 +54,11 @@
       }
     },
     created () {
+      // 从$route.params中提取home页面传入的参数
+      this.params.combined=this.$route.params.combined
+      this.params.title=this.$route.params.title
+      this.params.author=this.$route.params.author
+      this.params.affiliation=this.$route.params.affiliation
       this.fetchList()
       // this.$api.getDocumentDetail(4322).then(res=>{
       //   console.log(res)
