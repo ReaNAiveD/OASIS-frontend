@@ -3,7 +3,30 @@
         <div class="top-name">
             <div class="top-name-title">
                 <strong>Top Author</strong>
-                <div style="width: 100% ;font-size: 14px;margin-top: 4px"  >view more</div>
+<!--                <div style="width: 100% ;font-size: 14px;margin-top: 4px"  >view more</div>-->
+                <el-popover
+                        placement="right"
+                        width="300"
+                        trigger="click">
+                    <el-table :data="authors"  height="500">
+                        <el-table-column width="150" property="name" label="姓名"   @click="deleteRow(scope.row)"></el-table-column>
+                        <el-table-column width="70" property="documentCount" label="论文数"></el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="操作"
+                                width="70">
+                            <template slot-scope="scope">
+                                <el-button
+                                        @click.native.prevent="authorDetail(scope.$index)"
+                                        type="text"
+                                        size="small">
+                                    查看
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div slot="reference" style="width: 100% ;font-size: 14px;margin-top: 4px"  >view more</div>
+                </el-popover>
 
             </div>
         </div>
@@ -41,12 +64,17 @@
         name: 'TopList',
         data() {
             return {
-
+                drawer: false,
+                direction: 'rtl',
             };
         },
         props:['authors'],
         methods: {
+            authorDetail(index) {
+                console.log(index);
+                this.$router.push({path: '/author/'+this.authors[index].authorId, query: {}});
 
+            }
         },
         computed:{
         }
@@ -90,9 +118,11 @@
         padding: 10px 30px 20px;
         box-sizing: border-box;
     text-align:left;
+
     }
 
 .top-item{
+
     margin: 0 10px;
     max-width: 520px;
     width: 24%;
@@ -104,7 +134,7 @@
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    font-size: 15px;
+    font-size: 13px;
 }
 .left {
     width: 60%;
@@ -126,7 +156,7 @@
 .item-bottom {
     margin-top: 3px;
     width: 100%;
-    height: 4px;
+    height: 14px;
 }
 .el-progress {
     position: relative;
@@ -134,7 +164,7 @@
 }
 .top-list ul {
         width: 100%;
-        height: 375px;
+        height: 395px;
         overflow: hidden;
     padding: 0;
     margin-top: -5px;
