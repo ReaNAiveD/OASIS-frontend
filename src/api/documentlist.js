@@ -8,9 +8,12 @@ export function fetchList(data) {
     })
 }
 
-export function getDocumentDetail(id){
+export function getDocumentDetail(id) {
     return request({
-        url:'/document/detail?id='+id,
-        method:'get',
+        url: '/document/detail',
+        method: 'get',
+        params: {
+            id: id
+        }
     })
 }
