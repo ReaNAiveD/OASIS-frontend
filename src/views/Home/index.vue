@@ -6,12 +6,15 @@
                     <div class="search-box">
                         <h1 class="search-title" >-   C   S   E   I   I   I   -</h1>
                     </div>
+
                     <div class="search-body">
                         <el-input placeholder="请输入作者，出版社，或论文标题" v-model="searchInput" class="input-with-select">
-                            <el-select v-model="select" slot="prepend" placeholder="混合搜索"  >
-                                <el-option label="作者名称" value="1"></el-option>
-                                <el-option label="出版社" value="2"></el-option>
-                                <el-option label="论文标题" value="3"></el-option>
+                            <el-select v-model="select" slot="prepend" placeholder="混合搜索" style="width: 110px" >
+                                <el-option label="混合搜索" value="0"></el-option>
+                                <el-option label="标题" value="1"></el-option>
+                                <el-option label="作者" value="2"></el-option>
+                                <el-option label="摘要" value="3"></el-option>
+<!--                                <el-option label="作者单位" value="4"></el-option>-->
                             </el-select>
                             <el-button slot="append" type="primary" icon="el-icon-search" @click="search"></el-button>
                         </el-input>
@@ -20,13 +23,10 @@
         </div>
         <div class="home-top-list">
             <div class="top-list">
+                <TopList v-bind:authors="topAuthors" ></TopList>
                 <TopList  ></TopList>
                 <TopList  ></TopList>
-                <TopList  ></TopList>
-
             </div>
-
-
         </div>
 
     </div>
@@ -37,10 +37,12 @@
 
 <script>
 
-    import Header from '@/components/Header'
-    import TopList from '@/components/TopList'
+    import Header from '@/components/Header';
+    import TopList from '@/components/TopList';
+    import {getAuthorTOPList} from "@/api/home";
+
     export default {
-        name: 'Search',
+        name: 'home',
         data() {
             return {
                 note: {
@@ -50,13 +52,37 @@
                     marginTop: "5px",
                 },
                 searchInput: '',
-                select: 'random'
+                combined:'',
+                title:'',
+                author:'',
+                affiliation:'',
+                select: '0',
+                topAuthors:[]
             }
+        },
+        created(){
+
+            this.getTopList();
         },
         methods:{
             search(){
                 console.log("search");
-                this.$router.push({path: '/search', query: {input: this.searchInput}});
+                if(this.select==='0'){
+                    this.combined=this.searchInput;
+                }else if(this.select==='1'){
+                    this.title=this.searchInput;
+                }else if(this.select==='2'){
+                    this.author=this.searchInput;
+                }else if(this.select==='3'){
+                    this.affiliation=this.searchInput;
+                }
+                this.$router.push({path: '/search', query: {combined: this.combined,title:this.title,author:this.author,affiliation:this.affiliation}});
+            },
+            getTopList(){
+                getAuthorTOPList(12).then(res=>{
+                    this.topAuthors=res.data;
+                    console.log(this.topAuthors);
+                })
             }
         },
         components: {

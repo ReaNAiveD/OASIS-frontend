@@ -11,11 +11,11 @@
             <ul>
                 <li  v-for="(author, index) in authors" :key="index">
                     <div class="item-top">
-                        <a class="left" :href="'/author/:'+author.id" target="_blank">
+                        <a class="left" :href="'/author/'+author.authorId" target="_blank">
                             {{author.name}}
                         </a>
                         <div class="right">
-                            {{author.document_count}}
+                            {{author.documentCount}}
                             <span>Papers</span>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                         <div class="el-progress el-progress--line el-progress--without-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                             <div class="el-progress-bar">
                                 <div class="el-progress-bar__outer" style="height: 6px;">
-                                    <div class="el-progress-bar__inner" :style="'width:'+author.document_count/authors[0].document_count*100+'%'">
+                                    <div class="el-progress-bar__inner" :style="'width:'+author.documentCount/authors[0].documentCount*100+'%'">
                                     </div>
                                 </div>
                             </div>
@@ -41,66 +41,10 @@
         name: 'TopList',
         data() {
             return {
-                authors: [
-                    {
-                        "name": "John Penix0",
-                        "affiliation": "Google, USA",
-                        "id": "123",
-                        "keywords": "",
-                        "document_count": "255"
-                    },
-                    {
-                        "name": "John Penix1",
-                        "affiliation": "Google, USA",
-                        "id": "123456789",
-                        "keywords": "",
-                        "document_count": "225"
-                    },
-                    {
-                        "name": "John Penix2",
-                        "affiliation": "Google, USA",
-                        "id": "123456789",
-                        "keywords": "",
-                        "document_count": "165"
-                    },
-                    {
-                        "name": "John Penix3",
-                        "affiliation": "Google, USA",
-                        "id": "123456789",
-                        "keywords": "",
-                        "document_count": "145"
-                    },
-                    {
-                        "name": "John Penix4",
-                        "affiliation": "Google, USA",
-                        "id": "123456789",
-                        "keywords": "",
-                        "document_count": "105"
-                    },
-                    {
-                        "name": "John Penix4",
-                        "affiliation": "Google, USA",
-                        "id": "123456789",
-                        "keywords": "",
-                        "document_count": "85"
-                    },
-                    {
-                        "name": "John Penix5",
-                        "affiliation": "Google, USA",
-                        "id": "123456789",
-                        "keywords": "",
-                        "document_count": "65"
-                    },
-                    {
-                        "name": "John Penix6",
-                        "affiliation": "Google, USA",
-                        "id": "123456789",
-                        "keywords": "",
-                        "document_count": "55"
-                    },
-                    ]
+
             };
         },
+        props:['authors'],
         methods: {
 
         },
