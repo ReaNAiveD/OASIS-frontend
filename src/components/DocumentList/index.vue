@@ -20,15 +20,15 @@
                                   :authors="document.authors" :docu-abstract="document.docuAbstract" :publication-year="document.publicationYear" :keywords="document.keywords.split(';')" :reference-count="document.referenceCount"/>
             </div>
 
-            <div v-else>很抱歉没有搜索到相关的论文！</div>
+<!--            <div v-else>很抱歉没有搜索到相关的论文！</div>-->
 
         </div>
     </div>
 </template>
 
 <script>
-  import DocumentListItem from '@/components/DocumentList/DocumentListItem'
-  // todo：router-view
+    import DocumentListItem from '@/components/DocumentList/DocumentListItem'
+    // todo：router-view
   export default {
     name: 'DocumentList',
     components: { DocumentListItem },
