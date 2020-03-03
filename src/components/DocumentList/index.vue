@@ -22,11 +22,6 @@
                                   :publication-year="document.publicationYear" :keywords="document.keywords.split(';')"
                                   :reference-count="document.referenceCount"/>
             </div>
-
-            <el-card v-else>
-                很抱歉没有搜索到相关的论文！
-            </el-card>
-
         </div>
     </div>
 </template>
