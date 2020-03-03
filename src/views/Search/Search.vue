@@ -20,7 +20,7 @@
 					</el-pagination>
 				</div>
 			</el-main>
-			<el-aside style="width: 260px">
+			<el-aside style="width: 290px">
 				<Recommendation></Recommendation>
 			</el-aside>
 		</el-container>
@@ -128,10 +128,6 @@
 				console.log(`当前页: ${val}`);
 			},
 			backTop() {
-				// document.body.scrollTop = 0
-				// document.documentElement.scrollTop = 0
-				// document.body.scrollTop = 0
-				// document.documentElement.scrollTop = 0
 				let timer = setInterval(function () {
 					let osTop = document.documentElement.scrollTop || document.body.scrollTop
 					let speed = Math.floor(-osTop / 5)
