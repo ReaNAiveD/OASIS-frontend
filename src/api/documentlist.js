@@ -18,4 +18,14 @@ export function getDocumentDetail(id) {
     })
 }
 
+export function getMaxDownload(num){
+    return request({
+        url:'/top/document/max_download',
+        method:'get',
+        params:{
+            num:num
+        }
+    })
+}
+
 

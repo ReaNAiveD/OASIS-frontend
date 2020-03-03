@@ -1,8 +1,9 @@
-import {detail} from './author'
-import {fetchList,getDocumentDetail} from './documentlist'
+import { detail } from './author'
+import { fetchList, getDocumentDetail, getMaxDownload } from './documentlist'
 
 export default{
   detail,
   fetchList,
-  getDocumentDetail
+  getDocumentDetail,
+  getMaxDownload
 }

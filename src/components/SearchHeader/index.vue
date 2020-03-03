@@ -73,28 +73,38 @@
 				// console.log(this.combined)
 				// console.log(this.author)
 				this.$emit('clickSearch', this.combined, this.title, this.author, this.affiliation)
+			},
+			parsePath(){
+				this.combined = this.$route.query.combined
+				this.title = this.$route.query.title
+				this.author = this.$route.query.author
+				this.affiliation = this.$route.query.affiliation
+				if (this.combined !== '') {
+					this.searchType = 'combined'
+					this.searchKeyword = this.combined
+				} else if (this.author !== '') {
+					this.searchType = 'author'
+					this.searchKeyword = this.author
+				} else if (this.title !== '') {
+					this.searchType = 'title'
+					this.searchKeyword = this.title
+				} else if (this.affiliation !== '') {
+					this.searchType = 'affiliation'
+					this.searchKeyword = this.affiliation
+				}
+			}
+		},
+		watch:{
+			$route(){
+				console.log('router change')
+				this.parsePath()
+				this.clickSearch()
 			}
 		},
 		// 子组件创建后将用户输入的搜索关键字绑定到界面上
 		created() {
 			console.log('SearchHeader created')
-			this.combined = this.$route.query.combined
-			this.title = this.$route.query.title
-			this.author = this.$route.query.author
-			this.affiliation = this.$route.query.affiliation
-			if (this.combined !== '') {
-				this.searchType = 'combined'
-				this.searchKeyword = this.combined
-			} else if (this.author !== '') {
-				this.searchType = 'author'
-				this.searchKeyword = this.author
-			} else if (this.title !== '') {
-				this.searchType = 'title'
-				this.searchKeyword = this.title
-			} else if (this.affiliation !== '') {
-				this.searchType = 'affiliation'
-				this.searchKeyword = this.affiliation
-			}
+			this.parsePath()
 			this.clickSearch()
 		}
 	}
