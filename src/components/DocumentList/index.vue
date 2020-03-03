@@ -16,11 +16,16 @@
 
         <div class="list-container">
             <div v-if="documents.length!==0">
-                <DocumentListItem v-for="document in documents" :key="document.id" :title="document.title" :id="document.id"
-                                  :authors="document.authors" :docu-abstract="document.docuAbstract" :publication-year="document.publicationYear" :keywords="document.keywords.split(';')" :reference-count="document.referenceCount"/>
+                <DocumentListItem v-for="document in documents" :key="document.id" :title="document.title"
+                                  :id="document.id"
+                                  :authors="document.authors" :docu-abstract="document.docuAbstract"
+                                  :publication-year="document.publicationYear" :keywords="document.keywords.split(';')"
+                                  :reference-count="document.referenceCount"/>
             </div>
 
-<!--            <div v-else>很抱歉没有搜索到相关的论文！</div>-->
+            <el-card v-else>
+                很抱歉没有搜索到相关的论文！
+            </el-card>
 
         </div>
     </div>
@@ -32,14 +37,14 @@
   export default {
     name: 'DocumentList',
     components: { DocumentListItem },
-    props:{
-      documents:{
-        type:Array,
-        default: ()=>[]
+    props: {
+      documents: {
+        type: Array,
+        default: () => []
       },
       documentCount: {
-        type:Number,
-        default:0
+        type: Number,
+        default: 0
       }
     },
     data () {
@@ -67,19 +72,19 @@
         ],
       }
     },
-    watch:{
-      $route:{
+    watch: {
+      $route: {
         handler: function (val) {
           // 监听路由变化
           console.log(val.query.year)
         }
       },
-      orderby(){
-        this.$emit('clickSortBy',this.orderby)
+      orderby () {
+        this.$emit('clickSortBy', this.orderby)
       }
     },
-    created(){
-      this.orderby=localStorage.getItem('orderby')||'default'
+    created () {
+      this.orderby = localStorage.getItem('orderby') || 'default'
     }
   }
 </script>
@@ -90,6 +95,7 @@
         line-height: 35px;
         height: 35px;
     }
+
     .left {
         float: left;
     }
@@ -98,10 +104,12 @@
         float: right;
         margin-right: 10px;
     }
+
     .right {
         float: right;
         width: 150px;
     }
+
     .document-list-container > div:first-child {
         color: darkgray;
         font-size: 15px;
