@@ -27,8 +27,8 @@
 </template>
 
 <script>
-    import DocumentListItem from '@/components/DocumentList/DocumentListItem'
-    // todo：router-view
+  import DocumentListItem from '@/components/DocumentList/DocumentListItem'
+  // todo：router-view
   export default {
     name: 'DocumentList',
     components: { DocumentListItem },
@@ -78,6 +78,9 @@
         this.$emit('clickSortBy',this.orderby)
       }
     },
+    created(){
+      this.orderby=localStorage.getItem('orderby')||'default'
+    }
   }
 </script>
 

@@ -6,8 +6,19 @@
 				<FilterBy v-on:clickFilter="clickFilter"></FilterBy>
 			</el-aside>
 			<el-main>
-				<Loading v-if="isLoading"></Loading>
-				<DocumentList :documents="documents" :document-count="searchCount" v-on:clickSortBy="clickSortBy"></DocumentList>
+				<Loading v-if="isLoading" style="position: fixed"></Loading>
+				<DocumentList :documents="documents" :document-count="totalElements" v-on:clickSortBy="clickSortBy"></DocumentList>
+				<div class="block" v-if="!isLoading">
+					<span class="demonstration"></span>
+					<el-pagination
+							@size-change="handleSizeChange"
+							@current-change="handleCurrentChange"
+							:current-page.sync="params.page+1"
+							:page-size="params.pageSize"
+							layout="prev, pager, next, jumper"
+							:total="totalElements">
+					</el-pagination>
+				</div>
 			</el-main>
 			<el-aside style="width: 260px">
 				<Recommendation></Recommendation>
@@ -40,42 +51,49 @@
 				params: {
 					'combined': '',
 					'title': '',
-					'author': 'Yuexing Wang',
+					'author': '',
 					'abstract': '',
 					'affiliation': '',
 					'publicationTitle': '',
-					'yearFrom': '',
-					'yearTo': '',
+					'yearFrom': 1970,
+					'yearTo': 2020,
 					'publisher': '',
 					'conference': '',
 					'orderby': 'default',
-					'pageSize': '',
-					'page': ''
+					'pageSize': 5,
+					'page': 0
 				},
-				searchCount: 0,
+				// pageable:{},
+				totalPages:0,
+				totalElements:0,
 				documents: [],
 				isLoading: true
 			}
 		},
+		mounted(){
+			window.addEventListener('beforeunload',()=>this.beforeunloadFn())
+		},
 		created() {
-			// 从$route.params中提取home页面传入的参数
-			this.params.combined = this.$route.params.combined
-			this.params.title = this.$route.params.title
-			this.params.author = this.$route.params.author
-			this.params.affiliation = this.$route.params.affiliation
-			this.fetchList()
-			// this.$api.getDocumentDetail(4322).then(res=>{
-			//   console.log(res)
-			// })
+			this.params.page=parseInt(localStorage.getItem('page'))||0
 		},
 		methods: {
+			beforeunloadFn(){
+				localStorage.setItem('yearFrom', this.params.yearFrom)
+				localStorage.setItem('yearTo', this.params.yearTo)
+				localStorage.setItem('orderby',this.params.orderby)
+				localStorage.setItem('page',this.params.page)
+			},
 			fetchList() {
 				this.isLoading = true
+
+				console.log(this.params)
 				this.$api.fetchList(this.params).then(res => {
 					this.documents = res.data.content
-					this.searchCount = this.documents.length
+					this.totalPages=res.data.totalPages
+					this.totalElements=res.data.totalElements
 					this.isLoading = false
-					console.log("documentList: ", this.documents)
+					console.log(res.data)
+
 				}, err => {
 					console.log(err)
 				})
@@ -98,12 +116,33 @@
 
 				console.log(this.params.yearFrom)
 				console.log(this.params.yearTo)
-
 				this.fetchList()
+			},
+			handleSizeChange(val) {
+				console.log(`每页 ${val} 条`);
+			},
+			handleCurrentChange(val) {
+				this.params.page=val-1
+				this.fetchList()
+				this.backTop()
+				console.log(`当前页: ${val}`);
+			},
+			backTop() {
+				// document.body.scrollTop = 0
+				// document.documentElement.scrollTop = 0
+				// document.body.scrollTop = 0
+				// document.documentElement.scrollTop = 0
+				let timer = setInterval(function () {
+					let osTop = document.documentElement.scrollTop || document.body.scrollTop
+					let speed = Math.floor(-osTop / 5)
+					document.documentElement.scrollTop = document.body.scrollTop = osTop + speed
+					this.isTop = true
+					if (osTop === 0) {
+						clearInterval(timer)
+					}
+				},30)
 			}
-
 		}
-
 	}
 </script>
 

@@ -134,6 +134,11 @@
           this.$emit('clickFilter',this.yearFrom,this.yearTo)
         }
       }
+    },
+    created(){
+      this.yearFrom = localStorage.getItem('yearFrom')||1970
+      this.yearTo=localStorage.getItem('yearTo')||2020
+      console.log('FilterBy Created')
     }
   }
 </script>

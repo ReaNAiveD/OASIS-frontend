@@ -77,6 +77,7 @@
 		},
 		// 子组件创建后将用户输入的搜索关键字绑定到界面上
 		created() {
+			console.log('SearchHeader created')
 			this.combined = this.$route.query.combined
 			this.title = this.$route.query.title
 			this.author = this.$route.query.author
@@ -94,6 +95,7 @@
 				this.searchType = 'affiliation'
 				this.searchKeyword = this.affiliation
 			}
+			this.clickSearch()
 		}
 	}
 </script>
