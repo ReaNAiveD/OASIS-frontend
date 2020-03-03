@@ -43,7 +43,9 @@
         computed: {
             authorKeywords: function () {
                 if (this.info.authorKeywords === "") return [];
-                return this.info.authorKeywords.split(";");
+                return this.info.authorKeywords.split(";").filter(function (keyword) {
+                    return keyword !== '';
+                });
             }
         }
     }
@@ -89,6 +91,6 @@
 
     .author-keyword{
         float: left;
-        margin: 0 4px 16px;
+        margin: 0 4px 8px;
     }
 </style>
