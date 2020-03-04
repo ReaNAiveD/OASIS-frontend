@@ -85,5 +85,4 @@
         top: calc(50% - 1.25em);
         left: calc(50% - 1.25em);
     }
-
 </style>
