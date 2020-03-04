@@ -5,6 +5,7 @@
         </el-col>
         <el-col :md="8">
             <ReferenceList :refs="documentInfo.ref"/>
+            <el-pagination small layout="prev, pager, next" :total="documentInfo.ref.length" :page-size="pageSize" @current-change="pageChange"></el-pagination>
         </el-col>
     </el-row>
 </template>
@@ -49,7 +50,14 @@
                             "document_id": "123456789"
                         }
                     ]
-                }
+                },
+                pageSize: 20,
+                currentPage: 1
+            }
+        },
+        computed: {
+            displayDocuments: function () {
+                return this.authorDetail.documents.slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1);
             }
         },
         created: function () {
@@ -59,6 +67,12 @@
             }).catch(error =>{
                 console.log(error)
             })
+        },
+        methods: {
+            pageChange: function (currentPage) {
+                this.currentPage = currentPage;
+                scrollTo(0, 0);
+            }
         }
     }
 </script>
