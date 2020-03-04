@@ -3,8 +3,7 @@
         <div>The Most Popular Papers (Top 3)</div>
         <div class="list-container">
             <div  v-for="document in documents" :key="document.id" >
-                <div class="triangle-topleft-blue"></div>
-                <div class="triangle-topleft-white"></div>
+                <div class="triangle-top-left"></div>
                 <DocumentListItem :title="document.title"
                                   :id="document.id"
                                   :authors="document.authors" :docu-abstract="document.docuAbstract"
@@ -47,23 +46,12 @@
         font-size: 15px;
     }
 
-    .triangle-topleft-blue {
-        width: 0;
-        height: 0;
-        border-top: 35px solid #3588f5;
-        border-right: 35px solid transparent;
-        /*border-top: 25px solid white;*/
-        /*border-right: 25px solid white;*/
-        position: absolute;
-    }
-
-    .triangle-topleft-white {
-        width: 0;
-        height: 0;
-        border-top: 20px solid white;
-        border-right: 20px solid transparent;
-        /*border-top: 25px solid white;*/
-        /*border-right: 25px solid white;*/
+    .triangle-top-left{
+        border-bottom: 9px solid #3588f5;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        width: 30px;
+        transform: rotate(315deg) translateX(-14px);
         position: absolute;
     }
 </style>
