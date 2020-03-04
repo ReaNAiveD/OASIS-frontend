@@ -9,7 +9,7 @@
                 <div v-if="document.authors.length >= 1" class="doc-authors">
                     <span v-for="(author, index) in document.authors" :key="index">
                         <span v-if="index!==0">, </span>
-                        <el-link :underline="false" @click="$router.push('/author/' + author.id)">
+                        <el-link :underline="false" @click="authorRedirect(author.id)">
                             {{author.name}}
                         </el-link>
                     </span>
@@ -110,6 +110,11 @@
             }
         },
         computed: {
+        },
+        methods: {
+            authorRedirect: function (id) {
+                window.open(this.$router.resolve('/author/' + id).href, '_blank');
+            }
         }
     }
 </script>
