@@ -8,12 +8,12 @@
                     </div>
 
                     <div class="search-body">
-                        <el-input placeholder="请输入作者，摘要，或论文标题" v-model="searchInput" class="input-with-select" @keyup.enter.native="search">
+                        <el-input placeholder="请输入作者，作者单位，或论文标题" v-model="searchInput" class="input-with-select" @keyup.enter.native="search">
                             <el-select v-model="select" slot="prepend" placeholder="混合搜索" style="width: 110px" >
                                 <el-option label="混合搜索" value="0"></el-option>
                                 <el-option label="标题" value="1"></el-option>
                                 <el-option label="作者" value="2"></el-option>
-                                <el-option label="摘要" value="3"></el-option>
+                                <el-option label="作者单位" value="3"></el-option>
 <!--                                <el-option label="作者单位" value="4"></el-option>-->
                             </el-select>
                             <el-button slot="append" type="primary" icon="el-icon-search" @click="search"></el-button>
