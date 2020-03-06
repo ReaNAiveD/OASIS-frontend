@@ -1,6 +1,7 @@
 <template>
     <div class="document-list-head-search">
-        <img src="@/assets/logo.png" width="40" alt="">
+<!--        <router-link tag="img" src="@/assets/logo.png" width="40" alt="" @click="back" to="home"></router-link>-->
+        <img src="@/assets/logo.png" width="40" alt="" @click="back">
         <span>CSEIII</span>
         <el-select class="document-list-search" v-model="searchType">
             <el-option v-for="type in searchTypes" :key="type.value" :value="type.value" :label="type.label"/>
@@ -93,13 +94,18 @@
           this.searchType = 'affiliation'
           this.searchKeyword = this.affiliation
         }
+      },
+      back(){
+        this.$router.push({ path: '/'})
       }
     },
     watch: {
-      $route () {
+      $route (to) {
         console.log('router change')
-        this.parsePath()
-        this.clickSearch()
+        if(to.path!=='/home'){
+          this.parsePath()
+          this.clickSearch()
+        }
       }
     },
     // 子组件创建后将用户输入的搜索关键字绑定到界面上
