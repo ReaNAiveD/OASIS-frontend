@@ -13,7 +13,7 @@
                                 <el-option label="混合搜索" value="0"></el-option>
                                 <el-option label="标题" value="1"></el-option>
                                 <el-option label="作者" value="2"></el-option>
-                                <el-option label="摘要" value="3"></el-option>
+                                <el-option label="作者机构" value="3"></el-option>
 <!--                                <el-option label="作者单位" value="4"></el-option>-->
                             </el-select>
                             <el-button slot="append" type="primary" icon="el-icon-search" @click="search"></el-button>
