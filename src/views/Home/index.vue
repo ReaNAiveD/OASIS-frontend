@@ -42,8 +42,8 @@
 
   import Header from '@/components/Header'
   import TopList from '@/components/TopList'
-  import {getAuthorTOPList, getDocumentDownloadTopList} from '@/api/home'
-  import TopListCommon from "@/components/TopList/common";
+  import { getAuthorTOPList, getDocumentDownloadTopList } from '@/api/home'
+  import TopListCommon from '@/components/TopList/common'
 
   export default {
         name: 'home',
@@ -91,7 +91,12 @@
         methods:{
             search(){
                 console.log("search");
-                if(this.select==='0'){
+                this.combined = ''
+                this.title = ''
+                this.author = ''
+                this.affiliation = ''
+
+              if(this.select==='0'){
                     this.combined=this.searchInput;
                 }else if(this.select==='1'){
                     this.title=this.searchInput;
