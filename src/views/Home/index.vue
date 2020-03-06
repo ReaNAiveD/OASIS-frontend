@@ -8,7 +8,7 @@
                     </div>
 
                     <div class="search-body">
-                        <el-input placeholder="请输入作者，出版社，或论文标题" v-model="searchInput" class="input-with-select" @keyup.enter.native="search">
+                        <el-input placeholder="请输入作者，摘要，或论文标题" v-model="searchInput" class="input-with-select" @keyup.enter.native="search">
                             <el-select v-model="select" slot="prepend" placeholder="混合搜索" style="width: 110px" >
                                 <el-option label="混合搜索" value="0"></el-option>
                                 <el-option label="标题" value="1"></el-option>
@@ -23,7 +23,9 @@
         </div>
         <div class="home-top-list">
             <div class="top-list">
-                <TopList v-bind:authors="topAuthors" ></TopList>
+<!--                <TopList v-bind:authors="topAuthors" ></TopList>-->
+                <TopListCommon :title="'Top Authors'" :measure="'papers'"
+                               :data="topAuthorsData"></TopListCommon>
                 <TopListCommon :title="'Top Download Documents'" :measure="'downloads'" :labels="['标题', '下载量', '操作']"
                                :data="topDownloadDocumentsData"></TopListCommon>
                 <TopList  ></TopList>
@@ -70,6 +72,15 @@
                         name: doc.title,
                         count: doc.totalDownload,
                         pushPath: '/document/' + doc.id
+                    }
+                })
+            },
+            topAuthorsData:function () {
+                return this.topAuthors.map(function (author) {
+                    return{
+                        name:author.name,
+                        count:author.documentCount,
+                        pushPath: '/author/'+author.authorId
                     }
                 })
             }
