@@ -29,7 +29,7 @@
             label: '作者名称'
           }, {
             value: 'affiliation',
-            label: '出版社'
+            label: '机构'
           }, {
             value: 'title',
             label: '论文标题'
@@ -93,6 +93,9 @@
         } else if (this.affiliation !== '') {
           this.searchType = 'affiliation'
           this.searchKeyword = this.affiliation
+        }else {
+          // 全为空的情况
+          this.searchKeyword=''
         }
       },
       back(){
