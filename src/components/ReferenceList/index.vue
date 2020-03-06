@@ -1,6 +1,5 @@
 <template>
     <div class="list-container">
-        <div class="detail-label">Reference</div>
         <reference-list-item class="item" v-for="(ref, index) in refs" :key="index" :title="ref.title || ''" :text="ref.text || ''"
                              :google-link="ref.googleLink || ''" :document-id="ref.documentId || -1"></reference-list-item>
     </div>
@@ -30,6 +29,7 @@
     .list-container .detail-label{
         font-size: 18px;
         text-align: left;
+        margin-bottom: 16px;
     }
 
     .list-container .item{
