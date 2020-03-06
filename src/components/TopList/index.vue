@@ -71,8 +71,9 @@
         props:['authors'],
         methods: {
             authorDetail(index) {
-                console.log(index);
-                this.$router.push({path: '/author/'+this.authors[index].authorId, query: {}});
+                // console.log(index);
+                // this.$router.push({path: '/author/'+this.authors[index].authorId, query: {}});
+                window.open(this.$router.resolve('/author/'+this.authors[index].authorId).href, '_blank');
 
             }
         },

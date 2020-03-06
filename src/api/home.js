@@ -9,3 +9,13 @@ export function getAuthorTOPList(num) {
         }
     })
 }
+
+export function getDocumentDownloadTopList(num) {
+    return request({
+        url: '/top/document/max_download',
+        method: 'get',
+        params: {
+            num: num
+        }
+    })
+}

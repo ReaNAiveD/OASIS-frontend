@@ -4,7 +4,9 @@
             <DocumentInfo :document="documentInfo"/>
         </el-col>
         <el-col :md="8">
-            <ReferenceList :refs="documentInfo.ref"/>
+            <div class="detail-label">Reference({{correctRef.length}})</div>
+            <ReferenceList :refs="displayRef"/>
+            <el-pagination small layout="prev, pager, next" :total="correctRef.length" :page-size="pageSize" @current-change="pageChange"></el-pagination>
         </el-col>
     </el-row>
 </template>
@@ -49,7 +51,17 @@
                             "document_id": "123456789"
                         }
                     ]
-                }
+                },
+                pageSize: 5,
+                currentPage: 1
+            }
+        },
+        computed: {
+            correctRef: function(){
+                return this.documentInfo.ref.filter((ref) => { return ref.title!=null && ref.title.substring(0, 11)!=='Xamarin Bug' });
+            },
+            displayRef: function () {
+                return this.correctRef.slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage));
             }
         },
         created: function () {
@@ -59,6 +71,12 @@
             }).catch(error =>{
                 console.log(error)
             })
+        },
+        methods: {
+            pageChange: function (currentPage) {
+                this.currentPage = currentPage;
+                scrollTo(0, 0);
+            }
         }
     }
 </script>
@@ -66,5 +84,10 @@
 <style scoped>
     .detail-container {
         margin: 12px;
+    }
+    .detail-label {
+        margin: 8px 0 16px 8px;
+        font-size: 18px;
+        text-align: left;
     }
 </style>

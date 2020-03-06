@@ -24,7 +24,8 @@
         <div class="home-top-list">
             <div class="top-list">
                 <TopList v-bind:authors="topAuthors" ></TopList>
-                <TopList  ></TopList>
+                <TopListCommon :title="'Top Download Documents'" :measure="'downloads'" :labels="['标题', '下载量', '操作']"
+                               :data="topDownloadDocumentsData"></TopListCommon>
                 <TopList  ></TopList>
             </div>
         </div>
@@ -39,7 +40,8 @@
 
   import Header from '@/components/Header'
   import TopList from '@/components/TopList'
-  import { getAuthorTOPList } from '@/api/home'
+  import {getAuthorTOPList, getDocumentDownloadTopList} from '@/api/home'
+  import TopListCommon from "@/components/TopList/common";
 
   export default {
         name: 'home',
@@ -57,11 +59,22 @@
                 author:'',
                 affiliation:'',
                 select: '0',
-                topAuthors:[]
+                topAuthors:[],
+                topDownloadDocuments:[]
+            }
+        },
+        computed: {
+            topDownloadDocumentsData: function () {
+                return this.topDownloadDocuments.map(function (doc) {
+                    return {
+                        name: doc.title,
+                        count: doc.totalDownload,
+                        pushPath: '/document/' + doc.id
+                    }
+                })
             }
         },
         created(){
-
             this.getTopList();
         },
         methods:{
@@ -82,10 +95,14 @@
                 getAuthorTOPList(30).then(res=>{
                     this.topAuthors=res.data;
                     //console.log(this.topAuthors);
+                });
+                getDocumentDownloadTopList(30).then(res=>{
+                    this.topDownloadDocuments=res.data;
                 })
             }
         },
         components: {
+            TopListCommon,
             Header,
             TopList
         }
