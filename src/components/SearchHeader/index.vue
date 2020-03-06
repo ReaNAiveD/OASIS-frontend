@@ -29,7 +29,7 @@
             label: '作者名称'
           }, {
             value: 'affiliation',
-            label: '机构'
+            label: '作者机构'
           }, {
             value: 'title',
             label: '论文标题'
