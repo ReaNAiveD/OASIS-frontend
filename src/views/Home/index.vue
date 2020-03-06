@@ -23,7 +23,9 @@
         </div>
         <div class="home-top-list">
             <div class="top-list">
-                <TopList v-bind:authors="topAuthors" ></TopList>
+<!--                <TopList v-bind:authors="topAuthors" ></TopList>-->
+                <TopListCommon :title="'Top Authors'" :measure="'papers'"
+                               :data="topAuthorsData"></TopListCommon>
                 <TopListCommon :title="'Top Download Documents'" :measure="'downloads'" :labels="['标题', '下载量', '操作']"
                                :data="topDownloadDocumentsData"></TopListCommon>
                 <TopList  ></TopList>
@@ -70,6 +72,15 @@
                         name: doc.title,
                         count: doc.totalDownload,
                         pushPath: '/document/' + doc.id
+                    }
+                })
+            },
+            topAuthorsData:function () {
+                return this.topAuthors.map(function (author) {
+                    return{
+                        name:author.name,
+                        count:author.documentCount,
+                        pushPath: '/author/'+author.authorId
                     }
                 })
             }
