@@ -75,11 +75,11 @@
         })).catch(() => {})
         this.$emit('clickSearch', this.combined, this.title, this.author, this.affiliation)
       },
-      parsePath (route) {
-        this.combined = route.query.combined
-        this.title = route.query.title
-        this.author = route.query.author
-        this.affiliation = route.query.affiliation
+      parsePath () {
+        this.combined = this.$route.query.combined
+        this.title = this.$route.query.title
+        this.author = this.$route.query.author
+        this.affiliation = this.$route.query.affiliation
         console.log(this.combined)
         if (this.combined !== '') {
           this.searchType = 'combined'
@@ -109,16 +109,16 @@
         console.log(to)
         console.log(from)
         if(to.path!=='/home'||from.path==='/home'){
-            this.parsePath(to)
+            this.parsePath()
             this.clickSearch()
         }
       }
     },
     // 子组件创建后将用户输入的搜索关键字绑定到界面上
     created () {
-      // console.log('SearchHeader created')
-      // this.parsePath()
-      // this.clickSearch()
+      console.log('SearchHeader created')
+      this.parsePath()
+      this.clickSearch()
     }
   }
 </script>
