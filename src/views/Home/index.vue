@@ -13,8 +13,8 @@
                                 <el-option label="混合搜索" value="0"></el-option>
                                 <el-option label="标题" value="1"></el-option>
                                 <el-option label="作者" value="2"></el-option>
-                                <el-option label="作者单位" value="3"></el-option>
-<!--                                <el-option label="作者单位" value="4"></el-option>-->
+                                <el-option label="作者机构" value="3"></el-option>
+
                             </el-select>
                             <el-button slot="append" type="primary" icon="el-icon-search" @click="search"></el-button>
                         </el-input>
@@ -42,8 +42,8 @@
 
   import Header from '@/components/Header'
   import TopList from '@/components/TopList'
-  import {getAuthorTOPList, getDocumentDownloadTopList} from '@/api/home'
-  import TopListCommon from "@/components/TopList/common";
+  import { getAuthorTOPList, getDocumentDownloadTopList } from '@/api/home'
+  import TopListCommon from '@/components/TopList/common'
 
   export default {
         name: 'home',
@@ -91,7 +91,12 @@
         methods:{
             search(){
                 console.log("search");
-                if(this.select==='0'){
+                this.combined = ''
+                this.title = ''
+                this.author = ''
+                this.affiliation = ''
+
+              if(this.select==='0'){
                     this.combined=this.searchInput;
                 }else if(this.select==='1'){
                     this.title=this.searchInput;

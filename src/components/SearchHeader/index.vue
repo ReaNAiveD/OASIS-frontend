@@ -1,6 +1,6 @@
 <template>
     <div class="document-list-head-search">
-<!--        <router-link tag="img" src="@/assets/logo.png" width="40" alt="" @click="back" to="home"></router-link>-->
+        <!--        <router-link tag="img" src="@/assets/logo.png" width="40" alt="" @click="back" to="home"></router-link>-->
         <img src="@/assets/logo.png" width="40" alt="" @click="back">
         <span>CSEIII</span>
         <el-select class="document-list-search" v-model="searchType">
@@ -29,7 +29,7 @@
             label: '作者名称'
           }, {
             value: 'affiliation',
-            label: '出版社'
+            label: '作者机构'
           }, {
             value: 'title',
             label: '论文标题'
@@ -43,6 +43,7 @@
     methods: {
       // 将搜索框中的内容传递给父组件
       clickSearch () {
+        console.log("======",this.$route)
         this.combined = ''
         this.title = ''
         this.author = ''
@@ -72,8 +73,6 @@
             combined: this.combined
           }
         })).catch(() => {})
-        // console.log(this.combined)
-        // console.log(this.author)
         this.$emit('clickSearch', this.combined, this.title, this.author, this.affiliation)
       },
       parsePath () {
@@ -81,6 +80,7 @@
         this.title = this.$route.query.title
         this.author = this.$route.query.author
         this.affiliation = this.$route.query.affiliation
+        console.log(this.combined)
         if (this.combined !== '') {
           this.searchType = 'combined'
           this.searchKeyword = this.combined
@@ -93,18 +93,24 @@
         } else if (this.affiliation !== '') {
           this.searchType = 'affiliation'
           this.searchKeyword = this.affiliation
+        } else {
+          // 全为空的情况
+          this.searchType='combined'
+          this.searchKeyword=''
         }
       },
-      back(){
+      back () {
         this.$router.push({ path: '/'})
       }
     },
     watch: {
-      $route (to) {
+      $route (to,from) {
         console.log('router change')
-        if(to.path!=='/home'){
-          this.parsePath()
-          this.clickSearch()
+        console.log(to)
+        console.log(from)
+        if(to.path!=='/home'||from.path==='/home'){
+            this.parsePath()
+            this.clickSearch()
         }
       }
     },
