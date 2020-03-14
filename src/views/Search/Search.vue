@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import SearchHeader from '@/components/SearchHeader/index'
+  import SearchHeader from '@/components/SearchHeader/SearchHeader'
   import DocumentList from '@/components/DocumentList/index'
   import FilterBy from '@/components/FilterBy/index'
   import Recommendation from '@/components/Recommendation/index'
