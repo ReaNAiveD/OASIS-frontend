@@ -10,38 +10,31 @@
             <el-breadcrumb-item>Portrait</el-breadcrumb-item>
         </el-breadcrumb>
 
-<!--        个人信息简介-->
+        <!--        个人信息简介-->
         <AuthorInfoCard :author="authorDetail" style="padding-top: 100px;"></AuthorInfoCard>
 
         <!--        ECharts图像-->
         <div class="charts-container">
             <meetingGraph ></meetingGraph>
             <fieldGraph ></fieldGraph>
-
             <authorRelation ></authorRelation>
         </div>
         <!--        论文列表-->
-<!--        <div class="document-container">-->
-<!--            <DocumentList :documents="documents " :document-count="totalElements"></DocumentList>-->
-<!--        </div>-->
-
-        <el-col class="col-container"  :sm="24">
-            <DocumentList :documents="displayDocuments" :document-count="authorDetail.documentCount" @clickSortBy="resort"></DocumentList>
-<!--            <el-pagination small layout="prev, pager, next" :total="authorDetail.documentCount" :page-size="pageSize" @current-change="pageChange"></el-pagination>-->
-        </el-col>
+        <documentWithPaper :docs="authorDetail.documents" :docCount="authorDetail.documentCount"></documentWithPaper>
 
     </div>
 </template>
 
 <script>
 
-    import DocumentList from '@/components/DocumentList'
     import SearchHeader from '@/components/SearchHeader'
     import { detail as getAuthorDetail } from '@/api/author'
     import AuthorInfoCard from '@/components/authorPortrait/info'
     import authorRelation from '@/components/authorPortrait/authorRelationShip'
     import meetingGraph from '@/components/authorPortrait/meetingGraph'
     import fieldGraph from '@/components/authorPortrait/fieldGraph'
+    import documentWithPaper from '@/components/DocumentList/DocumentWithPaper'
+
     export default {
         name: 'index',
         components: {
@@ -49,17 +42,12 @@
 
             fieldGraph,
             meetingGraph,
-
-            DocumentList,
             AuthorInfoCard,
-            authorRelation
+            authorRelation,
+            documentWithPaper
         },
         data () {
             return {
-                fieldId: 0,
-                totalElements: 411,
-                pageSize: 20,
-                currentPage: 1,
                 authorDetail: {
                     "id":10448,
                     "name":"",
@@ -85,11 +73,8 @@
         },
         computed: {
 
-            displayDocuments: function () {
-                console.log(this.authorDetail.documents.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1));
-                return this.authorDetail.documents.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1);
-            }
         },
+
     }
 </script>
 <style scoped>
