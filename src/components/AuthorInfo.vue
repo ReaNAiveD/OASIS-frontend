@@ -1,6 +1,8 @@
 <template>
     <div>
-        <div class="author-name">{{info.name}}</div>
+        <div class="author-name"  >
+            <a :href="'/authorPortrait/'+info.id" target="_blank">{{info.name}}</a>
+        </div>
         <ul class="card-details">
             <li class="card-detail">
                 <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
