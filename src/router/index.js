@@ -8,7 +8,9 @@ import searchRouter from './Search';
 import authorRouter from './Author/index';
 import authorRelationship from './Author/relationShip'
 import fieldRouter from './Field'
+import affiliationRouter from './Affiliation'
 import authorPortrait from './Author/portrait'
+
 Vue.use(VueRouter);
 
 // 路由的数组
@@ -27,7 +29,8 @@ const routes = [
         name: "DocumentDetail",
         component: () =>import('@/views/DocumentDetail')
     },
-    fieldRouter
+    fieldRouter,
+    affiliationRouter
 
 ];
 
