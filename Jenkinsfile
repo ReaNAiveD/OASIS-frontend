@@ -27,10 +27,12 @@ pipeline {
                     sh 'ls -l -R'
                     sh 'pwd'
                     dockerImage = docker.build registry+":$BUILD_NUMBER"
+                    /*
                     docker.withRegistry( '', registryCredential ) {
                        dockerImage.push()
                        dockerImage.push('latest')
                     }
+                    */
                 }
             }
         }
