@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        registry = "justdevnoops/frontend-oasis"
+    }
     stages {
         stage("build") {
             agent {
@@ -15,13 +17,20 @@ pipeline {
         }
 
         stage("build image") {
-            options { timeout(time: 15, unit: 'MINUTES') }
+            options { timeout(time: 60, unit: 'MINUTES') }
+            environment{
+                registryCredential = 'dockerhub'
+            }
             steps {
                 script {
                     unstash 'distfiles'
                     sh 'ls -l -R'
                     sh 'pwd'
-                    dockerImage = docker.build "justdevnoops/frontend-oasis:$BUILD_NUMBER"
+                    dockerImage = docker.build registry+":$BUILD_NUMBER"
+                    docker.withRegistry( '', registryCredential ) {
+                       dockerImage.push()
+                       dockerImage.push('latest')
+                    }
                 }
             }
         }
