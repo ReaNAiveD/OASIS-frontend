@@ -11,7 +11,8 @@
                     <div class="author-name">{{author.name}}</div>
                     <div class="author-descrip">
                         <i class="el-icon-office-building"></i>
-                        {{author.affiliation}}
+                        <a :href="'/aff/'+affiliationID" target="_blank">{{author.affiliation}}</a>
+
                     </div>
                     <div class="author-field">
                         <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(keyword, index) in authorKeywords" :key="index">{{keyword}}</el-tag>
@@ -48,7 +49,7 @@
         name: "AuthorInfoCard",
         data(){
             return{
-
+                affiliationID:1,//需要一个可以根据作者id返回机构id的接口
             }
         },
         computed: {

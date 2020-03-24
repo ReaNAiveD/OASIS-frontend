@@ -1,71 +1,390 @@
 <template>
-    <ChartsTemplate :title="title" :option="option"></ChartsTemplate>
+    <div class="echartLayout">
+        <div id="sun" style="width:100%; height:100%; overflow: hidden "></div>
+    </div>
 </template>
 
 <script>
-    import ChartsTemplate from '@/components/Field/ChartsTemplate'
-
+    import echarts from 'echarts'
     export default {
         name: 'meetingGraph',
-        components:{
-            ChartsTemplate
+        data() {
+            return {}
         },
-        data(){
-            return {
-                title:'研究方向论文统计',
-                option : {
-                    legend: {},
-                    tooltip: {},
-                    dataset: {
-                        source: [
-                            ['product', '2015', '2016', '2017'],
-                            ['Matcha Latte', 43.3, 85.8, 93.7],
-                            ['Milk Tea', 83.1, 73.4, 55.1],
-                            ['Cheese Cocoa', 86.4, 65.2, 82.5],
-                            ['Walnut Brownie', 72.4, 53.9, 39.1]
-                        ]
+        mounted: function() {
+            this.$nextTick(function() {
+                this.getPie()
+            })
+        },
+        methods: {
+            getPie() {
+                // 绘制图表
+                var myChart = echarts.init(document.getElementById('sun'));
+                var colors = ['#FFAE57', '#FF7853', '#EA5151', '#CC3F57', '#9A2555'];
+                var bgColor = '#2E2733';
+
+                var itemStyle = {
+                    star5: {
+                        color: colors[0]
                     },
-                    xAxis: { type: 'category' },
-                    yAxis: {},
-                    // Declare several bar series, each will be mapped
-                    // to a column of dataset.source by default.
-                    series: [
-                        { type: 'bar' },
-                        { type: 'bar' },
-                        { type: 'bar' }
-                    ]
+                    star4: {
+                        color: colors[1]
+                    },
+                    star3: {
+                        color: colors[2]
+                    },
+                    star2: {
+                        color: colors[3]
+                    }
+                };
+
+                var data = [
+                    {
+                    name: '虚构',
+                    itemStyle: {
+                        color: colors[1]
+                    },
+                    children: [{
+                        name: '小说',
+                        children: [{
+                            name: '5☆',
+                            children: [{
+                                name: '疼'
+                            }, {
+                                name: '慈悲'
+                            }, {
+                                name: '楼下的房客'
+                            }]
+                        }, {
+                            name: '4☆',
+                            children: [{
+                                name: '虚无的十字架'
+                            }, {
+                                name: '无声告白'
+                            }, {
+                                name: '童年的终结'
+                            }]
+                        }, {
+                            name: '3☆',
+                            children: [{
+                                name: '疯癫老人日记'
+                            }]
+                        }]
+                    }, {
+                        name: '其他',
+                        children: [{
+                            name: '5☆',
+                            children: [{
+                                name: '纳博科夫短篇小说全集'
+                            }]
+                        }, {
+                            name: '4☆',
+                            children: [{
+                                name: '安魂曲'
+                            }, {
+                                name: '人生拼图版'
+                            }]
+                        }, {
+                            name: '3☆',
+                            children: [{
+                                name: '比起爱你，我更需要你'
+                            }]
+                        }]
+                    }]
+                }, {
+                    name: '非虚构',
+                    itemStyle: {
+                        color: colors[2]
+                    },
+                    children: [{
+                        name: '设计',
+                        children: [{
+                            name: '5☆',
+                            children: [{
+                                name: '无界面交互'
+                            }]
+                        }, {
+                            name: '4☆',
+                            children: [{
+                                name: '数字绘图的光照与渲染技术'
+                            }, {
+                                name: '日本建筑解剖书'
+                            }]
+                        }, {
+                            name: '3☆',
+                            children: [{
+                                name: '奇幻世界艺术\n&RPG地图绘制讲座'
+                            }]
+                        }]
+                    }, {
+                        name: '社科',
+                        children: [{
+                            name: '5☆',
+                            children: [{
+                                name: '痛点'
+                            }]
+                        }, {
+                            name: '4☆',
+                            children: [{
+                                name: '卓有成效的管理者'
+                            }, {
+                                name: '进化'
+                            }, {
+                                name: '后物欲时代的来临',
+                            }]
+                        }, {
+                            name: '3☆',
+                            children: [{
+                                name: '疯癫与文明'
+                            }]
+                        }]
+                    }, {
+                        name: '心理',
+                        children: [{
+                            name: '5☆',
+                            children: [{
+                                name: '我们时代的神经症人格'
+                            }]
+                        }, {
+                            name: '4☆',
+                            children: [{
+                                name: '皮格马利翁效应'
+                            }, {
+                                name: '受伤的人'
+                            }]
+                        }, {
+                            name: '3☆',
+                        }, {
+                            name: '2☆',
+                            children: [{
+                                name: '迷恋'
+                            }]
+                        }]
+                    }, {
+                        name: '居家',
+                        children: [{
+                            name: '4☆',
+                            children: [{
+                                name: '把房子住成家'
+                            }, {
+                                name: '只过必要生活'
+                            }, {
+                                name: '北欧简约风格'
+                            }]
+                        }]
+                    }, {
+                        name: '绘本',
+                        children: [{
+                            name: '5☆',
+                            children: [{
+                                name: '设计诗'
+                            }]
+                        }, {
+                            name: '4☆',
+                            children: [{
+                                name: '假如生活糊弄了你'
+                            }, {
+                                name: '博物学家的神秘动物图鉴'
+                            }]
+                        }, {
+                            name: '3☆',
+                            children: [{
+                                name: '方向'
+                            }]
+                        }]
+                    }, {
+                        name: '哲学',
+                        children: [{
+                            name: '4☆',
+                            children: [{
+                                name: '人生的智慧'
+                            }]
+                        }]
+                    }, {
+                        name: '技术',
+                        children: [{
+                            name: '5☆',
+                            children: [{
+                                name: '代码整洁之道'
+                            }]
+                        }, {
+                            name: '4☆',
+                            children: [{
+                                name: 'Three.js 开发指南'
+                            }]
+                        }]
+                    }]
+                }];
+
+                for (var j = 0; j < data.length; ++j) {
+                    var level1 = data[j].children;
+                    for (var i = 0; i < level1.length; ++i) {
+                        var block = level1[i].children;
+                        var bookScore = [];
+                        var bookScoreId;
+                        for (var star = 0; star < block.length; ++star) {
+                            var style = (function (name) {
+                                switch (name) {
+                                    case '5☆':
+                                        bookScoreId = 0;
+                                        return itemStyle.star5;
+                                    case '4☆':
+                                        bookScoreId = 1;
+                                        return itemStyle.star4;
+                                    case '3☆':
+                                        bookScoreId = 2;
+                                        return itemStyle.star3;
+                                    case '2☆':
+                                        bookScoreId = 3;
+                                        return itemStyle.star2;
+                                }
+                            })(block[star].name);
+
+                            block[star].label = {
+                                color: style.color,
+                                downplay: {
+                                    opacity: 0.5
+                                }
+                            };
+
+                            if (block[star].children) {
+                                style = {
+                                    opacity: 1,
+                                    color: style.color
+                                };
+                                block[star].children.forEach(function (book) {
+                                    book.value = 1;
+                                    book.itemStyle = style;
+
+                                    book.label = {
+                                        color: style.color
+                                    };
+
+                                    var value = 1;
+                                    if (bookScoreId === 0 || bookScoreId === 3) {
+                                        value = 5;
+                                    }
+
+                                    if (bookScore[bookScoreId]) {
+                                        bookScore[bookScoreId].value += value;
+                                    }
+                                    else {
+                                        bookScore[bookScoreId] = {
+                                            color: colors[bookScoreId],
+                                            value: value
+                                        };
+                                    }
+                                });
+                            }
+                        }
+
+                        level1[i].itemStyle = {
+                            color: data[j].itemStyle.color
+                        };
+                    }
                 }
+
+                var option = {
+                    title: {
+                        text: '研究方向发表论文统计',
+                        top: 'bottom',
+                        left: 'right',
+                        textStyle:{
+                            color:'#fff'
+                        }
+
+                    },
+                    backgroundColor: bgColor,
+                    color: colors,
+                    series: [{
+                        type: 'sunburst',
+                        radius: [0, '90%'],
+                        center: ['50%', '50%'],
+                        data: data,//设置每个扇形块的样式,优先级最高；
+                        sort: function (a, b) {
+                            if (a.depth === 1) {
+                                return b.getValue() - a.getValue();
+                            }
+                            else {
+                                return a.dataIndex - b.dataIndex;
+                            }
+                        },
+                        label: {
+                            rotate: 'radial',//径向旋转
+                            color: bgColor
+                        },
+                        itemStyle: {//整个旭日图的样式，优先级最低
+                            borderColor: bgColor,
+                            borderWidth: 2
+                        },
+                        levels: [//设置每一层的样式，优先级中等
+                            {},
+                            {
+                                r0: 0,//空心圆半径
+                                r: 40,//外半径
+                                label: {
+                                    rotate: 0
+                                }
+                            },
+                            {
+                                r0: 40,
+                                r: 105
+                             },
+                            {
+                                r0: 115,
+                                r: 140,
+                                itemStyle: {
+                                    shadowBlur: 2,
+                                    shadowColor: colors[2],
+                                    color: 'transparent'
+                                },
+                                label: {
+                                    rotate: 'tangential',
+                                    fontSize: 10,
+                                    color: colors[0]
+                                }
+                            },
+                            {
+                                r0: 140,
+                                r: 145,
+                                itemStyle: {
+                                    shadowBlur: 80,
+                                    shadowColor: colors[0]
+                                },
+                                label: {
+                                    position: 'outside',
+                                    textShadowBlur: 5,
+                                    textShadowColor: '#333',
+                                },
+                                downplay: {//downplay 表示除了 highlight 扇形块之外的被淡化的扇形块
+                                    label: {
+                                        opacity: 0.5//圆形透明度
+                                    }
+                                }
+                             }
+                        ]
+                    }]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option)
             }
-        },
+        }
+
     }
+
 </script>
 
 <style scoped>
-    .affiliate-active-graph-container {
-        text-align: center;
-        float: left;
-        /*width: 30%;*/
+    .echartLayout {
+        width: 300px;
         margin: 10px;
+        height: 300px;
+
+        text-align: center;
         border: 1px solid #EBEEF5;
         border-radius: 4px;
-        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-
-    }
-
-    .title {
-        width: 100%;
-        /*height: 30px;*/
-        float: left;
-        transform: translateY(10px);
-        /*border-bottom: 1px solid #EBEEF5;*/
-    }
-
-    .el-link{
-        margin-left: 5px;
-    }
-
-    .charts {
-        margin-left: 10px;
-        /*margin-right: 10px;*/
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+        background: white;
+        /*position: absolute;*/
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="echartLayout">
-        <div id="container" style="width:100%; height:100%; overflow: hidden "></div>
+        <div id="authorRelationContainer" style="width:100%; height:100%; overflow: hidden "></div>
     </div>
 </template>
 
@@ -25,14 +25,14 @@
         },
         methods: {
             initEchart() {
-                let dom = document.getElementById("container");
+                let dom = document.getElementById("authorRelationContainer");
                 this.myChart = echarts.init(dom);
                 this.chartData=this.dataEChart();
                 this.chartLink=this.linkEChart();
                 this.categories=this.categoryArray;
                 let option = {
                     title: {
-                        text: 'Author Relationship',
+                        text: '作者关系图谱',
                         subtext: 'Default layout',
                         top: 'bottom',
                         left: 'right'
