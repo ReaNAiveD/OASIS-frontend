@@ -1,25 +1,25 @@
 <template>
     <div class="summary-container">
         <el-row class="info-line">
-            <el-col span="12" class="info-text">
+            <el-col :span="12" class="info-text">
                 <i class="el-icon-document"></i>
                 文章
             </el-col>
-            <el-col span="12" class="summary-num">{{documentCount}}</el-col>
+            <el-col :span="12" class="summary-num">{{documentCount}}</el-col>
         </el-row>
         <el-row class="info-line">
-            <el-col span="12" class="info-text">
+            <el-col :span="12" class="info-text">
                 <i class="el-icon-user"></i>
                 作者
             </el-col>
-            <el-col span="12" class="summary-num">{{authorCount}}</el-col>
+            <el-col :span="12" class="summary-num">{{authorCount}}</el-col>
         </el-row>
         <el-row class="info-line">
-            <el-col span="12" class="info-text">
+            <el-col :span="12" class="info-text">
                 <i class="el-icon-link"></i>
                 引用
             </el-col>
-            <el-col span="12" class="summary-num">{{refCount}}</el-col>
+            <el-col :span="12" class="summary-num">{{refCount}}</el-col>
         </el-row>
     </div>
 </template>

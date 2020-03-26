@@ -5,13 +5,13 @@
             <span class="title-text">{{title}}</span>
         </div>
         <div class="charts">
-            <CommonBar :option="option"/>
+            <CommonBar ref="bar" :option="option"/>
         </div>
     </div>
 </template>
 
 <script>
-
+    import {getDocumentCountByAuthor} from "@/api/affiliation";
     import CommonBar from '@/components/CommonCharts/index'
     export default {
         name: "AuthorSummaryGraph",
@@ -23,13 +23,8 @@
                 title: '机构作者统计',
                 option: {
                     dataset: {
-                        source:[
-                            ['field', 'docCount'],
-                            ['a', 624],
-                            ['b', 154],
-                            ['c', 125],
-                            ['d', 26]
-                        ]
+                        dimension: ['name', 'docCount'],
+                        source:[]
                     },
                     legend:{
                         data:['docCount']
@@ -43,14 +38,27 @@
                     //         }
                     //     }
                     // },
-                    xAxis: {type: 'category'},
-                    yAxis: {},
+                    xAxis: {
+                        type: 'category',
+                        axisLabel: {
+                            interval:0,
+                            rotate:40,
+                            formatter: function (value) {
+                                return value.replace(/ /g, '\n');
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: '文章数',
+                        minInterval: 1
+                    },
                     visualMap: {
                         show: false,
                         type: 'continuous',
-                        min: 50,
-                        max: 1500,
-                        dimension: 1,
+                        min: 1,
+                        max: 15,
+                        dimension: 0,
                         inRange: {
                             color: ['#FF645E', '#80130F'],
                             // colorLightness: [0.2, 1]
@@ -60,13 +68,19 @@
                         {
                             type: 'bar',
                             encode: {
-                                x: 'field',
+                                x: 'name',
                                 y: 'docCount'
                             }
                         }
                     ]
                 }
             }
+        },
+        created: function () {
+            getDocumentCountByAuthor(this.$route.params.id).then(res=>{
+                this.option.dataset.source = res.data.data.slice(0, 6);
+                this.$refs.bar.updateCharts();
+            })
         }
     }
 </script>

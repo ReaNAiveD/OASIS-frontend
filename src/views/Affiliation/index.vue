@@ -10,12 +10,13 @@
             <el-row>
                 <el-col :sm="16" :xs="24">
                     <el-card class="top-line">
-                        <AffiliationIntroduction/>
+                        <AffiliationIntroduction :name="info.name" :introduction="info.introduction"
+                                                 :logo-url="info.logoLink" :site="info.homePageLink"/>
                     </el-card>
                 </el-col>
                 <el-col :sm="8" :xs="24">
                     <el-card class="top-line">
-                        <NumSummary/>
+                        <NumSummary :author-count="info.authorCount" :document-count="info.docCount" :ref-count="info.citationCount"/>
                     </el-card>
                 </el-col>
             </el-row>
@@ -47,6 +48,7 @@
     import FieldSummaryGraph from "@/views/Affiliation/components/FieldSummaryGraph";
     import AuthorSummaryGraph from "@/views/Affiliation/components/AuthorSummaryGraph";
     import AuthorActivationGraph from "@/views/Affiliation/components/AuthorActivationGraph";
+    import {basicInfo} from '@/api/affiliation'
     export default {
         name: "Affiliation",
         components: {
@@ -54,8 +56,21 @@
             AuthorSummaryGraph, FieldSummaryGraph, NumSummary, AffiliationIntroduction, SearchHeader},
         data: function () {
             return {
-
+                info: {
+                    name: "",
+                    homePageLink: null,
+                    logoLink: null,
+                    introduction: null,
+                    authorCount: 0,
+                    docCount: 0,
+                    citationCount: 0
+                }
             }
+        },
+        created: function () {
+            basicInfo(this.$route.params.id).then(res => {
+                if (res.data.result === 0) this.info = res.data.data;
+            })
         }
     }
 </script>

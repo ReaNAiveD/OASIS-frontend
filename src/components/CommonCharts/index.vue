@@ -32,6 +32,9 @@
             drawChart () {
                 this.charts = echarts.init(this.$refs.charts)
                 this.charts.setOption(this.option)
+            },
+            updateCharts(){
+                this.charts.setOption(this.option)
             }
         }
     }

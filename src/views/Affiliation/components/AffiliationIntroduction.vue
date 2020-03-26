@@ -1,23 +1,23 @@
 <template>
     <div class="intro-container">
         <el-row>
-            <el-col v-if="logoUrl!==''" :sm="6" :xs="24">
+            <el-col v-if="logoUrl!=null && logoUrl!==''" :sm="6" :xs="24">
                 <el-image class="logo" :src="logoUrl" fit="contain"></el-image>
             </el-col>
-            <el-col class="text-info" :sm="logoUrl===''? 24 : 18" :xs="24">
+            <el-col class="text-info" :sm="(logoUrl==null||logoUrl==='')? 24 : 18" :xs="24">
                 <div class="name">
                     {{name}}
                 </div>
                 <div class="detail">
                     <el-scrollbar style="height: calc(100% + 17px)">
                         <div>
-                        {{introduction}}
+                        {{introduction || ''}}
                         </div>
                     </el-scrollbar>
                 </div>
                 <div class="link">
                     <i class="el-icon-link"></i>
-                    <el-link :disabled="site===''" :href="site">Affiliation Site</el-link>
+                    <el-link :disabled="site==null||site===''" :href="site">Affiliation Site</el-link>
                 </div>
             </el-col>
         </el-row>

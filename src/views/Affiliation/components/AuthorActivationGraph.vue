@@ -5,12 +5,13 @@
             <span class="title-text">{{title}}</span>
         </div>
         <div class="charts">
-            <CommonCharts :option="option"/>
+            <CommonCharts ref="bar" :option="option"/>
         </div>
     </div>
 </template>
 
 <script>
+    import {getAuthorActivation} from "@/api/affiliation";
     import CommonCharts from "@/components/CommonCharts/index";
     export default {
         name: "AuthorActivationGraph",
@@ -20,11 +21,6 @@
                 title: '作者活跃度统计',
                 option: {
                     dataset: [
-                        ['name', 'activation', 'docCount'],
-                        ['a', 43, 13],
-                        ['b', 3, 1],
-                        ['c', 83, 15],
-                        ['d', 68, 12]
                     ],
                     tooltip:{
                         padding: 8,
@@ -34,7 +30,7 @@
                             const value = obj.data;
                             return '<div style="border-bottom: 1px solid rgba(255, 255, 255, 0.3); font-size: 18px;padding-bottom: 4px; margin: 4px">' +
                                 value.name + '</div>' +
-                                '活跃度：' + value.value + '<br>' +
+                                '活跃度：' + value.activation.toFixed(2) + '<br>' +
                                 '发表论文：' + value.docCount + '<br>'
                         }
                     },
@@ -64,42 +60,40 @@
                             name: '作者',
                             type: 'graph',
                             layout: 'force',
+                            force:{
+                                initLayout: 'circular',
+                                repulsion: 20
+                            },
                             itemStyle: {
                                 borderColor: '#fff',
                                 borderWidth: 1,
                                 shadowBlur: 5,
                                 shadowColor: 'rgba(0, 0, 0, 0.3)'
                             },
-                            data: [{
-                                name: 'a',
-                                value: 43,
-                                docCount: 10
-                            },{
-                                name: 'b',
-                                value: 3,
-                                docCount: 2
-                            },{
-                                name: 'c',
-                                value: 83,
-                                docCount: 14
-                            },{
-                                name: 'd',
-                                value: 68,
-                                docCount: 19
-                            }
-                            ]
+                            data: []
                         }
                     ]
                 }
             }
         },
         created:function(){
-            for (let i = 0; i < this.option.series[0].data.length; i++){
-                this.option.series[0].data[i].itemStyle = {
-                    color : this.getRandomColor('#c26eff', '#d41512')
+            getAuthorActivation(this.$route.params.id).then(res =>{
+                this.option.series[0].data = res.data.data.slice(0, 50).map(function(data){
+                    return {
+                        name: data.name,
+                        value: Math.ceil(data.activation * 10),
+                        activation: data.activation,
+                        docCount: data.docCount,
+                        id: data.id
+                    }
+                });
+                for (let i = 0; i < this.option.series[0].data.length; i++){
+                    this.option.series[0].data[i].itemStyle = {
+                        color : this.getRandomColor('#c26eff', '#d41512')
+                    }
                 }
-            }
-            console.log(this.option.series[0])
+                this.$refs.bar.updateCharts();
+            });
             // this.option.series[0].data = this.option.series[0].data.map(function (a) {
             //     a.itemStyle.color = this.getRandomColor(parseInt('71', 16), parseInt('40', 16), parseInt('96', 16), 1,
             //         parseInt('85', 16), parseInt('0d', 16), parseInt('0b', 16), 1)

@@ -9,13 +9,14 @@
             <span class="title-text">研究方向统计</span>
         </div>
         <div class="charts">
-            <CommonBar :option="option"/>
+            <CommonBar ref="bar" :option="option"/>
         </div>
     </div>
 </template>
 
 <script>
     import CommonBar from '@/components/CommonCharts/index'
+    import {getDocumentCountByField} from '@/api/affiliation'
     export default {
         name: "FieldSummaryGraph",
         components: {
@@ -26,13 +27,8 @@
                 title: '研究方向论文统计',
                 option: {
                     dataset: {
-                        source:[
-                            ['field', 'docCount'],
-                            ['a', 624],
-                            ['b', 154],
-                            ['c', 125],
-                            ['d', 26]
-                        ]
+                        dimension:['field', 'docCount'],
+                        source:[]
                     },
                     legend:{
                         data:['docCount']
@@ -46,13 +42,26 @@
                     //         }
                     //     }
                     // },
-                    xAxis: {type: 'category'},
-                    yAxis: {},
+                    xAxis: {
+                        type: 'category',
+                        axisLabel: {
+                            interval:0,
+                            rotate:40,
+                            formatter: function (value) {
+                                return value.replace(/ /g, '\n');
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: '文章数',
+                        minInterval: 1
+                    },
                     visualMap: {
                         show: false,
                         type: 'continuous',
-                        min: 50,
-                        max: 1500,
+                        min: 1,
+                        max: 15,
                         dimension: 1,
                         inRange: {
                             color: ['#90d7ec', '#11264f'],
@@ -70,6 +79,12 @@
                     ]
                 }
             }
+        },
+        created: function () {
+            getDocumentCountByField(this.$route.params.id).then(res => {
+                this.option.dataset.source = res.data.data.slice(0, 5);
+                this.$refs.bar.updateCharts();
+            })
         }
     }
 </script>
