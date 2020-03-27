@@ -183,7 +183,7 @@
 
 <style scoped>
     .echartLayout {
-        width: 300px;
+        width: 400px;
         margin: 10px;
         height: 300px;
 

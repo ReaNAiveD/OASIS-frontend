@@ -1,8 +1,7 @@
 <template>
-    <div class="field-container" style="min-width: 1000px;">
+    <div class="field-container" style="min-width: 800px;">
         <!--        头部-->
         <SearchHeader></SearchHeader>
-
         <!--        面包屑-->
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">home</el-breadcrumb-item>
@@ -10,17 +9,22 @@
             <el-breadcrumb-item>Portrait</el-breadcrumb-item>
         </el-breadcrumb>
 
-        <!--        个人信息简介-->
-        <AuthorInfoCard :author="authorDetail" style="padding-top: 100px;"></AuthorInfoCard>
+        <div class="below-containner">
+            <!--        个人信息简介-->
+            <AuthorInfoCard :author="authorDetail" style="padding-top: 100px;"></AuthorInfoCard>
 
-        <!--        ECharts图像-->
-        <div class="charts-container">
-            <meetingGraph ></meetingGraph>
-            <fieldGraph ></fieldGraph>
-            <authorRelation ></authorRelation>
+            <!--        ECharts图像-->
+            <div class="charts-container">
+                <meetingGraph ></meetingGraph>
+                <fieldGraph ></fieldGraph>
+                <authorRelation ></authorRelation>
+            </div>
+            <!--        论文列表-->
+            <div class="doc-list">
+                <documentWithPaper :docs="authorDetail.documents" :docCount="authorDetail.documentCount"></documentWithPaper>
+            </div>
         </div>
-        <!--        论文列表-->
-        <documentWithPaper :docs="authorDetail.documents" :docCount="authorDetail.documentCount"></documentWithPaper>
+
 
     </div>
 </template>
@@ -81,8 +85,13 @@
 <style scoped>
     .field-container {
         background: whitesmoke;
-    }
 
+        /*width: 80%;*/
+    }
+    .below-containner{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
     .el-breadcrumb {
         width: 100%;
         z-index: 998;
@@ -112,5 +121,10 @@
         margin-top: 10px;
         padding: 6px;
     }
-
+    .doc-list{
+        padding: 6px;
+        margin: 20px;
+        margin-top: 30px;
+        /*width: 50%;*/
+    }
 </style>

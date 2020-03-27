@@ -106,5 +106,10 @@
 </script>
 
 <style scoped>
-
+    .col-container {
+        /*margin: 5px auto;*/
+        /*padding: 6px;*/
+        width: 100%;
+        float:none;
+    }
 </style>
