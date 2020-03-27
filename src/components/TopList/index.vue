@@ -73,7 +73,7 @@
             authorDetail(index) {
                 // console.log(index);
                 // this.$router.push({path: '/author/'+this.authors[index].authorId, query: {}});
-                window.open(this.$router.resolve('/author/'+this.authors[index].authorId).href, '_blank');
+                window.open(this.$router.resolve('/authorPortrait/'+this.authors[index].authorId).href, '_blank');
 
             }
         },

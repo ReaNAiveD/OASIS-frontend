@@ -167,7 +167,7 @@
     height: 500px;
     justify-content: space-between;
     height: 500px;
-    background: #f7f8fa;
+    /*background: #f7f8fa;*/
 }
     .top-list{
         z-index: 2;

@@ -1,5 +1,5 @@
 export default {
-    path:'/authorPortrait/:id',
+    path:'/author/:id',
     name: "AuthorPortrait",
     component:()=>import('@/views/Author/authorPortrait.vue')
 }

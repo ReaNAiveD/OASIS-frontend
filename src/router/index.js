@@ -5,7 +5,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import homeRouter from './Home';
 import searchRouter from './Search';
-import authorRouter from './Author/index';
+// import authorRouter from './Author/index';
 import authorRelationship from './Author/relationShip'
 import fieldRouter from './Field'
 import affiliationRouter from './Affiliation'
@@ -21,7 +21,7 @@ const routes = [
     },
     homeRouter,
     searchRouter,
-    authorRouter,
+    // authorRouter,
     authorRelationship,
     authorPortrait,
     {
