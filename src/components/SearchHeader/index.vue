@@ -1,7 +1,7 @@
 <template>
     <div class="document-list-head-search">
         <img src="@/assets/logo.png" width="40" alt="">
-        <span>CSEIII</span>
+        <span>OASIS</span>
         <el-select class="document-list-search" v-model="searchType">
             <el-option v-for="type in searchTypes" :key="type.value" :value="type.value" :label="type.label"/>
         </el-select>
@@ -39,9 +39,11 @@
         searchKeyword: ''
       }
     },
-    // methods: {
-    //   // 将搜索框中的内容传递给父组件
-    //   clickSearch () {
+    methods: {
+      // 将搜索框中的内容传递给父组件
+      clickSearch () {
+        }
+      }
     //     console.log("======",this.$route)
     //     this.combined = ''
     //     this.title = ''

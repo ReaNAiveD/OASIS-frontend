@@ -1,61 +1,95 @@
 <template>
-    <ChartsTemplate :title="title" :option="option"></ChartsTemplate>
+    <ChartsTemplate :title="title" ref="chartsTemplate"></ChartsTemplate>
 </template>
 
 <script>
   import ChartsTemplate from '@/components/Field/ChartsTemplate'
+  import { get_author_activation } from '@/api/field'
+  import { gradientColor } from '@/components/Field/color'
 
   export default {
     name: 'AuthorActiveGraph',
-    components:{
+    components: {
       ChartsTemplate
     },
-    data(){
+    data () {
       return {
-        title:'学者活跃度统计',
-        option : {
-          legend: {},
-          tooltip: {},
-          dataset: {
-            source: [
-              ['product', '2015', '2016', '2017'],
-              ['Matcha Latte', 43.3, 85.8, 93.7],
-              ['Milk Tea', 83.1, 73.4, 55.1],
-              ['Cheese Cocoa', 86.4, 65.2, 82.5],
-              ['Walnut Brownie', 72.4, 53.9, 39.1]
-            ]
+        title: '学者活跃度统计',
+        option: {
+          dataset: [],
+          tooltip: {
+            padding: 8,
+            backgroundColor: '#222',
+            borderColor: '#777',
+            formatter: function (obj) {
+              const value = obj.data
+              return '<div style="border-bottom: 1px solid rgba(255, 255, 255, 0.3); font-size: 18px;padding-bottom: 4px; margin: 4px">' +
+                value.name + '</div>' +
+                '活跃度：' + value.activation.toFixed(2) + '<br>'
+            }
           },
-          xAxis: { type: 'category' },
-          yAxis: {},
-          // Declare several bar series, each will be mapped
-          // to a column of dataset.source by default.
+          visualMap: [
+            {
+              show: false,
+              type: 'continuous',
+              min: 5,
+              max: 90,
+              inRange: {
+                symbolSize: [5, 20]
+              }
+            },
+          ],
           series: [
-            { type: 'bar' },
-            { type: 'bar' },
-            { type: 'bar' }
+            {
+              name: '机构',
+              type: 'graph',
+              layout: 'force',
+              force: {
+                initLayout: 'circular',
+                repulsion: 20
+              },
+              itemStyle: {
+                borderColor: '#fff',
+                borderWidth: 1,
+                shadowBlur: 5,
+                shadowColor: 'rgba(0, 0, 0, 0.3)'
+              },
+              symbolSize: (value) => {
+                // console.log("activation: ",value)
+                return value
+              },
+              data: []
+            }
           ]
         }
+
       }
+    },
+    created () {
+      get_author_activation(this.$route.params.id).then(res => {
+        let limitSize=30
+        let totalSize=res.data.data.length
+        let size=totalSize>limitSize?limitSize:totalSize
+        this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
+          return {
+            name: data.name,
+            value: Math.ceil(data.activation * 5),
+            activation: data.activation,
+            id: data.author_id
+          }
+        })
+        let colors = gradientColor('#3399FF', '#5aff00', size)
+        for (let i = 0; i < size; i++) {
+          this.option.series[0].data[i].itemStyle = {
+            color: colors[i]
+          }
+        }
+        this.$refs.chartsTemplate.drawChart(this.option)
+        console.log('机构活跃度', this.option)
+      })
     },
   }
 </script>
 
 <style scoped>
-    .author-active-graph-container {
-        text-align: center;
-        float: right;
-        /*width: 30%;*/
-        margin: 10px;
-    }
-
-    .title {
-        width: 100%;
-        float: left;
-        transform: translateY(20px);
-        text-align: center;
-    }
-
-    .el-link{
-        margin-left: 5px;
-    }
 </style>

@@ -22,7 +22,7 @@
 
             </div>
             <div class="keywords" v-if="keywords[0]!==''">
-                <span style="line-height: 25px">Keywords:</span>
+                <span style="line-height: 25px">Keywords: </span>
                 <el-tag type="info" effect="plain" :hit=true v-for="(keyword,index) in keywords" :key="index">
                     {{keyword}}
                 </el-tag>

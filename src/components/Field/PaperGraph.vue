@@ -1,74 +1,75 @@
 <template>
-    <ChartsTemplate :title="title" :option="option"></ChartsTemplate>
+    <ChartsTemplate :title="title" ref="chartsTemplate"></ChartsTemplate>
 </template>
 
 <script>
   import ChartsTemplate from '@/components/Field/ChartsTemplate'
+  import { get_doc_publication } from '@/api/field'
 
   export default {
     name: 'PaperGraph',
-    components:{
+    components: {
       ChartsTemplate
     },
-    props:{
-      affiliation_id:{
-        type:Number,
-        default:0
+    props: {
+      affiliation_id: {
+        type: Number,
+        default: 0
       }
     },
-    data(){
+    data () {
       return {
-        title:'论文数量统计',
+        title: '论文数量统计',
         currentDate: new Date(),
-        charts:'',
-        option:{
-          dataset: {
-            source: [
-              ['score', 'amount', 'product'],
-              [89.3, 58212, 'Matcha Latte'],
-              [57.1, 78254, 'Milk Tea'],
-              [74.4, 41032, 'Cheese Cocoa'],
-              [50.1, 12755, 'Cheese Brownie'],
-              [89.7, 20145, 'Matcha Cocoa'],
-              [68.1, 79146, 'Tea'],
-              [19.6, 91852, 'Orange Juice'],
-              [10.6, 101852, 'Lemon Juice'],
-              [32.7, 20112, 'Walnut Brownie']
-            ]
+        charts: '',
+        option: {
+          // legend:{},
+          tooltip: {},
+          xAxis: {
+            type: 'category',
+            data: []
           },
-          grid: {containLabel: true},
-          xAxis: {name: 'amount'},
-          yAxis: {type: 'category'},
-          visualMap: {
-            orient: 'horizontal',
-            left: 'center',
-            min: 10,
-            max: 100,
-            text: ['High Score', 'Low Score'],
-            // Map the score column to color
-            dimension: 0,
-            inRange: {
-              color: ['#D7DA8B', '#E15457']
-            }
+          yAxis: {
+            type: 'value'
           },
-          series: [
-            {
-              type: 'bar',
-              encode: {
-                // Map the "amount" column to X axis.
-                x: 'amount',
-                // Map the "product" column to Y axis
-                y: 'product'
-              }
-            }
-          ]
+          series: [{
+            data: [],
+            type: 'line'
+          }]
         }
       }
     },
+    created () {
+      get_doc_publication(this.$route.params.id).then(res => {
+        this.buildOption(res.data.data)
+        console.log('created')
+        this.$refs.chartsTemplate.drawChart(this.option)
+      })
+    },
+    methods: {
+      buildOption (data) {
+        let years = []  // 所有年份，可能存在有的年份发表论文数为0，但也要显示出来
+        let docCount=[]
+        let minYear=data[0].year
+        let maxYear=data[data.length-1].year
+        for (let i = minYear; i <= maxYear; i++) {
+          years.push(i)
+          docCount.push(0)
+        }
+
+        this.option.series[0].data = []
+        this.option.xAxis.data=[]
+        for (let item of data) {
+          docCount[item.year-minYear]=item.docCount
+        }
+        this.option.xAxis.data=years
+        this.option.series[0].data=docCount
+
+        console.log(this.option.series[0].data)
+      },
+    }
   }
 </script>
 
 <style scoped>
-
-
 </style>

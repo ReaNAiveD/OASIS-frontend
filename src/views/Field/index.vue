@@ -1,26 +1,59 @@
 <template>
-    <div class="field-container" style="min-width: 1000px;">
+    <div class="aff-container">
         <!--        头部-->
         <SearchHeader></SearchHeader>
 
         <!--        面包屑-->
         <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">home</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">OASIS</el-breadcrumb-item>
             <el-breadcrumb-item>Research Field Profile</el-breadcrumb-item>
-            <el-breadcrumb-item>{{fieldName}}</el-breadcrumb-item>
+            <el-breadcrumb-item>{{field}}</el-breadcrumb-item>
         </el-breadcrumb>
 
-        <!--        研究方向简介-->
-        <FieldInfo v-bind:field_id="fieldId" style="padding-top: 90px;"></FieldInfo>
-        <!--        ECharts图像-->
-        <div class="charts-container">
-            <PaperGraph class="left"></PaperGraph>
-            <AuthorActiveGraph class="right"></AuthorActiveGraph>
-            <AffiliateActiveGraph class="middle"></AffiliateActiveGraph>
-        </div>
-        <!--        论文列表-->
-        <div class="document-container">
-            <DocumentList :documents="documents " :document-count="totalElements"></DocumentList>
+        <div class="aff-content">
+
+            <el-row :gutter="40">
+                <el-col :sm="8" :xs="24">
+                    <div class="grid-content bg-purple" style="height: 400px">
+                        <FieldInfo></FieldInfo>
+                    </div>
+                </el-col>
+                <el-col :sm="16" :xs="24">
+                    <div class="grid-content bg-purple">
+                        <HotFields></HotFields>
+                    </div>
+                </el-col>
+
+            </el-row>
+            <!--            gutter：指定每一栏之间的间隔，默认间隔为 0-->
+            <el-row :gutter="40">
+                <el-col :sm="8" :xs="24">
+                    <div class="grid-content bg-purple">
+                        <PaperGraph></PaperGraph>
+
+                    </div>
+                </el-col>
+                <el-col :sm="8" :xs="24">
+                    <div class="grid-content bg-purple">
+                        <AuthorActiveGraph></AuthorActiveGraph>
+
+                    </div>
+                </el-col>
+                <el-col :sm="8" :xs="24">
+                    <div class="grid-content bg-purple">
+                        <AffiliateActiveGraph></AffiliateActiveGraph>
+                    </div>
+                </el-col>
+            </el-row>
+
+            <!--        论文列表-->
+            <el-row :gutter="20">
+                <el-col :sm="24" :xs="24">
+                    <div class="grid-content bg-purple">
+                        <DocumentList :documents="documents " :document-count="totalElements"></DocumentList>
+                    </div>
+                </el-col>
+            </el-row>
         </div>
     </div>
 </template>
@@ -32,6 +65,8 @@
   import AuthorActiveGraph from '@/components/Field/AuthorActiveGraph'
   import DocumentList from '@/components/DocumentList'
   import SearchHeader from '@/components/SearchHeader'
+  import HotFields from '@/components/Field/HotFieldGraph'
+  import { get_field_detail } from '@/api/field'
 
   export default {
     name: 'index',
@@ -41,12 +76,14 @@
       PaperGraph,
       AffiliateActiveGraph,
       AuthorActiveGraph,
-      DocumentList
+      DocumentList,
+      HotFields
     },
     data () {
       return {
-        fieldId: 0,
-        fieldName: 'Mathematics',
+        id: 0,
+        field: '',
+        keywords:'',
         totalElements: 411,
         documents: [{
           'id': 4608,
@@ -273,12 +310,18 @@
           'ref': null
         }]
       }
+    },
+    created(){
+      get_field_detail(this.$route.params.id).then(res=>{
+        this.field=res.data.data.field
+        this.keywords=res.data.data.keywords
+      })
     }
   }
 </script>
 <style scoped>
-    .field-container {
-        background: whitesmoke;
+    .aff-container {
+        background-color: whitesmoke;
     }
 
     .el-breadcrumb {
@@ -292,19 +335,36 @@
         border-bottom: 2px solid #3588f5;
     }
 
-    .el-breadcrumb-item:first-child {
-    }
-
     .charts-container {
-        display: flex;
-        justify-content: space-between;
-        margin-left: 30px;
-        margin-right: 30px;
+        /*display: flex;*/
+        /*justify-content: space-between;*/
+        /*margin-left: 30px;*/
+        /*margin-right: 30px;*/
     }
 
-    .document-container {
-        margin-left: 40px;
-        margin-right: 40px;
+    /*.document-container {*/
+    /*    margin-left: 40px;*/
+    /*    margin-right: 40px;*/
+    /*}*/
+
+    .aff-content {
+        padding-top: 120px;
+        position: relative;
+        max-width: 1280px;
+        margin: auto;
     }
 
+    .el-row,.el-col {
+        margin-bottom: 20px;
+    }
+
+    .el-row:last-child,.el-col:last-child {
+        margin-bottom: 0;
+    }
+
+    .grid-content {
+        border-radius: 4px;
+        min-height: 36px;
+        text-align: center;
+    }
 </style>

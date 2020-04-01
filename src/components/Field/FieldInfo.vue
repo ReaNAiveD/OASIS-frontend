@@ -1,60 +1,111 @@
 <template>
     <div class="field-info-container">
-        <el-card class="box-card card-left">
-            <div slot="header" class="clearfix">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix header">
                 <i class="el-icon-link"></i>
-                <span>{{fieldName}}</span>
-                <i :class="{'el-icon-star-off':!isStar,'el-icon-star-on':isStar,'star-button':true} "
-                   @click="isStar=!isStar"></i>
+                <span class="title">{{field}}</span>
+                <!--                <i :class="{'el-icon-star-off':!isStar,'el-icon-star-on':isStar,'star-button':true} "-->
+                <!--                   @click="isStar=!isStar"></i>-->
 
             </div>
-            <div class="text item">
-                {{fieldIntro}}
-            </div>
-        </el-card>
-        <el-card class="box-card card-right">
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="Parent Topic" name="parentTopic">
-                    <el-scrollbar style="height: 140px;">
-                        <div v-for="(parent,index) in parentField" :key="index">
-                            <el-link target="_blank">{{parent}}</el-link>
-                        </div>
-                    </el-scrollbar>
-                </el-tab-pane>
-                <el-tab-pane label="Child Topic" name="childTopic">
-                    <el-scrollbar style="height: 140px;">
-                        <div v-for="(child,index) in childField" :key="index">
-                            <el-link target="_blank">{{child}}</el-link>
-                        </div>
-                    </el-scrollbar>
-                </el-tab-pane>
-            </el-tabs>
+            <!--            <div class="text item">-->
+            <!--                {{keywords}}-->
+            <!--            </div>-->
+<!--            <div class="keywords" v-if="keywords[0]!==''">-->
+<!--                <span style="line-height: 25px">Keywords:</span>-->
+<!--                <el-tag type="info" effect="plain" :hit=true v-for="(keyword,index) in keywords" :key="index">-->
+<!--                    {{keyword}}-->
+<!--                </el-tag>-->
+<!--            </div>-->
+            <div class="charts" ref="charts"></div>
+
+<!--            <ChartsTemplate ref="chartsTemplate"></ChartsTemplate>-->
         </el-card>
     </div>
 
 </template>
 
 <script>
+  // import ChartsTemplate from '@/components/Field/ChartsTemplate'
+  // import { gradientColor } from '@/components/Field/color'
+  import { get_field_detail } from '@/api/field'
+
+  const echarts = require('echarts/lib/echarts')
+  require('echarts-wordcloud')
+
+
   export default {
     name: 'FieldInfo',
+    components: {
+      // ChartsTemplate
+    },
     data () {
       return {
+        field:'',
+        keywords:'',
         isStar: false,
-        activeName: 'childTopic',
-        fieldId: 0,
-        fieldName: 'Mathematics',
-        fieldIntro: 'Mathematics (from Greek μάθημα máthēma, \'knowledge, study, learning\') includes the study of such topics as quantity (number theory), structure (algebra), space (geometry), and change (mathematical analysis). ',
-        parentField: ['Computational science', 'Geometry'],
-        childField: ['Algorithm', 'Applied mathematics', 'Calculus', 'Algorithm', 'Applied mathematics', 'Calculus'],
+        option: {
+          series: [
+            {
+              type: 'wordCloud',
+              gridSize: 50,
+              drawOutOfBound: true,
+              sizeRange: [40, 40],
+              rotationRange: [0, 0],
+              shape: 'pentagon',
+              left: 'center',
+              top: 'center',
+              width: '70%',
+              height: '80%',
+              right: null,
+              bottom: null,
+              textStyle: {
+                normal: {
+                  color:  function() {
+                    return '#' +
+                      (function f(color) {
+                        return(color += '6789678967896789' [Math.floor(Math.random() * 16)]) &&
+                        (color.length === 6) ? color : f(color);
+                      })('');
+                  }
+                },
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowColor: '#333'
+                }
+              },
+              data: []
+            }
+          ]
+        }
       }
     },
     created () {
-      // 获取该研究方向的详细信息
+      get_field_detail(this.$route.params.id).then(res=>{
+        this.field=res.data.data.field
+        this.keywords=res.data.data.keywords.split(',')
+        this.drawChart()
+      })
     },
     methods: {
-      handleClick (tab, event) {
-        console.log(tab, event)
-      }
+      // handleClick (tab, event) {
+      //   console.log(tab, event)
+      // },
+      drawChart () {
+        console.log("key:",this.keywords)
+        this.option.series[0].data=this.keywords.map(keyword=>{
+          return {
+            name:keyword,
+            value:100
+          }
+        })
+        // let colors=gradientColor("#000000","#000000",this.keywords.length)
+        // console.log(colors)
+        // this.option.series[0].textStyle.normal.color='#5aff00'
+        this.charts = echarts.init(this.$refs.charts)
+        this.charts.setOption(this.option)
+        console.log(this.option.series[0].data)
+      },
     }
   }
 </script>
@@ -78,24 +129,26 @@
         clear: both
     }
 
-    .box-card:first-child {
+    .box-card {
         text-align: left;
-        margin: 40px;
-        width: 50%;
-        height: 200px;
+        /*margin: 40px;*/
+        width: 100%;
     }
 
-    .box-card:last-child {
-        text-align: left;
-        margin: 40px;
-        width: 30%;
-        height: 200px;
-    }
+    /*.box-card:last-child {*/
+    /*    text-align: left;*/
+    /*    margin: 0;*/
+    /*    width: 30%;*/
+    /*    height: 100%;*/
+    /*}*/
 
     .field-info-container {
         text-align: center;
         display: flex;
         justify-content: space-between;
+        /*margin-top: 20px;*/
+        /*margin-bottom: 20px;*/
+        height: 100%;
     }
 
     .star-button {
@@ -114,5 +167,27 @@
 
     .el-link {
         margin-bottom: 5px;
+    }
+
+    .title, .header {
+        font-size: 30px;
+    }
+
+    .keywords {
+        text-align: left;
+        overflow: hidden;
+    }
+
+    .keywords span {
+        margin: 5px;
+        font-size: 20px;
+        height: 28px;
+        line-height: 28px;
+    }
+
+    .charts,.charts  *{
+        width: 400px;
+        height: 300px;
+        /*padding-left: 10px;*/
     }
 </style>
