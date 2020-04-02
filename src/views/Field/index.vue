@@ -50,7 +50,8 @@
             <el-row :gutter="20">
                 <el-col :sm="24" :xs="24">
                     <div class="grid-content bg-purple">
-                        <DocumentList :documents="documents " :document-count="totalElements"></DocumentList>
+<!--                        <DocumentList :documents="documents " :document-count="totalElements"></DocumentList>-->
+<!--                        <FieldDocuments></FieldDocuments>-->
                     </div>
                 </el-col>
             </el-row>
@@ -63,7 +64,8 @@
   import PaperGraph from '@/components/Field/PaperGraph'
   import AffiliateActiveGraph from '@/components/Field/AffiliateActiveGraph'
   import AuthorActiveGraph from '@/components/Field/AuthorActiveGraph'
-  import DocumentList from '@/components/DocumentList'
+  // import DocumentList from '@/components/DocumentList'
+  // import FieldDocuments from '@/components/Field/FieldDocuments'
   import SearchHeader from '@/components/SearchHeader'
   import HotFields from '@/components/Field/HotFieldGraph'
   import { get_field_detail } from '@/api/field'
@@ -76,8 +78,9 @@
       PaperGraph,
       AffiliateActiveGraph,
       AuthorActiveGraph,
-      DocumentList,
-      HotFields
+      // DocumentList,
+      HotFields,
+      // FieldDocuments
     },
     data () {
       return {
