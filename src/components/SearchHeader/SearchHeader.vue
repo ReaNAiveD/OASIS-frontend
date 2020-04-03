@@ -2,7 +2,7 @@
     <div class="document-list-head-search">
         <!--        <router-link tag="img" src="@/assets/logo.png" width="40" alt="" @click="back" to="home"></router-link>-->
         <img src="@/assets/logo.png" width="40" alt="" @click="back">
-        <span>CSEIII</span>
+        <span>OASIS</span>
         <el-select class="document-list-search" v-model="searchType">
             <el-option v-for="type in searchTypes" :key="type.value" :value="type.value" :label="type.label"/>
         </el-select>
@@ -65,7 +65,7 @@
             break
         }
         (this.$router.push({
-          path: 'search',
+          path: '/search',
           query: {
             author: this.author,
             affiliation: this.affiliation,
@@ -108,6 +108,9 @@
         console.log('router change')
         console.log(to)
         console.log(from)
+        if(to.path.indexOf('/field')!==-1){
+          return
+        }
         if(to.path!=='/home'||from.path==='/home'){
           this.parsePath()
           this.clickSearch()

@@ -15,13 +15,13 @@
         </div>
 
         <div class="list-container">
-            <div v-if="documents.length!==0">
+<!--            <div v-if="documents.length!==0">-->
                 <DocumentListItem v-for="document in documents" :key="document.id" :title="document.title"
                                   :id="document.id"
                                   :authors="document.authors" :docu-abstract="document.docuAbstract"
                                   :publication-year="document.publicationYear" :keywords="document.keywords.split(';')"
                                   :reference-count="document.referenceCount"/>
-            </div>
+<!--            </div>-->
         </div>
     </div>
 </template>

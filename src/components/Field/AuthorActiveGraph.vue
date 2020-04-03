@@ -95,13 +95,16 @@
         })
       },
       clickItem(param){
-        this.$router.push({path:'/author/'+this.authorIds[param.dataIndex]})
+        let temp=this.$router.resolve({path:'/author/'+this.authorIds[param.dataIndex]})
+        window.open(temp.href, '_blank');
       }
     },
     watch:{
       '$route': function (to) {
         console.log("+++++++++++",to)
-        this.loadGraph(to)
+        if (to.path.indexOf('/field') !== -1) {
+          this.loadGraph(to)
+        }
       }
     },
   }

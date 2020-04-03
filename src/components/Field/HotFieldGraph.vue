@@ -113,7 +113,9 @@
     },
     watch:{
       '$route': function (to) {
-        this.loadGraph(to)
+        if (to.path.indexOf('/field') !== -1) {
+          this.loadGraph(to)
+        }
       }
     },
   }

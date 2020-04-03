@@ -17,6 +17,18 @@
             <!--                    {{keyword}}-->
             <!--                </el-tag>-->
             <!--            </div>-->
+            <el-row class="info-line">
+                <el-col :span="6" class="info-text" >
+                    <i class="el-icon-document"></i>
+                    文章
+                </el-col>
+                <el-col :span="7" class="summary-num">{{documentCount}}</el-col>
+
+                <el-col :span="9" class="info-text" >
+                    <i class="el-icon-search"></i>
+                    <el-link href="https://www.google.com.hk" target="_blank" class="google" >谷歌链接</el-link>
+                </el-col>
+            </el-row>
             <div class="charts" ref="charts"></div>
 
             <!--            <ChartsTemplate ref="chartsTemplate"></ChartsTemplate>-->
@@ -28,7 +40,7 @@
 <script>
   // import ChartsTemplate from '@/components/Field/ChartsTemplate'
   // import { gradientColor } from '@/components/Field/color'
-  import { get_field_detail } from '@/api/field'
+  import { get_field_detail, get_field_document } from '@/api/field'
 
   const echarts = require('echarts/lib/echarts')
   require('echarts-wordcloud')
@@ -43,6 +55,7 @@
         field: '',
         keywords: '',
         isStar: false,
+        documentCount:0,
         option: {
           series: [
             {
@@ -81,9 +94,16 @@
     },
     mounted () {
       this.initChart()
+      this.loadData(this.$route)
       this.loadGraph(this.$route)
     },
     methods: {
+      loadData(route){
+        get_field_document(route.params.id).then(res=>{
+          this.documentCount=res.data.totalElements
+          console.log("===",this.documentCount)
+        })
+      },
       loadGraph (route) {
         get_field_detail(route.params.id).then(res => {
           this.field = res.data.data.field
@@ -103,7 +123,10 @@
     },
     watch:{
       '$route': function (to) {
-        this.loadGraph(to)
+        if (to.path.indexOf('/field') !== -1) {
+          this.loadData(to)
+          this.loadGraph(to)
+        }
       }
     },
   }
@@ -187,8 +210,27 @@
     .charts, .charts * {
         width: 100%;
         height: 300px;
-        transform: translateY(-50px);
+        transform: translateY(-80px);
         /*padding-bottom: 50px;*/
         /*padding-left: 10px;*/
+    }
+
+    .info-text{
+        text-align: right;
+        padding:  12px 8px 8px;
+        color: #909399;
+        font-size: 14px;
+    }
+
+    .summary-num{
+        text-align: left;
+        padding: 8px;
+        color: #409EFF;
+        font-size: 24px;
+    }
+
+    .google{
+        z-index: 999;
+        margin-left: 6px;
     }
 </style>

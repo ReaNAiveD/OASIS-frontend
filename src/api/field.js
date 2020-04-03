@@ -55,7 +55,7 @@ export function get_aff_activation(id) {
 // 领域下的文章
 export function get_field_document(id,pagesize,page) {
   return request({
-    url: '/field/aff/activation',
+    url: '/field/document',
     method: 'get',
     params: {
       id: id,

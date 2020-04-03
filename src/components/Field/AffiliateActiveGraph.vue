@@ -95,12 +95,16 @@
       },
       clickItem (param) {
         console.log("click")
-        this.$router.push({ path: '/aff/' + this.affiliationIds[param.dataIndex] })
+        let temp=this.$router.resolve({ path: '/aff/' + this.affiliationIds[param.dataIndex] })
+        window.open(temp.href, '_blank');
       }
     },
     watch:{
       '$route': function (to) {
-        this.loadGraph(to)
+        console.log("=========",to)
+        if (to.path.indexOf('/field') !== -1) {
+          this.loadGraph(to)
+        }
       }
     },
   }
