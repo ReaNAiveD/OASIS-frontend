@@ -18,9 +18,9 @@
                     <div class="author-field">
                         <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(field, index) in authorFields" :key="index">{{field.field_name}}</el-tag>
                     </div>
-<!--                    <div class="author-field">-->
-<!--                        <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(keyword, index) in authorKeywords" :key="index">{{keyword}}</el-tag>-->
-<!--                    </div>-->
+                    <div class="author-field">
+                        <el-tag class="author-keyword" type="info"  size="small" v-for="(keyword, index) in authorKeywords" :key="index">{{keyword}}</el-tag>
+                    </div>
                 </div>
             </el-container>
             <el-container class="author-bottom">
@@ -87,7 +87,7 @@
         text-align: left;
         margin: 40px;
         width: 100%;
-        height: 250px;
+        height: 300px;
 
     }
     .author-top{

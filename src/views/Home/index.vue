@@ -91,7 +91,7 @@
                     return{
                         name:aff.name,
                         count:aff.activation.toFixed(2),
-                        pushPath:'/aff/'+aff.id
+                        pushPath:'/aff/'+aff.affiliationId
                     }
                 })
             }

@@ -13,7 +13,10 @@
                     relationArray:{},
                 chartData:[],
                 chartLink:[],
-                categoryArray:[{name:""},{name:""},{name:""}],
+                categoryArray:[{name:""},{name:""},{name:""},{name:""},{name:""},
+                        {name:""},{name:""},{name:""},{name:""},{name:""},{name:""},
+                        {name:""},{name:""},{name:""},{name:""},{name:""},
+                        {name:""},{name:""},{name:""},{name:""},{name:""}],
                 w:400,
                 h:300,
             }
@@ -43,6 +46,7 @@
                 this.chartData=this.getData(this.relationArray.vertices);
                 this.chartLink=this.getRelation(this.relationArray.edges);
                 this.categories=this.categoryArray;
+                // let routeTemp=this.$route;
                 let option = {
                     title: {
                         text: '作者关系图谱',
@@ -111,10 +115,24 @@
                     ]
                 };
                 this.myChart.setOption(option);
-                this.myChart.on('click', function (params) {
-                    console.log(params.data)//获取点击的人或关系的数据信息
-                });
+                // this.myChart.on('click', function (params) {
+                //     console.log(params.data.id)//获取点击的人或关系的数据信息
+                //         // console.log(this.$route.params.id)
+                //         // this.goAuthor(params.data.id)
+                //     window.open(routeTemp.resolve('/author/'+params.data.id).href, '_blank');
+                // });
+                    this.myChart.on('click',param=>{
+                            // console.log("func:",this.clickItem)
+                            // console.log(param);
+                            console.log(param.data.authorId);
+                            this.$router.push({path:'/author/'+param.data.authorId})
+                    });
+
+
             },
+                goAuthor(id){
+                        window.open(this.$router.resolve('/author/'+id).href, '_blank');
+                },
                 getData(input){
                     let data=[];
                         let item;
@@ -122,9 +140,12 @@
                                 data.push({category:item.category,
                                         name:item.content.name,
                                         value:item.content.activation,
-                                id:item.id
+                                id:item.id,
+                                        authorId:item.content.id
                                 });
                         }
+                        console.log(input)
+                        // console.log(data)
                         return data;
                 },
                 getRelation(input){
