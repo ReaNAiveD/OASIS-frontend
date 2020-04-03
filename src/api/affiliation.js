@@ -39,3 +39,15 @@ export function getAuthorActivation(id) {
         }
     })
 }
+
+export function getDocList(id, page, pageSize) {
+    return request({
+        url: '/aff/document',
+        method: 'get',
+        params: {
+            id: id,
+            page: page | 0,
+            pageSize: pageSize
+        }
+    })
+}
