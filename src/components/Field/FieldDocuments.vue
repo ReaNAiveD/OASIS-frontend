@@ -73,11 +73,13 @@
         }
       }
     },
-    // watch:{
-    //   '$route': function (to) {
-    //     // this.loadData(to)
-    //   }
-    // },
+    watch:{
+      '$route': function (to) {
+        if (to.path.indexOf('/field')!==-1) {
+          this.loadData(to)
+        }
+      }
+    },
   }
 </script>
 
