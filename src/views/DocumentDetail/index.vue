@@ -1,23 +1,34 @@
 <template>
-    <el-row class="detail-container">
-        <el-col :md="16">
-            <DocumentInfo :document="documentInfo"/>
-        </el-col>
-        <el-col :md="8">
-            <div class="detail-label">Reference({{correctRef.length}})</div>
-            <ReferenceList :refs="displayRef"/>
-            <el-pagination small layout="prev, pager, next" :total="correctRef.length" :page-size="pageSize" @current-change="pageChange"></el-pagination>
-        </el-col>
-    </el-row>
+    <div class="field-container" style="min-width: 800px;">
+        <SearchHeader></SearchHeader>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }">home</el-breadcrumb-item>
+            <el-breadcrumb-item>Document</el-breadcrumb-item>
+        </el-breadcrumb>
+
+        <div class="below-containner">
+            <el-row class="detail-container">
+                <el-col :md="16">
+                    <DocumentInfo :document="documentInfo"/>
+                </el-col>
+                <el-col :md="8">
+                    <div class="detail-label">Reference({{correctRef.length}})</div>
+                    <ReferenceList :refs="displayRef"/>
+                    <el-pagination small layout="prev, pager, next" :total="correctRef.length" :page-size="pageSize" @current-change="pageChange"></el-pagination>
+                </el-col>
+            </el-row>
+        </div>
+    </div>
 </template>
 
 <script>
+    import SearchHeader from '@/components/SearchHeader'
     import DocumentInfo from "@/components/DocumentInfo/index";
     import ReferenceList from "@/components/ReferenceList/index";
     import {getDocumentDetail} from "@/api/documentlist";
     export default {
         name: "DocumentDetail",
-        components: {ReferenceList, DocumentInfo},
+        components: {ReferenceList, DocumentInfo,SearchHeader},
         data: function () {
             return {
                 documentInfo: {
@@ -89,5 +100,26 @@
         margin: 8px 0 16px 8px;
         font-size: 18px;
         text-align: left;
+    }
+    .field-container {
+        background: whitesmoke;
+    }
+    .below-containner{
+        padding-top: 100px;
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .el-breadcrumb {
+        width: 100%;
+        z-index: 998;
+        padding-top: 80px;
+        padding-bottom: 10px;
+        padding-left: 40px;
+        background: white;
+        position: fixed;
+        border-bottom: 2px solid #3588f5;
+    }
+
+    .el-breadcrumb-item:first-child {
     }
 </style>
