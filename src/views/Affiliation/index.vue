@@ -4,7 +4,7 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{path: '/'}">OASIS</el-breadcrumb-item>
             <el-breadcrumb-item>Affiliation</el-breadcrumb-item>
-            <el-breadcrumb-item>{{'Affiliation id ' + $route.params.id}}</el-breadcrumb-item>
+            <el-breadcrumb-item>{{info.name}}</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="aff-content">
             <el-row>
@@ -37,24 +37,29 @@
                     </el-card>
                 </el-col>
             </el-row>
+            <div class="doc-list">
+                <DocumentList :documents="displayDocuments" :document-count="info.docCount"></DocumentList>
+                <el-pagination small layout="prev, pager, next" :total="info.docCount" :page-size="pageSize" @current-change="pageChange"></el-pagination>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-  import SearchHeader from '@/components/SearchHeader/index'
-  import AffiliationIntroduction from '@/views/Affiliation/components/AffiliationIntroduction'
-  import NumSummary from '@/views/Affiliation/components/NumSummary'
-  import FieldSummaryGraph from '@/views/Affiliation/components/FieldSummaryGraph'
-  import AuthorSummaryGraph from '@/views/Affiliation/components/AuthorSummaryGraph'
-  import AuthorActivationGraph from '@/views/Affiliation/components/AuthorActivationGraph'
-  import { basicInfo } from '@/api/affiliation'
+    import SearchHeader from '@/components/SearchHeader/index'
+    import AffiliationIntroduction from '@/views/Affiliation/components/AffiliationIntroduction'
+    import NumSummary from '@/views/Affiliation/components/NumSummary'
+    import FieldSummaryGraph from '@/views/Affiliation/components/FieldSummaryGraph'
+    import AuthorSummaryGraph from '@/views/Affiliation/components/AuthorSummaryGraph'
+    import AuthorActivationGraph from '@/views/Affiliation/components/AuthorActivationGraph'
+    import { basicInfo, getDocList } from '@/api/affiliation'
+    import DocumentList from '@/components/DocumentList/index'
 
-  export default {
+    export default {
         name: "Affiliation",
         components: {
             AuthorActivationGraph,
-            AuthorSummaryGraph, FieldSummaryGraph, NumSummary, AffiliationIntroduction, SearchHeader},
+            AuthorSummaryGraph, FieldSummaryGraph, NumSummary, AffiliationIntroduction, SearchHeader, DocumentList},
         data: function () {
             return {
                 info: {
@@ -65,13 +70,26 @@
                     authorCount: 0,
                     docCount: 0,
                     citationCount: 0
-                }
+                },
+                pageSize: 5,
+                displayDocuments: [],
+
             }
         },
         created: function () {
             basicInfo(this.$route.params.id).then(res => {
                 if (res.data.result === 0) this.info = res.data.data;
+            });
+            getDocList(this.$route.params.id, 0, this.pageSize).then(res => {
+                this.displayDocuments = res.data.content;
             })
+        },
+        methods: {
+            pageChange: function (currentPage) {
+                getDocList(this.$route.params.id, currentPage-1, this.pageSize).then(res => {
+                    this.displayDocuments = res.data.content;
+                })
+            }
         }
     }
 </script>
@@ -137,5 +155,8 @@
     .row-bg {
         padding: 10px 0;
         background-color: #f9fafc;
+    }
+    .doc-list {
+        padding: 0 10px;
     }
 </style>
