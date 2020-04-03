@@ -26,7 +26,7 @@
 
                 <el-col :span="9" class="info-text" >
                     <i class="el-icon-search"></i>
-                    <el-link href="https://www.google.com.hk" target="_blank" class="google" >谷歌链接</el-link>
+                    <el-link :href="'https://www.google.com.hk/search?q='+field" target="_blank" class="google" >谷歌链接</el-link>
                 </el-col>
             </el-row>
             <div class="charts" ref="charts"></div>
