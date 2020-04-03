@@ -1,5 +1,5 @@
 <template>
-    <ChartsTemplate :title="title" ref="chartsTemplate"></ChartsTemplate>
+    <ChartsTemplate :title="title" :clickItem="clickItem" ref="chartsTemplate"></ChartsTemplate>
 </template>
 
 <script>
@@ -14,6 +14,7 @@
     },
     data () {
       return {
+        affiliationIds: [],
         title: '机构活跃度统计',
         option: {
           dataset: [],
@@ -55,38 +56,52 @@
                 shadowColor: 'rgba(0, 0, 0, 0.3)'
               },
               symbolSize: (value) => {
-                // console.log("activation: ",value)
                 return value
               },
               data: []
             }
           ]
         }
-
       }
     },
     created () {
-      get_aff_activation(this.$route.params.id).then(res => {
-        let limitSize=30
-        let totalSize=res.data.data.length
-        let size=totalSize>limitSize?limitSize:totalSize
-        this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
-          return {
-            name: data.affiliation,
-            value: Math.ceil(data.activation * 5),
-            activation: data.activation,
-            id: data.id
+      this.loadGraph(this.$route)
+    },
+    methods: {
+      loadGraph (route) {
+        get_aff_activation(route.params.id).then(res => {
+          let limitSize = 30
+          let totalSize = res.data.data.length
+          let size = totalSize > limitSize ? limitSize : totalSize
+          this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
+            return {
+              name: data.affiliation,
+              value: Math.ceil(data.activation * 5),
+              activation: data.activation,
+              id: data.id
+            }
+          })
+          this.affiliationIds = res.data.data.slice(0, size).map(function (data) {
+            return data.affiliation_id
+          })
+          let colors = gradientColor('#d700f5', '#fff709', size)
+          for (let i = 0; i < size; i++) {
+            this.option.series[0].data[i].itemStyle = {
+              color: colors[i]
+            }
           }
+          this.$refs.chartsTemplate.drawChart(this.option)
         })
-        let colors=gradientColor('#d700f5','#fff709',size)
-        for (let i = 0; i < size; i++) {
-          this.option.series[0].data[i].itemStyle = {
-            color: colors[i]
-          }
-        }
-        this.$refs.chartsTemplate.drawChart(this.option)
-        console.log('机构活跃度', this.option)
-      })
+      },
+      clickItem (param) {
+        console.log("click")
+        this.$router.push({ path: '/aff/' + this.affiliationIds[param.dataIndex] })
+      }
+    },
+    watch:{
+      '$route': function (to) {
+        this.loadGraph(to)
+      }
     },
   }
 </script>

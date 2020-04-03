@@ -4,7 +4,7 @@
             <i class="el-icon-data-line"></i>
             <el-link :underline="false">{{title}}</el-link>
         </div>
-        <div class="charts" ref="charts" :style="{width:width,height:height}"></div>
+        <div class="charts" ref="charts" :style="{width:width,height:height}" ></div>
     </div>
 </template>
 
@@ -18,12 +18,17 @@
   // 引入提示框和标题组件
   require('echarts/lib/component/tooltip')
   require('echarts/lib/component/title')
+  require('echarts/lib/component/legend')
   // 引入词云
   require('echarts-wordcloud')
 
   export default {
     name: 'Charts',
     props: {
+      clickItem:{
+        type:Function,
+        default:null
+      },
       title: {
         type: String,
         default: ''
@@ -43,11 +48,23 @@
         }
       }
     },
+    mounted(){
+      this.initChart()
+    },
     methods: {
-      drawChart (option) {
+      initChart () {
         this.charts = echarts.init(this.$refs.charts)
-        this.charts.setOption(option)
+        //添加点击事件
+        this.charts.on('click',param=>{
+          // console.log("func:",this.clickItem)
+          if(this.clickItem){
+            this.clickItem(param)
+          }
+        })
       },
+      drawChart(option){
+        this.charts.setOption(option)
+      }
     }
   }
 </script>

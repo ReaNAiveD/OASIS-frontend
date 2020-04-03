@@ -1,5 +1,5 @@
 <template>
-    <ChartsTemplate :title="title" ref="chartsTemplate"></ChartsTemplate>
+    <ChartsTemplate :title="title" :clickItem="clickItem" ref="chartsTemplate"></ChartsTemplate>
 </template>
 
 <script>
@@ -14,6 +14,7 @@
     },
     data () {
       return {
+        authorIds:[],
         title: '学者活跃度统计',
         option: {
           dataset: [],
@@ -62,31 +63,46 @@
             }
           ]
         }
-
       }
     },
     created () {
-      get_author_activation(this.$route.params.id).then(res => {
-        let limitSize=30
-        let totalSize=res.data.data.length
-        let size=totalSize>limitSize?limitSize:totalSize
-        this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
-          return {
-            name: data.name,
-            value: Math.ceil(data.activation * 5),
-            activation: data.activation,
-            id: data.author_id
+      this.loadGraph(this.$route)
+    },
+    methods:{
+      loadGraph(route){
+        get_author_activation(route.params.id).then(res => {
+          let limitSize=30
+          let totalSize=res.data.data.length
+          let size=totalSize>limitSize?limitSize:totalSize
+          this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
+            return {
+              name: data.name,
+              value: Math.ceil(data.activation * 5),
+              activation: data.activation,
+              id: data.author_id
+            }
+          })
+          this.authorIds=res.data.data.slice(0, size).map(function (data) {
+            return data.author_id
+          })
+          let colors = gradientColor('#3399FF', '#5aff00', size)
+          for (let i = 0; i < size; i++) {
+            this.option.series[0].data[i].itemStyle = {
+              color: colors[i]
+            }
           }
+          this.$refs.chartsTemplate.drawChart(this.option)
         })
-        let colors = gradientColor('#3399FF', '#5aff00', size)
-        for (let i = 0; i < size; i++) {
-          this.option.series[0].data[i].itemStyle = {
-            color: colors[i]
-          }
-        }
-        this.$refs.chartsTemplate.drawChart(this.option)
-        console.log('机构活跃度', this.option)
-      })
+      },
+      clickItem(param){
+        this.$router.push({path:'/author/'+this.authorIds[param.dataIndex]})
+      }
+    },
+    watch:{
+      '$route': function (to) {
+        console.log("+++++++++++",to)
+        this.loadGraph(to)
+      }
     },
   }
 </script>

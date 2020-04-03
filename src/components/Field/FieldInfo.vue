@@ -11,15 +11,15 @@
             <!--            <div class="text item">-->
             <!--                {{keywords}}-->
             <!--            </div>-->
-<!--            <div class="keywords" v-if="keywords[0]!==''">-->
-<!--                <span style="line-height: 25px">Keywords:</span>-->
-<!--                <el-tag type="info" effect="plain" :hit=true v-for="(keyword,index) in keywords" :key="index">-->
-<!--                    {{keyword}}-->
-<!--                </el-tag>-->
-<!--            </div>-->
+            <!--            <div class="keywords" v-if="keywords[0]!==''">-->
+            <!--                <span style="line-height: 25px">Keywords:</span>-->
+            <!--                <el-tag type="info" effect="plain" :hit=true v-for="(keyword,index) in keywords" :key="index">-->
+            <!--                    {{keyword}}-->
+            <!--                </el-tag>-->
+            <!--            </div>-->
             <div class="charts" ref="charts"></div>
 
-<!--            <ChartsTemplate ref="chartsTemplate"></ChartsTemplate>-->
+            <!--            <ChartsTemplate ref="chartsTemplate"></ChartsTemplate>-->
         </el-card>
     </div>
 
@@ -33,7 +33,6 @@
   const echarts = require('echarts/lib/echarts')
   require('echarts-wordcloud')
 
-
   export default {
     name: 'FieldInfo',
     components: {
@@ -41,8 +40,8 @@
     },
     data () {
       return {
-        field:'',
-        keywords:'',
+        field: '',
+        keywords: '',
         isStar: false,
         option: {
           series: [
@@ -61,12 +60,12 @@
               bottom: null,
               textStyle: {
                 normal: {
-                  color:  function() {
+                  color: function () {
                     return '#' +
-                      (function f(color) {
-                        return(color += '6789678967896789' [Math.floor(Math.random() * 16)]) &&
-                        (color.length === 6) ? color : f(color);
-                      })('');
+                      (function f (color) {
+                        return (color += '6789678967896789' [Math.floor(Math.random() * 16)]) &&
+                        (color.length === 6) ? color : f(color)
+                      })('')
                   }
                 },
                 emphasis: {
@@ -80,33 +79,33 @@
         }
       }
     },
-    created () {
-      get_field_detail(this.$route.params.id).then(res=>{
-        this.field=res.data.data.field
-        this.keywords=res.data.data.keywords.split(',')
-        this.drawChart()
-      })
+    mounted () {
+      this.initChart()
+      this.loadGraph(this.$route)
     },
     methods: {
-      // handleClick (tab, event) {
-      //   console.log(tab, event)
-      // },
-      drawChart () {
-        console.log("key:",this.keywords)
-        this.option.series[0].data=this.keywords.map(keyword=>{
-          return {
-            name:keyword,
-            value:100
-          }
+      loadGraph (route) {
+        get_field_detail(route.params.id).then(res => {
+          this.field = res.data.data.field
+          this.keywords = res.data.data.keywords.split(',')
+          this.option.series[0].data = this.keywords.map(keyword => {
+            return {
+              name: keyword,
+              value: 100
+            }
+          })
+          this.charts.setOption(this.option)
         })
-        // let colors=gradientColor("#000000","#000000",this.keywords.length)
-        // console.log(colors)
-        // this.option.series[0].textStyle.normal.color='#5aff00'
-        this.charts = echarts.init(this.$refs.charts)
-        this.charts.setOption(this.option)
-        console.log(this.option.series[0].data)
       },
-    }
+      initChart () {
+        this.charts = echarts.init(this.$refs.charts)
+      },
+    },
+    watch:{
+      '$route': function (to) {
+        this.loadGraph(to)
+      }
+    },
   }
 </script>
 
@@ -185,9 +184,11 @@
         line-height: 28px;
     }
 
-    .charts,.charts  *{
-        width: 400px;
+    .charts, .charts * {
+        width: 100%;
         height: 300px;
+        transform: translateY(-50px);
+        /*padding-bottom: 50px;*/
         /*padding-left: 10px;*/
     }
 </style>

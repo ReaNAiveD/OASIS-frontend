@@ -40,13 +40,15 @@
       }
     },
     created () {
-      get_doc_publication(this.$route.params.id).then(res => {
-        this.buildOption(res.data.data)
-        console.log('created')
-        this.$refs.chartsTemplate.drawChart(this.option)
-      })
+      this.loadGraph(this.$route)
     },
     methods: {
+      loadGraph(route){
+        get_doc_publication(route.params.id).then(res => {
+          this.buildOption(res.data.data)
+          this.$refs.chartsTemplate.drawChart(this.option)
+        })
+      },
       buildOption (data) {
         let years = []  // 所有年份，可能存在有的年份发表论文数为0，但也要显示出来
         let docCount=[]
@@ -67,7 +69,12 @@
 
         console.log(this.option.series[0].data)
       },
-    }
+    },
+    watch:{
+      '$route': function (to) {
+        this.loadGraph(to)
+      }
+    },
   }
 </script>
 
