@@ -19,3 +19,14 @@ export function getDocumentDownloadTopList(num) {
         }
     })
 }
+
+//获取活跃度最高的机构
+export function getAffiliationActiveTopList(num) {
+    return request({
+        url: '/top/affiliation',
+        method: 'get',
+        params: {
+            num: num
+        }
+    })
+}

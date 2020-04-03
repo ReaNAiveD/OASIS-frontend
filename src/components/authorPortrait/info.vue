@@ -14,9 +14,13 @@
                         <a :href="'/aff/'+author.affiliationId" target="_blank">{{author.affiliation}}</a>
 
                     </div>
+<!--                    小tag们-->
                     <div class="author-field">
-                        <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(keyword, index) in authorKeywords" :key="index">{{keyword}}</el-tag>
+                        <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(field, index) in authorFields" :key="index">{{field.field_name}}</el-tag>
                     </div>
+<!--                    <div class="author-field">-->
+<!--                        <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(keyword, index) in authorKeywords" :key="index">{{keyword}}</el-tag>-->
+<!--                    </div>-->
                 </div>
             </el-container>
             <el-container class="author-bottom">
@@ -58,12 +62,15 @@
                 return (this.author.authorKeywords.split(";").filter(function (keyword) {
                     return keyword !== '';
                 })).splice(0,6);
+            },
+            authorFields:function () {
+                return (this.author.fieldList).slice(0,6);
             }
         },
         methods:{
             toField(tag) {
-                console.log(tag);
-                window.open(this.$router.resolve('/field/'+tag).href, '_blank');
+                console.log(this.author.fieldList[tag]);
+                window.open(this.$router.resolve('/field/'+this.author.fieldList[tag].field_id).href, '_blank');
             },
         },
         props:['author']

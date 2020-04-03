@@ -28,7 +28,8 @@
                                :data="topAuthorsData"></TopListCommon>
                 <TopListCommon :title="'Top Download Documents'" :measure="'downloads'" :labels="['标题', '下载量', '操作']"
                                :data="topDownloadDocumentsData"></TopListCommon>
-                <TopList  ></TopList>
+                <TopListCommon :title="'Top Affiliation'" :measure="'activation'" :labels="['标题', '下载量', '操作']"
+                               :data="topAffiliationActiveData"></TopListCommon>
             </div>
         </div>
 
@@ -41,8 +42,7 @@
 <script>
 
   import Header from '@/components/Header'
-  import TopList from '@/components/TopList'
-  import { getAuthorTOPList, getDocumentDownloadTopList } from '@/api/home'
+  import { getAuthorTOPList, getDocumentDownloadTopList,getAffiliationActiveTopList } from '@/api/home'
   import TopListCommon from '@/components/TopList/common'
 
   export default {
@@ -62,7 +62,8 @@
                 affiliation:'',
                 select: '0',
                 topAuthors:[],
-                topDownloadDocuments:[]
+                topDownloadDocuments:[],
+                topAffiliationActive:[]
             }
         },
         computed: {
@@ -83,6 +84,16 @@
                         pushPath: '/author/'+author.authorId
                     }
                 })
+            },
+            //活跃度最高的机构
+            topAffiliationActiveData:function () {
+                return this.topAffiliationActive.map(function (aff) {
+                    return{
+                        name:aff.name,
+                        count:aff.activation.toFixed(2),
+                        pushPath:'/aff/'+aff.id
+                    }
+                })
             }
         },
         created(){
@@ -90,7 +101,7 @@
         },
         methods:{
             search(){
-                console.log("search");
+                // console.log("search");
                 this.combined = ''
                 this.title = ''
                 this.author = ''
@@ -114,13 +125,16 @@
                 });
                 getDocumentDownloadTopList(30).then(res=>{
                     this.topDownloadDocuments=res.data;
+                });
+                getAffiliationActiveTopList(30).then(res=>{
+                    this.topAffiliationActive=res.data;
+                    // console.log(this.topAffiliationActive);
                 })
             }
         },
         components: {
             TopListCommon,
-            Header,
-            TopList
+            Header
         }
     }
 </script>

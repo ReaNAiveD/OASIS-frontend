@@ -83,7 +83,7 @@
         mounted(){
             getAuthorDetail(this.$route.params.id).then(response => {
                 this.authorDetail = response.data;
-
+                // console.log(this.authorDetail);
             }).catch(error =>{
                 console.log(error)
             });
@@ -104,11 +104,11 @@
         },
         methods:{
             authorRelationDetail:function() {
-                console.log("ok");
+                // console.log("ok");
                 window.open(this.$router.resolve('/authorRelationship/'+this.authorDetail.id).href, '_blank');
             },
             fieldPaperDetail:function() {
-                console.log("ok");
+                // console.log("ok");
                 window.open(this.$router.resolve('/fieldPaper/'+this.authorDetail.id).href, '_blank');
             }
 

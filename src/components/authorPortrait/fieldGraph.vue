@@ -159,7 +159,7 @@
                                                         // console.log(data[i].children[j].children[0])
                                                         let level=Math.round(item.docActivation*10/5)-1;//暂用的一种level分布
                                                         level=Math.min(level,2);
-                                                        console.log(level);
+                                                        // console.log(level);
                                                         data[i].children[j].children[level].children.push({
                                                                name:item. title
                                                         });
