@@ -5,7 +5,7 @@
         <!--        面包屑-->
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">home</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/author/'+authorDetail.id }  " >{{authorDetail.name}}</el-breadcrumb-item>
+            <el-breadcrumb-item  >{{authorDetail.name}}</el-breadcrumb-item>
             <el-breadcrumb-item>Portrait</el-breadcrumb-item>
         </el-breadcrumb>
 
@@ -15,9 +15,17 @@
 
             <!--        ECharts图像-->
             <div class="charts-container">
-                <meetingGraph ></meetingGraph>
-                <fieldGraph ></fieldGraph>
-                <authorRelation ></authorRelation>
+
+                    <meetingGraph ></meetingGraph>
+
+                <div @click="fieldPaperDetail" class="echartLayout">
+                    <fieldGraph ></fieldGraph>
+                </div>
+
+                <div  @click="authorRelationDetail" class="echartLayout" :relationArray="relationData">
+                    <authorRelation ></authorRelation>
+                </div>
+
             </div>
             <!--        论文列表-->
             <div class="doc-list">
@@ -38,12 +46,13 @@
     import meetingGraph from '@/components/authorPortrait/meetingGraph'
     import fieldGraph from '@/components/authorPortrait/fieldGraph'
     import documentWithPaper from '@/components/DocumentList/DocumentWithPaper'
+    import {authorFieldPaper as getAuthorFieldPaper} from  '@/api/author'
+    // import {authorRelation as getAuthorRelation} from  '@/api/author'
 
     export default {
         name: 'index',
         components: {
             SearchHeader,
-
             fieldGraph,
             meetingGraph,
             AuthorInfoCard,
@@ -58,27 +67,52 @@
                     "firstName":"",
                     "lastName":"",
                     "affiliation":"",
+                    affiliationId:0,//
                     "authorKeywords":"",
                     "ieeeId":"",
                     "coworkers":[],
                     "documentCount":0,
-                    "documents": []
+                    "documents": [],
+                    "fieldList":[]//
                 },
-
+                fieldPaperData:{},
+                relationData:{}
 
             }
         },
-        created(){
+        mounted(){
             getAuthorDetail(this.$route.params.id).then(response => {
-                console.log(response);
                 this.authorDetail = response.data;
+
             }).catch(error =>{
                 console.log(error)
-            })
+            });
+
+
+            getAuthorFieldPaper(this.$route.params.id).then(response=>{
+                // console.log(response);
+                this.fieldPaperData=response.data.data;
+            }).catch(error=>{
+                console.log(error)
+            });
+
+
+
         },
         computed: {
 
         },
+        methods:{
+            authorRelationDetail:function() {
+                console.log("ok");
+                window.open(this.$router.resolve('/authorRelationship/'+this.authorDetail.id).href, '_blank');
+            },
+            fieldPaperDetail:function() {
+                console.log("ok");
+                window.open(this.$router.resolve('/fieldPaper/'+this.authorDetail.id).href, '_blank');
+            }
+
+        }
 
     }
 </script>
@@ -126,5 +160,17 @@
         margin: 20px;
         margin-top: 30px;
         /*width: 50%;*/
+    }
+    .echartLayout {
+        width: 400px;
+        margin: 10px;
+        height: 300px;
+
+        text-align: center;
+        border: 1px solid #EBEEF5;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+        background: white;
+        /*position: absolute;*/
     }
 </style>

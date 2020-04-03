@@ -10,6 +10,7 @@ import authorRelationship from './Author/relationShip'
 import fieldRouter from './Field'
 import affiliationRouter from './Affiliation'
 import authorPortrait from './Author/portrait'
+import fieldPaper from "./Author/fieldPaper";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,7 @@ const routes = [
     // authorRouter,
     authorRelationship,
     authorPortrait,
+    fieldPaper,
     {
         path: "/document/:id",
         name: "DocumentDetail",

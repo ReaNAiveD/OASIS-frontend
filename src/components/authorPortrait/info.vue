@@ -5,13 +5,13 @@
                 <div class="author-photo">
                     <el-image
                             src=https://www.acemap.info/attachment/default/author.png
-                            :fit="fit"></el-image>
+                            ></el-image>
                 </div>
                 <div class="author-introduce">
                     <div class="author-name">{{author.name}}</div>
                     <div class="author-descrip">
                         <i class="el-icon-office-building"></i>
-                        <a :href="'/aff/'+affiliationID" target="_blank">{{author.affiliation}}</a>
+                        <a :href="'/aff/'+author.affiliationId" target="_blank">{{author.affiliation}}</a>
 
                     </div>
                     <div class="author-field">
@@ -49,7 +49,7 @@
         name: "AuthorInfoCard",
         data(){
             return{
-                affiliationID:1,//需要一个可以根据作者id返回机构id的接口
+                // affiliationID:1,//需要一个可以根据作者id返回机构id的接口
             }
         },
         computed: {

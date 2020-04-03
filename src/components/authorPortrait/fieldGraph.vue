@@ -1,23 +1,178 @@
 <template>
-    <div class="echartLayout">
+<!--    <div class="echartLayout">-->
         <div id="sun" style="width:100%; height:100%; overflow: hidden "></div>
-    </div>
+<!--    </div>-->
 </template>
 
 <script>
     import echarts from 'echarts'
+    import {authorFieldPaper as getAuthorFieldPaper} from  '@/api/author'
+
     export default {
-        name: 'meetingGraph',
+        name: 'fieldGraph',
         data() {
-            return {}
+            return {
+                    // fieldPaperData:{},
+                    realList: [],
+                    fieldPaperData: {//下面是例子
+                       "documents":
+                               [
+                                       {
+                                               "field_id": 1,
+                                               "total_citations": 0,
+                                               "title": "DeepMutation++: A Mutation Testing Framework for Deep Learning Systems",
+                                               "docActivation": 0.8333,
+                                               "id": 4352
+                                       },
+                                       {
+                                               "field_id": 1,
+                                               "total_citations": 0,
+                                               "title": "An Empirical Study Towards Characterizing Deep Learning Development and Deployment Across Different Frameworks and Platforms",
+                                               "id": 4414,
+                                               "docActivation": 0.8333
+                                       },
+
+                                       {
+                                               "id": 4635,
+                                               "docActivation": 2.0000,
+                                               "title": "CodeHow: Effective Code Search Based on API Understanding and Extended Boolean Model (E)",
+                                               "field_id": 34,
+                                               "total_citations": 15
+                                       },
+                                       {
+                                               "title": "JaConTeBe: A Benchmark Suite of Real-World Java Concurrency Bugs (T)",
+                                               "id": 4760,
+                                               "docActivation": 1.1000,
+                                               "total_citations": 6,
+                                               "field_id": 41
+                                       },
+
+                                       {
+                                               "id": 4859,
+                                               "total_citations": 2,
+                                               "title": "Mining revision histories to detect cross-language clones without intermediates",
+                                               "field_id": 10,
+                                               "docActivation": 0.7778
+                                       }
+                               ],
+                       "fields": [
+
+                               {
+                                       "field_id": 10,
+                                       "field_name": "Management science",
+                                       "activation": 0.7778
+                               },
+                               {
+                                       "field_name": "Engineering drawing",
+                                       "field_id": 55,
+                                       "activation": 0.8333
+                               },
+                               {
+                                       "field_name": "Software engineering",
+                                       "activation": 1.1000,
+                                       "field_id": 41
+                               },
+                               {
+                                       "activation": 2.0000,
+                                       "field_id": 34,
+                                       "field_name": "Parallel computing"
+                               },
+                               {
+                                       "field_id": 1,
+                                       "field_name": "Artificial intelligence",
+                                       "activation": 2.4999
+                               }
+                       ]
+                       },
+
+            }
         },
         mounted: function() {
-            this.$nextTick(function() {
-                this.getPie()
-            })
+                getAuthorFieldPaper(this.$route.params.id).then(response=>{
+                        // console.log("---"+response);
+                        this.fieldPaperData=response.data.data;
+                         this.operateData(this.fieldPaperData);
+                        this.$nextTick(function() {
+                                this.getPie()
+                        })
+                }).catch(error=>{
+                        console.log(error)
+                });
+
+
         },
         methods: {
+                operateData(input){
+                        let data=[];//最终结果
+                        let item;
+                        for(item of input.fields){//初始化领域
+                                let fathername=Math.round(item.field_id/10);//先假设的父类名称
+                                let flag=0;
+                                for(let i=0;i<data.length;i++){//遍历查看是否已存在父类
+                                        if(data[i].name===fathername){//已存在父类
+                                                flag=1;
+                                                data[i].children.push({//
+                                                        name:item.field_name,
+                                                        id:item.field_id,
+                                                        children: [{
+                                                                name: '5☆',
+                                                                children: [{}]
+                                                        },{
+                                                                name: '4☆',
+                                                                children: [{}]
+                                                        },{
+                                                                name: '3☆',
+                                                                children: [{}]
+                                                        }]
+                                                });
+                                                break;
+                                        }
+                                }
+                                if(flag===0){//不存在父类
+                                        data.push({
+                                                name:fathername,
+                                                id:fathername,
+                                                itemStyle: {//暂用style
+                                                        color: '#FFAE57'
+                                                },
+                                                children:[{
+                                                        name:item.field_name,
+                                                        id:item.field_id,
+                                                        children: [{
+                                                                name: '5☆',
+                                                                children: [{}]
+                                                        },{
+                                                                name: '4☆',
+                                                                children: [{}]
+                                                        },{
+                                                                name: '3☆',
+                                                                children: [{}]
+                                                        }]
+                                                }]
+                                        })
+                                }
+                        }
+                        for(item of input.documents) {//初始化论文
+                                for(let i=0;i<data.length;i++) {//遍历父领域
+                                        for(let j=0;j<data[i].children.length;j++){//遍历子领域
+                                                if(item.field_id===data[i].children[j].id){
+                                                        // console.log(data[i].children[j].children[0])
+                                                        let level=Math.round(item.docActivation*10/5)-1;//暂用的一种level分布
+                                                        level=Math.min(level,2);
+                                                        console.log(level);
+                                                        data[i].children[j].children[level].children.push({
+                                                               name:item. title
+                                                        });
+                                                        break;
+                                                }
+                                        }
+                                }
+                        }
+                        this.realList=data;
+                        // console.log(this.realList);
+                },
             getPie() {
+                    // console.log(this.fieldPaperData);
                 // 绘制图表
                 var myChart = echarts.init(document.getElementById('sun'));
                 var colors = ['#FFAE57', '#FF7853', '#EA5151', '#CC3F57', '#9A2555'];
@@ -38,183 +193,7 @@
                     }
                 };
 
-                var data = [
-                    {
-                    name: '虚构',
-                    itemStyle: {
-                        color: colors[1]
-                    },
-                    children: [{
-                        name: '小说',
-                        children: [{
-                            name: '5☆',
-                            children: [{
-                                name: '疼'
-                            }, {
-                                name: '慈悲'
-                            }, {
-                                name: '楼下的房客'
-                            }]
-                        }, {
-                            name: '4☆',
-                            children: [{
-                                name: '虚无的十字架'
-                            }, {
-                                name: '无声告白'
-                            }, {
-                                name: '童年的终结'
-                            }]
-                        }, {
-                            name: '3☆',
-                            children: [{
-                                name: '疯癫老人日记'
-                            }]
-                        }]
-                    }, {
-                        name: '其他',
-                        children: [{
-                            name: '5☆',
-                            children: [{
-                                name: '纳博科夫短篇小说全集'
-                            }]
-                        }, {
-                            name: '4☆',
-                            children: [{
-                                name: '安魂曲'
-                            }, {
-                                name: '人生拼图版'
-                            }]
-                        }, {
-                            name: '3☆',
-                            children: [{
-                                name: '比起爱你，我更需要你'
-                            }]
-                        }]
-                    }]
-                }, {
-                    name: '非虚构',
-                    itemStyle: {
-                        color: colors[2]
-                    },
-                    children: [{
-                        name: '设计',
-                        children: [{
-                            name: '5☆',
-                            children: [{
-                                name: '无界面交互'
-                            }]
-                        }, {
-                            name: '4☆',
-                            children: [{
-                                name: '数字绘图的光照与渲染技术'
-                            }, {
-                                name: '日本建筑解剖书'
-                            }]
-                        }, {
-                            name: '3☆',
-                            children: [{
-                                name: '奇幻世界艺术\n&RPG地图绘制讲座'
-                            }]
-                        }]
-                    }, {
-                        name: '社科',
-                        children: [{
-                            name: '5☆',
-                            children: [{
-                                name: '痛点'
-                            }]
-                        }, {
-                            name: '4☆',
-                            children: [{
-                                name: '卓有成效的管理者'
-                            }, {
-                                name: '进化'
-                            }, {
-                                name: '后物欲时代的来临',
-                            }]
-                        }, {
-                            name: '3☆',
-                            children: [{
-                                name: '疯癫与文明'
-                            }]
-                        }]
-                    }, {
-                        name: '心理',
-                        children: [{
-                            name: '5☆',
-                            children: [{
-                                name: '我们时代的神经症人格'
-                            }]
-                        }, {
-                            name: '4☆',
-                            children: [{
-                                name: '皮格马利翁效应'
-                            }, {
-                                name: '受伤的人'
-                            }]
-                        }, {
-                            name: '3☆',
-                        }, {
-                            name: '2☆',
-                            children: [{
-                                name: '迷恋'
-                            }]
-                        }]
-                    }, {
-                        name: '居家',
-                        children: [{
-                            name: '4☆',
-                            children: [{
-                                name: '把房子住成家'
-                            }, {
-                                name: '只过必要生活'
-                            }, {
-                                name: '北欧简约风格'
-                            }]
-                        }]
-                    }, {
-                        name: '绘本',
-                        children: [{
-                            name: '5☆',
-                            children: [{
-                                name: '设计诗'
-                            }]
-                        }, {
-                            name: '4☆',
-                            children: [{
-                                name: '假如生活糊弄了你'
-                            }, {
-                                name: '博物学家的神秘动物图鉴'
-                            }]
-                        }, {
-                            name: '3☆',
-                            children: [{
-                                name: '方向'
-                            }]
-                        }]
-                    }, {
-                        name: '哲学',
-                        children: [{
-                            name: '4☆',
-                            children: [{
-                                name: '人生的智慧'
-                            }]
-                        }]
-                    }, {
-                        name: '技术',
-                        children: [{
-                            name: '5☆',
-                            children: [{
-                                name: '代码整洁之道'
-                            }]
-                        }, {
-                            name: '4☆',
-                            children: [{
-                                name: 'Three.js 开发指南'
-                            }]
-                        }]
-                    }]
-                }];
+                var data =this.realList;
 
                 for (var j = 0; j < data.length; ++j) {
                     var level1 = data[j].children;
@@ -321,18 +300,18 @@
                             {},
                             {
                                 r0: 0,//空心圆半径
-                                r: 40,//外半径
+                                r: 150,//外半径
                                 label: {
                                     rotate: 0
                                 }
                             },
                             {
-                                r0: 40,
-                                r: 105
+                                r0: 150,
+                                r: 320
                              },
                             {
-                                r0: 115,
-                                r: 140,
+                                r0: 320,
+                                r: 345,
                                 itemStyle: {
                                     shadowBlur: 2,
                                     shadowColor: colors[2],
@@ -345,8 +324,8 @@
                                 }
                             },
                             {
-                                r0: 140,
-                                r: 145,
+                                r0: 345,
+                                r: 350,
                                 itemStyle: {
                                     shadowBlur: 80,
                                     shadowColor: colors[0]
@@ -375,16 +354,5 @@
 </script>
 
 <style scoped>
-    .echartLayout {
-        width: 400px;
-        margin: 10px;
-        height: 300px;
 
-        text-align: center;
-        border: 1px solid #EBEEF5;
-        border-radius: 4px;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
-        background: white;
-        /*position: absolute;*/
-    }
 </style>
