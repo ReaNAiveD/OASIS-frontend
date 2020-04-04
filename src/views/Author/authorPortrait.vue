@@ -67,13 +67,16 @@
                     "firstName":"",
                     "lastName":"",
                     "affiliation":"",
-                    affiliationId:0,//
+                    "affiliationId":0,//
                     "authorKeywords":"",
                     "ieeeId":"",
                     "coworkers":[],
                     "documentCount":0,
                     "documents": [],
-                    "fieldList":[]//
+                    "fieldList":[],//
+                    "totalCitations":0,//
+                    "totalDownloads":0,//
+                    "activation":0,//
                 },
                 fieldPaperData:{},
                 relationData:{}
@@ -83,7 +86,7 @@
         mounted(){
             getAuthorDetail(this.$route.params.id).then(response => {
                 this.authorDetail = response.data;
-                // console.log(this.authorDetail);
+                console.log(this.authorDetail);
             }).catch(error =>{
                 console.log(error)
             });
@@ -100,7 +103,9 @@
 
         },
         computed: {
-
+            // getActivation:function(){
+            //     return this.authorDetail.activation.toFixed(2)
+            // }
         },
         methods:{
             authorRelationDetail:function() {
