@@ -92,12 +92,23 @@
       }
     },
     created () {
-      get_field_detail(this.$route.params.id).then(res => {
-        this.field = res.data.data.field
-        this.keywords = res.data.data.keywords
-      })
+      this.loadData(this.$route)
     },
-    methods: {}
+    methods: {
+      loadData(route){
+        get_field_detail(route.params.id).then(res => {
+          this.field = res.data.data.field
+          this.keywords = res.data.data.keywords
+        })
+      }
+    },
+    watch:{
+      '$route': function (to) {
+        if (to.path.indexOf('/field') !== -1) {
+          this.loadData(to)
+        }
+      }
+    },
   }
 </script>
 <style scoped>
