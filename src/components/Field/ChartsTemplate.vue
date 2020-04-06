@@ -100,6 +100,8 @@
     }
 
     .charts {
+        overflow: hidden;
+        transform: translateY(-50px);
         /*width: 90%;*/
         /*height: 90%;*/
         /*margin-left: 10px;*/
@@ -111,4 +113,5 @@
         height: 90%;
         /*padding-left: 10px;*/
     }
+
 </style>
