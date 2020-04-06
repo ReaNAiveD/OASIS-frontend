@@ -13,10 +13,7 @@
                     relationArray:{},
                 chartData:[],
                 chartLink:[],
-                categoryArray:[{name:""},{name:""},{name:""},{name:""},{name:""},
-                        {name:""},{name:""},{name:""},{name:""},{name:""},{name:""},
-                        {name:""},{name:""},{name:""},{name:""},{name:""},
-                        {name:""},{name:""},{name:""},{name:""},{name:""}],
+                categoryArray:[],
                 w:400,
                 h:300,
             }
@@ -28,14 +25,21 @@
         mounted() {
                 // console.log(this.relationArray);
                 // console.log(this.$route.params.id);
+                for(var i=0;i<1000;i++){
+                        this.categoryArray[i]={
+                                name:""
+                        }
+                }
                 getAuthorRelation(this.$route.params.id).then(response=>{
                         // console.log(response);
                         this.relationArray=response.data;
                         this.initEchart();
+
                         // console.log(this.relationArray);
                 }).catch(error=>{
                         console.log(error)
                 });
+
 
         },
         methods: {
@@ -152,8 +156,8 @@
                                         authorId:item.content.id
                                 });
                         }
-                        console.log(input)
-                        // console.log(data)
+                        // console.log(input)
+                        console.log(data)
                         return data;
                 },
                 getRelation(input){
