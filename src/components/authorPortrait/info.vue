@@ -29,17 +29,17 @@
                     <div style="font-size: smaller">papers</div>
                 </div>
                 <div class="data">
-                    <div style="font-size: x-large;margin-top: 20px">{{author.documentCount}}</div>
+                    <div style="font-size: x-large;margin-top: 20px">{{author.totalCitations}}</div>
                     <div style="font-size: smaller">Citations</div>
                 </div>
                 <div class="data">
-                    <div style="font-size: x-large;margin-top: 20px">{{author.documentCount}}</div>
-                    <div style="font-size: smaller">Citations</div>
+                    <div style="font-size: x-large;margin-top: 20px">{{author.totalDownloads}}</div>
+                    <div style="font-size: smaller">Downloads</div>
                 </div>
 
                 <div class="data">
-                    <div style="font-size: x-large;margin-top: 20px">{{author.documentCount}}</div>
-                    <div style="font-size: smaller">Citations</div>
+                    <div style="font-size: x-large;margin-top: 20px">{{getActivation}}</div>
+                    <div style="font-size: smaller">Activation</div>
                 </div>
 
             </el-container>
@@ -65,6 +65,9 @@
             },
             authorFields:function () {
                 return (this.author.fieldList).slice(0,6);
+            },
+            getActivation:function(){
+                return this.author.activation.toFixed(2)
             }
         },
         methods:{
