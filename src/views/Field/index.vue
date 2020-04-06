@@ -27,19 +27,19 @@
             </el-row>
             <!--            gutter：指定每一栏之间的间隔，默认间隔为 0-->
             <el-row :gutter="40">
-                <el-col :sm="8" :xs="24">
+                <el-col :md="8" :xs="24">
                     <div class="grid-content bg-purple">
                         <PaperGraph></PaperGraph>
 
                     </div>
                 </el-col>
-                <el-col :sm="8" :xs="24">
+                <el-col :md="8" :xs="24">
                     <div class="grid-content bg-purple">
                         <AuthorActiveGraph></AuthorActiveGraph>
 
                     </div>
                 </el-col>
-                <el-col :sm="8" :xs="24">
+                <el-col :md="8" :xs="24">
                     <div class="grid-content bg-purple">
                         <AffiliateActiveGraph></AffiliateActiveGraph>
                     </div>
@@ -142,8 +142,10 @@
     .aff-content {
         padding-top: 120px;
         position: relative;
-        max-width: 1280px;
+        max-width: 1300px;
         margin: auto;
+        padding-left: 40px;
+        padding-right: 40px;
     }
 
     .el-row, .el-col {
