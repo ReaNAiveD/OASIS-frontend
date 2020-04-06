@@ -73,9 +73,17 @@
                                 }
                             },
                             edgeSymbol:'circle',
-                            force:{//点之间的距离
-                                repulsion:3000
-                            },
+                            // force:{//点之间的距离
+                            //     repulsion:3000
+                            // },
+                                force : { //力引导图基本配置
+                                        //initLayout: ,//力引导的初始化布局，默认使用xy轴的标点
+                                        repulsion : 800,//节点之间的斥力因子。支持数组表达斥力范围，值越大斥力越大。
+                                        gravity : 0.03,//节点受到的向中心的引力因子。该值越大节点越往中心点靠拢。
+                                        edgeLength :400,//边的两个节点之间的距离，这个距离也会受 repulsion。[10, 50] 。值越小则长度越长
+                                        layoutAnimation : true
+                                        //因为力引导布局会在多次迭代后才会稳定，这个参数决定是否显示布局的迭代动画，在浏览器端节点数据较多（>100）的时候不建议关闭，布局过程会造成浏览器假死。
+                                },
                             layout:'force',//点之间的距离
                             roam:true,
                             itemStyle:{//球颜色
