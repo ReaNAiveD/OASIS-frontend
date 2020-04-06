@@ -60,7 +60,7 @@
           series: [
             {
               type: 'wordCloud',
-              gridSize: 50,
+              gridSize: 30,
               drawOutOfBound: true,
               sizeRange: [40, 40],
               rotationRange: [0, 0],
@@ -192,7 +192,7 @@
     }
 
     .title, .header {
-        font-size: 30px;
+        font-size: 27px;
     }
 
     .keywords {
@@ -210,7 +210,7 @@
     .charts, .charts * {
         width: 100%;
         height: 300px;
-        transform: translateY(-80px);
+        transform: translateY(-50px);
         /*padding-bottom: 50px;*/
         /*padding-left: 10px;*/
     }
