@@ -3,9 +3,10 @@
 </template>
 
 <script>
-    import echarts from 'echarts'
-    import {authorRelation as getAuthorRelation} from  '@/api/author'
-    export default {
+        import echarts from 'echarts'
+        import { authorRelation as getAuthorRelation } from '@/api/author'
+
+        export default {
         name: "authorRelation",
         data() {
             return {

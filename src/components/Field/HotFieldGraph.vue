@@ -111,13 +111,7 @@
         this.$router.push({ path: '/field/' + this.fieldIds[param.dataIndex] })
       }
     },
-    watch:{
-      '$route': function (to) {
-        if (to.path.indexOf('/field') !== -1) {
-          this.loadGraph(to)
-        }
-      }
-    },
+
   }
 </script>
 

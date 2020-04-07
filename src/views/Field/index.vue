@@ -99,6 +99,7 @@
         get_field_detail(route.params.id).then(res => {
           this.field = res.data.data.field
           this.keywords = res.data.data.keywords
+          console.log(res.data)
         })
       }
     },

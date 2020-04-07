@@ -108,13 +108,15 @@
         console.log('router change')
         console.log(to)
         console.log(from)
-        if(to.path.indexOf('/field')!==-1){
-          return
-        }
-        if(to.path!=='/home'||from.path==='/home'){
+        if(to.path.indexOf('/search')!==-1){
           this.parsePath()
           this.clickSearch()
+          // return
         }
+        // if(to.path!=='/home'||from.path==='/home'){
+        //   // this.parsePath()
+        //   // this.clickSearch()
+        // }
       }
     },
     // 子组件创建后将用户输入的搜索关键字绑定到界面上
