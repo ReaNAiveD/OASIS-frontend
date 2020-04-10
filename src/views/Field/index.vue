@@ -143,7 +143,7 @@
     .aff-content {
         padding-top: 120px;
         position: relative;
-        max-width: 1300px;
+        max-width: 1100px;
         margin: auto;
         padding-left: 40px;
         padding-right: 40px;
