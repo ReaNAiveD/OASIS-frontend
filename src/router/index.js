@@ -12,6 +12,7 @@ import affiliationRouter from './Affiliation'
 import authorPortrait from './Author/portrait'
 // import fieldPaper from "./Author/fieldPaper";
 import fieldPie from "./Author/fieldPie";
+import enrich from "./Enrich/index"
 
 Vue.use(VueRouter);
 
@@ -34,7 +35,8 @@ const routes = [
         component: () =>import('@/views/DocumentDetail')
     },
     fieldRouter,
-    affiliationRouter
+    affiliationRouter,
+    enrich
 
 ];
 
