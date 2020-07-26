@@ -27,6 +27,14 @@
                 </div>
 
             </div>
+            <div class="coworker-rec">
+                <div class="coworker-rec-head"><span class="left">潜在合作者推荐</span></div>
+                <div class="rec-main">
+                    <el-card>
+                        <SimpleAuthorList :authors="coworkerRecommend"/>
+                    </el-card>
+                </div>
+            </div>
             <!--        论文列表-->
             <div class="doc-list">
                 <documentWithPaper :docs="authorDetail.documents" :docCount="authorDetail.documentCount"></documentWithPaper>
@@ -46,12 +54,14 @@
     import meetingGraph from '@/components/authorPortrait/meetingGraph'
     import fieldGraph from '@/components/authorPortrait/fieldGraph'
     import documentWithPaper from '@/components/DocumentList/DocumentWithPaper'
-    import {authorFieldPaper as getAuthorFieldPaper} from  '@/api/author'
+    import {authorFieldPaper as getAuthorFieldPaper, coworkerRecommend} from  '@/api/author'
+    import SimpleAuthorList from "@/components/authorPortrait/SimpleAuthorList";
     // import {authorRelation as getAuthorRelation} from  '@/api/author'
 
     export default {
         name: 'index',
         components: {
+            SimpleAuthorList,
             SearchHeader,
             fieldGraph,
             meetingGraph,
@@ -79,7 +89,8 @@
                     "activation":0,//
                 },
                 fieldPaperData:{},
-                relationData:{}
+                relationData:{},
+                coworkerRecommend: []
 
             }
         },
@@ -99,7 +110,9 @@
                 console.log(error)
             });
 
-
+            coworkerRecommend(this.$route.params.id).then(res=>{
+                this.coworkerRecommend = res.data.data;
+            })
 
         },
         computed: {
@@ -122,6 +135,22 @@
     }
 </script>
 <style scoped>
+    .left{
+        float: left;
+    }
+    .coworker-rec{
+        padding: 6px;
+        margin: 30px 20px 20px;
+    }
+    .coworker-rec-head {
+        float: left;
+        color: dimgray;
+        font-size: 14px;
+        width: 100%;
+    }
+    .rec-main {
+        width: 100%;
+    }
     .field-container {
         background: whitesmoke;
 

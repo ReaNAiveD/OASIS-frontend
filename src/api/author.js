@@ -32,6 +32,16 @@ export function authorFieldPaper(id) {
     })
 }
 
+export function coworkerRecommend(id) {
+    return request({
+        url: '/author/coworkers/recommend',
+        method: 'get',
+        params: {
+            id: id
+        }
+    })
+}
+
 //作者关系图谱，点边关系
 export function authorRelation(id) {
     return request({
