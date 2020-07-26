@@ -8,34 +8,40 @@
         </el-breadcrumb>
         <div class="aff-content">
             <el-row>
-                <el-col :sm="16" :xs="24">
+                <el-col :sm="18" :xs="24">
                     <el-card class="top-line">
                         <AffiliationIntroduction :name="info.name" :introduction="info.introduction"
                                                  :logo-url="info.logoLink" :site="info.homePageLink"/>
                     </el-card>
                 </el-col>
-                <el-col :sm="8" :xs="24">
+                <el-col :sm="6" :xs="24">
                     <el-card class="top-line">
                         <NumSummary :author-count="info.authorCount" :document-count="info.docCount" :ref-count="info.citationCount"/>
                     </el-card>
                 </el-col>
+
             </el-row>
             <el-row>
-                <el-col :sm="8" :xs="24">
+                <el-col :sm="6" :xs="24">
                     <el-card class="graph-line">
                         <FieldSummaryGraph/>
                     </el-card>
                 </el-col>
-                <el-col :sm="8" :xs="24">
+                <el-col :sm="6" :xs="24">
                     <el-card class="graph-line">
                         <AuthorSummaryGraph/>
                     </el-card>
                 </el-col>
-                <el-col :sm="8" :xs="24">
+                <el-col :sm="6" :xs="24">
                     <el-card class="graph-line">
                         <AuthorActivationGraph/>
                     </el-card>
                 </el-col>
+                <el-col :sm="5" :xs="24">
+                    <TopListCommon :title="'合作机构关系预测'" :measure="'cooperate'" :labels="['机构', '合作程度', '操作']"
+                                   :data="potentialPartners"></TopListCommon>
+                </el-col>
+
             </el-row>
             <div class="doc-list">
                 <DocumentList :documents="displayDocuments" :document-count="info.docCount"></DocumentList>
@@ -52,14 +58,17 @@
     import FieldSummaryGraph from '@/views/Affiliation/components/FieldSummaryGraph'
     import AuthorSummaryGraph from '@/views/Affiliation/components/AuthorSummaryGraph'
     import AuthorActivationGraph from '@/views/Affiliation/components/AuthorActivationGraph'
-    import { basicInfo, getDocList } from '@/api/affiliation'
+    import { basicInfo, getDocList,getCooperate } from '@/api/affiliation'
     import DocumentList from '@/components/DocumentList/index'
+    import TopListCommon from '@/components/TopList/common'
 
     export default {
         name: "Affiliation",
         components: {
             AuthorActivationGraph,
-            AuthorSummaryGraph, FieldSummaryGraph, NumSummary, AffiliationIntroduction, SearchHeader, DocumentList},
+            AuthorSummaryGraph, FieldSummaryGraph, NumSummary, AffiliationIntroduction, SearchHeader, DocumentList,
+            TopListCommon},
+
         data: function () {
             return {
                 info: {
@@ -73,7 +82,7 @@
                 },
                 pageSize: 5,
                 displayDocuments: [],
-
+                cooperateList:[]
             }
         },
         created: function () {
@@ -82,7 +91,26 @@
             });
             getDocList(this.$route.params.id, 0, this.pageSize).then(res => {
                 this.displayDocuments = res.data.content;
+            });
+            getCooperate(this.$route.params.id).then(res=>{
+                if(res.data.data.length>7)
+                    this.cooperateList=res.data.data.slice(0,7);
+                else
+                    this.cooperateList=res.data.data;
             })
+
+        },
+        computed:{
+            potentialPartners:function () {
+                console.log(this.cooperateList)
+                return this.cooperateList.map(function (cooperate) {
+                    return{
+                        name:cooperate.affiliationName,
+                        count:cooperate.cooperateCount,
+                        pushPath:'/aff/'+cooperate.affiliationId
+                    }
+                })
+            },
         },
         methods: {
             pageChange: function (currentPage) {
@@ -127,7 +155,8 @@
     }
 
     .el-card.graph-line{
-        /*height: 350px;*/
+        height: 350px;
+
     }
 
     .el-row {
@@ -159,4 +188,11 @@
     .doc-list {
         padding: 0 10px;
     }
+    .top-item{
+        width: 100%;
+        height: 370px;
+        margin: 20px;
+        overflow: hidden;
+    }
+
 </style>

@@ -51,3 +51,13 @@ export function getDocList(id, page, pageSize) {
         }
     })
 }
+
+export function getCooperate(id) {
+    return request({
+        url: '/aff/cooperate/aff',
+        method: 'get',
+        params: {
+            id: id,
+        }
+    })
+}
