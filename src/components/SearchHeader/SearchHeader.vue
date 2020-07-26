@@ -2,7 +2,7 @@
     <div class="document-list-head-search">
         <!--        <router-link tag="img" src="@/assets/logo.png" width="40" alt="" @click="back" to="home"></router-link>-->
         <img src="@/assets/logo.png" width="40" alt="" @click="back">
-        <span>OASIS</span>
+        <span @click="back">OASIS</span>
         <el-select class="document-list-search" v-model="searchType">
             <el-option v-for="type in searchTypes" :key="type.value" :value="type.value" :label="type.label"/>
         </el-select>

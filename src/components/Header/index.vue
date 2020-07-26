@@ -20,7 +20,7 @@
                 menuList:[
                     {name:'/home',navItem:'主页'},
                     {name:'/search',navItem:'发现'},
-                    {name:'/null',navItem:'登录/注册'}
+                    {name:'/enrich/csv',navItem:'数据上传'}
                 ],
                 activeIndex: '1',//当前激活菜单的 index
             };
