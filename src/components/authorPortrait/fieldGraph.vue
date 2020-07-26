@@ -269,15 +269,15 @@
           //       color: '#000',
           //     }
           //   ,
-            data: this.fieldName,
-            // formatter: function (params) {
-            // console.log('图例参数', params)
-            // for (var i = 0; i < legenddata.length; i++) {
-            //   if (legenddata[i].name === params) {
-            //     // return params + '\t文章数:' + legenddata[i].doc_count + '\t活跃度:' + legenddata[i].activation+'\t引用量:'+legenddata[i].total_citations
-            //   }
-            // }
-            // }
+          data: this.fieldName,
+          // formatter: function (params) {
+          // console.log('图例参数', params)
+          // for (var i = 0; i < legenddata.length; i++) {
+          //   if (legenddata[i].name === params) {
+          //     // return params + '\t文章数:' + legenddata[i].doc_count + '\t活跃度:' + legenddata[i].activation+'\t引用量:'+legenddata[i].total_citations
+          //   }
+          // }
+          // }
           // },
           calculable: true,
           series: [
@@ -285,7 +285,7 @@
               name: '半径模式',
               type: 'pie',
               clockWise: false,
-              radius: [20, 120],
+              radius: [20, 100],
               center: ['50%', '50%'],
               roseType: 'area',
               encode: {
@@ -301,21 +301,49 @@
                     return colorList[params.dataIndex]
                   },
                   label: {
-                    position: 'inside',
-                    textStyle:
-                      {
-                        fontWeight: 'bold',
-                        fontFamily: 'Microsoft YaHei',
-                        color: '#000',
-                        fontSize: 10
-                      },
+                    // position: 'inside',
+                    // textStyle:
+                    //   {
+                    //     fontWeight: 'bold',
+                    //     fontFamily: 'Microsoft YaHei',
+                    //     color: '#000',
+                    //     fontSize: 10
+                    //   },
                     // formatter:'{b} \n{@Confirmed}例 \n死亡{@Dead}',//注意这里大小写敏感哦
+                    // formatter: function (params) {
+                    //   console.log('参数列表', params)
+                    //   // if (params.data[1] > 9000) {return params.data[0] + '\n' + params.data[1] + '例' + '\n' + '死亡' + params.data[3] + '例'} else {return ''}
+                    //   return '文章数：' + params.data[1] + '篇'
+                    // },
                     formatter: function (params) {
                       console.log('参数列表', params)
-                      // if (params.data[1] > 9000) {return params.data[0] + '\n' + params.data[1] + '例' + '\n' + '死亡' + params.data[3] + '例'} else {return ''}
-                      return '文章数：' + params.data[1] + '篇'
-
+                      return '文章数:' + params.data[1] + '篇'
                     },
+                    normal: {
+                      borderWidth: 0,
+                      borderRadius: 4,
+                      padding: [0, -50],
+                      height: 40,
+                      fontSize: 12,
+                      align: 'center',
+                      rich: {
+                        b: {
+                          fontSize: 13,
+                          lineHeight: 5,
+                          color: '#41B3DC'
+                        }
+                      }
+                    }
+                  },
+                  labelLine: {
+                    normal: {
+                      show: true,
+                      length: 10,
+                      length2: 10
+                    },
+                    emphasis: {
+                      show: false
+                    }
                   },
                 },
               },

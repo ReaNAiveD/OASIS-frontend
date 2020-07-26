@@ -46,6 +46,8 @@
                 </el-col>
             </el-row>
 
+<!--            <ActiveRankTemplate></ActiveRankTemplate>-->
+
             <!--        论文列表-->
             <el-row :gutter="40">
                 <el-col class="" :xs="24">
@@ -65,6 +67,7 @@
   import FieldDocuments from '@/components/Field/FieldDocuments'
   import SearchHeader from '@/components/SearchHeader'
   import HotFields from '@/components/Field/HotFieldGraph'
+  // import ActiveRankTemplate from '@/components/Field/ActiveRankTemplate'
   import { get_field_detail } from '@/api/field'
 
   export default {
@@ -77,7 +80,8 @@
       AuthorActiveGraph,
       // DocumentList,
       HotFields,
-      FieldDocuments
+      FieldDocuments,
+      // ActiveRankTemplate
     },
     data () {
       return {
@@ -127,18 +131,6 @@
         position: fixed;
         border-bottom: 2px solid #3588f5;
     }
-
-    .charts-container {
-        /*display: flex;*/
-        /*justify-content: space-between;*/
-        /*margin-left: 30px;*/
-        /*margin-right: 30px;*/
-    }
-
-    /*.document-container {*/
-    /*    margin-left: 40px;*/
-    /*    margin-right: 40px;*/
-    /*}*/
 
     .aff-content {
         padding-top: 120px;
