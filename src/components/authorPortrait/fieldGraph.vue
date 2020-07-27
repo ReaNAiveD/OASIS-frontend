@@ -92,8 +92,6 @@
     },
     mounted: function () {
       getAuthorFieldPaper(this.$route.params.id).then(response => {
-        console.log('+++++++++++++++++++++')
-        console.log(response.data.data)
         // this.fieldPaperData = response.data.data
         this.fieldData = response.data.data.fields
         this.documentData = response.data.data.documents
@@ -190,8 +188,6 @@
           }
         })
 
-        console.log('======================================================')
-        console.log(legenddata)
 
         // this.realList = data
         // console.log(this.realList);
@@ -228,7 +224,6 @@
           tooltip: {
             trigger: 'item',
             formatter (params) {
-              console.log(params)
               return params.data[3] + '</br>' + '领域活跃度：' + params.data[0] + '</br>' + '文章数：' + params.data[1] + '</br>' + '总引用量：' + params.data[4]
             }
           },
@@ -316,7 +311,6 @@
                     //   return '文章数：' + params.data[1] + '篇'
                     // },
                     formatter: function (params) {
-                      console.log('参数列表', params)
                       return '文章数:' + params.data[1] + '篇'
                     },
                     normal: {

@@ -14,11 +14,11 @@
 </template>
 
 <script>
-    import AuthorInfo from '@/components/AuthorInfo'
+  import AuthorInfo from '@/components/AuthorInfo'
   import DocumentList from '@/components/DocumentList/index'
   import { detail as getAuthorDetail } from '@/api/author'
 
-    const sortFuncs= {
+  const sortFuncs= {
         // eslint-disable-next-line no-unused-vars
         defaultSort : function (a, b) {
             return 0;
@@ -59,15 +59,18 @@
             }
         },
         created: function () {
-            console.log(this.$route.params.id);
-            getAuthorDetail(this.$route.params.id).then(response => {
-                console.log(response);
-                this.authorDetail = response.data;
-            }).catch(error =>{
-                console.log(error)
-            })
+            this.loadData()
         },
         methods: {
+          loadData(){
+            console.log(this.$route.params.id);
+            getAuthorDetail(this.$route.params.id).then(response => {
+              console.log(response);
+              this.authorDetail = response.data;
+            }).catch(error =>{
+              console.log(error)
+            })
+          },
             pageChange: function (currentPage) {
                 this.currentPage = currentPage;
                 scrollTo(0, 0);
@@ -83,6 +86,12 @@
                     this.sortFunc = sortFuncs.defaultSort;
                 }
             }
+        },
+        watch:{
+          '$route'(){
+            this.loadData()
+            this.displayDocuments()
+          }
         }
     }
 </script>
