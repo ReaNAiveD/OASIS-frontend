@@ -3,11 +3,9 @@
         <el-col :sm="10" :md="5">
             {{typeHint}}
         </el-col>
-        <el-col :sm="!needSplit?14:10" :md="!needSplit?7:5">
+        <el-col :sm="14" :md="7" >
             {{sqlColumn}}
-        </el-col>
-        <el-col :hidden="!needSplit" :sm="4" :md="2">
-            <el-input v-model="split" placeholder="需要分隔符"></el-input>
+            <el-input v-if="needSplit" v-model="split" placeholder="请填写分隔符" style="width: 30%;margin-left: 20px"/>
         </el-col>
         <el-col :sm="12" :md="6">
             <el-select v-model="csvColumn" @change="columnChange">
@@ -83,6 +81,12 @@
 
 <style scoped>
     .container {
-        padding-bottom: 8px;
+
+    }
+    .el-col{
+        height: 30px;
+        line-height: 30px;
+        text-align:left;
+        padding-left: 10px;
     }
 </style>
