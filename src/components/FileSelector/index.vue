@@ -1,10 +1,10 @@
 <template>
     <div class="main-container">
-        <div class="file-inplace" :v-if="filename!=='' && filename!=null">
+        <div class="file-inplace" :v-if="filename!=='' && filename!=null" style="margin: 10px;font-weight: bold">
             {{filename}}
         </div>
         <div class="select-button">
-            <el-button @click="selectFileDisplayButtonClicked">
+            <el-button @click="selectFileDisplayButtonClicked" >
                 {{(filename===''||filename==null)?"上传csv文件":"更换csv文件"}}
             </el-button>
             <input id="select-input" style="display: none" type="file" accept=".csv,.txt" @change="selectFile()">
