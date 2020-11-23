@@ -74,10 +74,16 @@
           let limitSize=30
           let totalSize=res.data.data.length
           let size=totalSize>limitSize?limitSize:totalSize
-          this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
+          let activation_list=res.data.data.slice(0, size)
+          // 统计前size个活跃度的总和
+          let sum=0
+          for (let i = 0; i < size; i++) {
+            sum+=activation_list[i].activation
+          }
+          this.option.series[0].data = activation_list.map(function (data) {
             return {
               name: data.name,
-              value: Math.ceil(data.activation * 5),
+              value: Math.ceil(data.activation/sum * 350),
               activation: data.activation,
               id: data.author_id
             }
