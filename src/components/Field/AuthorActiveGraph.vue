@@ -56,7 +56,6 @@
                 shadowColor: 'rgba(0, 0, 0, 0.3)'
               },
               symbolSize: (value) => {
-                // console.log("activation: ",value)
                 return value
               },
               data: []
@@ -81,6 +80,7 @@
             sum+=activation_list[i].activation
           }
           this.option.series[0].data = activation_list.map(function (data) {
+            // softmax
             return {
               name: data.name,
               value: Math.ceil(data.activation/sum * 350),

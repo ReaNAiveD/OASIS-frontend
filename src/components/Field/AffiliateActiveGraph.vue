@@ -104,7 +104,7 @@
         console.log("click")
         let temp=this.$router.resolve({ path: '/aff/' + this.affiliationIds[param.dataIndex] })
         window.open(temp.href, '_blank');
-      }
+      },
     },
     watch:{
       '$route': function (to) {
