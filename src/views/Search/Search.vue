@@ -9,7 +9,7 @@
                 <Loading v-if="isLoading" style="position: fixed"></Loading>
                 <div :class="{gray:isLoading}">
                     <DocumentList v-if="documents.length!==0" :documents="documents" :document-count="totalElements"
-                                  v-on:clickSortBy="clickSortBy"></DocumentList>
+                                  v-on:clickSortBy="clickSortBy" :keyword-limit="10"></DocumentList>
                     <el-card v-else-if="!isLoading" style="margin-top: 35px ;color:lightgray">
                         很抱歉<br/>没有搜索到相关的论文！<br/>
                         不妨试试别的关键词～

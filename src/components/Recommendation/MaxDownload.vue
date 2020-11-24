@@ -9,6 +9,7 @@
                                   :authors="document.authors" :docu-abstract="document.docuAbstract"
                                   :publication-year="document.publicationYear" :keywords="document.keywords.split(';')"
                                   :reference-count="document.referenceCount"
+                                  :keyword-limit="3"
                                   />
             </div>
         </div>
