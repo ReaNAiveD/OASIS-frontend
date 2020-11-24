@@ -23,19 +23,19 @@
             </div>
             <div class="keywords" v-if="keywords[0]!==''">
                 <span style="line-height: 25px">Keywords: </span>
-                <el-tag type="info" effect="plain" :hit=true v-for="(keyword,index) in keywords" :key="index">
+                <el-tag type="info" effect="plain" :limitSize="keywords.length" :hit=true v-for="(keyword,index) in keywords.slice(0,limitSize)" :key="index">
                     {{keyword}}
                 </el-tag>
             </div>
         </div>
         <!--下方3个小按钮-->
-        <div>
-            <el-button type="text"><i class="el-icon-link"></i>Cite</el-button>
-            <el-button type="text"><i class="el-icon-folder"></i>Save</el-button>
-            <el-button type="text" class="citations">Citations ({{referenceCount}})</el-button>
-            <div></div>
-        </div>
-        <div style="height: 26px"></div>
+<!--        <div>-->
+<!--            <el-button type="text"><i class="el-icon-link"></i>Cite</el-button>-->
+<!--            <el-button type="text"><i class="el-icon-folder"></i>Save</el-button>-->
+<!--            <el-button type="text" class="citations">Citations ({{referenceCount}})</el-button>-->
+<!--            <div></div>-->
+<!--        </div>-->
+<!--        <div style="height: 26px"></div>-->
 
     </el-card>
 
