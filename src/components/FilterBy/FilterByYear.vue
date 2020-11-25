@@ -1,128 +1,170 @@
 <template>
+  <div class="filter-by-year-container">
+    <div class="one-line">
+      <div>Filter By</div>
+    </div>
     <el-card class="box-card">
-        <div slot="header" class="clearfix">
-            <span>Publication Date</span>
+      <div slot="header" class="clearfix">
+        <span>Interval: </span>
+        <span>1970 ~ {{ present_year }}</span>
+      </div>
+      <div class="block">
+        <el-slider
+            v-model="value"
+            range
+            :marks="marks"
+            :format-tooltip="formatTooltip"
+            @input="changeYear">
+        </el-slider>
+        <div class="filter_year">
+          <div class="year_box"  style="float: left">
+            <i class="el-icon-caret-bottom"></i>
+            <div class="year_num">{{ startYear }}</div>
+          </div>
+          <div  style="float: right; margin-left: 20px;margin-top: 5px">
+            <el-button icon="el-icon-search"  type="primary" size="mini" round @click="clickFilter"></el-button>
+          </div>
+          <div class="year_box"  style="float: right">
+            <i class="el-icon-caret-bottom"></i>
+            <div class="year_num">{{ endYear }}</div>
+          </div>
         </div>
-        <!--        <div class="text item">-->
-        <!--            <el-link @click="clickYear(5)" :class="{'clicked':year_index===5}">Past 5 years</el-link>-->
-        <!--&lt;!&ndash;            <el-radio v-model="radio" label="1"></el-radio>&ndash;&gt;-->
-        <!--        </div>-->
-        <!--        <div class="text item">-->
-        <!--            <el-link @click="clickYear(2)" :class="{'clicked':year_index===2}">Past 2 years</el-link>-->
-        <!--&lt;!&ndash;            <el-radio v-model="radio" label="2"></el-radio>&ndash;&gt;-->
-        <!--        </div>-->
-        <!--        <div class="text item">-->
-        <!--            <el-link @click="clickYear(1)" :class="{'clicked':year_index===1}">Past years</el-link>-->
-        <!--&lt;!&ndash;            <el-radio v-model="radio" label="3"></el-radio>&ndash;&gt;-->
-        <!--        </div>-->
-        <!--        <div class="text item">-->
-        <!--            <el-link @click="clickYear(-1)" :class="{'clicked':year_index===-1}">No Limitation</el-link>-->
-        <!--            &lt;!&ndash;            <el-radio v-model="radio" label="3"></el-radio>&ndash;&gt;-->
-        <!--        </div>-->
-        <el-form>
-            <div class="container">
-                <div class="block">
-                    <span class="demonstration">起始年份</span>
-                    <el-date-picker size="small"
-                                    v-model="yearFrom"
-                                    type="year"
-                                    placeholder="选择年">
-                    </el-date-picker>
-                </div>
-                <div class="block">
-                    <span class="demonstration">截止年份</span>
-                    <el-date-picker size="small"
-                                    v-model="yearTo"
-                                    type="year"
-                                    placeholder="选择年">
-                    </el-date-picker>
-                </div>
-            </div>
-
-<!--            <el-form-item label="机构">-->
-<!--                <el-checkbox-group v-model="sizeForm.type">-->
-<!--                    <el-checkbox-button label="ICSE" name="type"></el-checkbox-button>-->
-<!--                    <el-checkbox-button label="ASE" name="type"></el-checkbox-button>-->
-<!--                </el-checkbox-group>-->
-<!--            </el-form-item>-->
-        </el-form>
-
+      </div>
     </el-card>
+  </div>
 </template>
-
 <script>
-  export default {
-    name: 'FilterByYear',
-    data () {
-      return {
-        radio: '1',
-        year_index: -1,
-        yearFrom: '1970',
-        yearTo: '2020'
-      }
+
+export default {
+  name: 'index',
+  components: {},
+  data() {
+    return {
+      present_year: "2020",
+      marks: null,
+      value: [0, 100],
+      startYear: 1970,
+      endYear: 2020
+    }
+  },
+  created() {
+    let date = new Date()
+    this.present_year = date.getFullYear()
+    this.gap = this.present_year - 1970
+
+    this.marks = {
+      0: '1970',
+      25: this.computeYear(25) + "",
+      50: this.computeYear(50) + "",
+      75: this.computeYear(75) + "",
+      100: this.present_year + ""
+    }
+
+
+    this.yearFrom = localStorage.getItem('yearFrom') || 1970
+    this.yearTo = localStorage.getItem('yearTo') || 2020
+    console.log('FilterBy Created')
+  },
+  mounted() {
+
+  },
+  methods: {
+    clickYear(num) {
+      this.year_index = num
+      let params = this.$route.params
+      params.year = num
+      this.$router.params = params
+      console.log(this.$route.params)
     },
-    methods: {
-      clickYear (num) {
-        this.year_index = num
-        let params = this.$route.params
-        params.year = num
-        this.$router.params = params
-        console.log(this.$route.params)
-      }
+    clickFilter() {
+      // if (this.yearTo - this.yearFrom < 0) {
+      //   alert("请选择正确的年份范围！")
+      // } else {
+      //   this.$emit('clickFilter', this.yearFrom, this.yearTo)
+      // }
+    },
+    formatTooltip(val) {
+      return this.computeYear(val)
+    },
+    computeYear(val) {
+      return 1970 + Math.floor(val / 100 * this.gap)
+    },
+    changeYear(range) {
+      this.startYear = this.computeYear(range[0])
+      this.endYear = this.computeYear(range[1])
+      console.log("startYear: ", this.startYear)
+      console.log("endYear: ", this.endYear)
     }
   }
+}
 </script>
 
 <style scoped>
-    .text {
-        font-size: 16px;
-    }
+.one-line {
+  display: flex;
+  height: 35px;
+  justify-content: space-between;
+  line-height: 35px;
+  color: darkgray;
+  font-size: 15px;
+}
 
-    .item {
-        /*margin-bottom: 18px;*/
-    }
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
 
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
-    }
+.clearfix:after {
+  clear: both
+}
 
-    .clearfix:after {
-        clear: both
-    }
+.clearfix {
+  font-size: 15px;
+  font-weight: bolder;
+}
 
-    .box-card {
-        /*width: 480px;*/
-        margin-bottom: 10px;
-    }
+.box-card {
+  /*width: 100%;*/
+  text-align: left;
+  margin-bottom: 10px;
+}
 
-    .el-link, .el-radio {
-        /*height: 30px;*/
-        line-height: 40px;
-    }
+.block {
+  margin-bottom: 10px;
+}
 
-    .el-radio {
-        float: right;
-    }
+/* 开始 */
+.filter-by-year-container {
+  /*margin: 0;*/
+  /*width: 300px;*/
+}
 
-    .clicked {
-        color: #409EFF;
-    }
+.filter_year {
+  margin-top: 35px;
+  padding-bottom: 10px;
+}
 
-    .demonstration {
-        font-size: 14px;
-        color: #8492a6;
-        text-align: center;
-    }
+/*.filter_year > div {*/
+/*   display: inline;*/
+/*}*/
 
-    .el-input{
-        /*年份选择框的宽度*/
-        width: 100px;
-        margin-left: 25px;
-    }
+.year_num {
+  font-size: 15px;
+  font-weight: bolder;
+  color: #909399;
+}
 
-    .block {
-        margin-bottom: 10px;
-    }
+.year_box {
+  text-align: center;
+}
+
+i {
+  color: #409eff;
+}
+
+/*.el-col {*/
+/*  width: 300px;*/
+/*  min-width: 300px;*/
+/*}*/
 </style>

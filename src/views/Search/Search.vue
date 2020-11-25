@@ -4,7 +4,7 @@
       <div class="content">
         <el-row :gutter="30" :justify="center">
           <el-col :md="5">
-            <FilterBy v-on:clickFilter="clickFilter"></FilterBy>
+            <Filters v-on:clickFilter="clickFilter"></Filters>
           </el-col>
           <el-col :md="11">
             <Loading v-if="isLoading" style="position: fixed"></Loading>
@@ -41,7 +41,7 @@
 <script>
   import SearchHeader from '@/components/SearchHeader/SearchHeader'
   import DocumentList from '@/components/DocumentList/index'
-  import FilterBy from '@/components/FilterBy/index'
+  import  Filters from '@/components/FilterBy/index'
   import Recommendation from '@/components/Recommendation/index'
   import Loading from '@/components/Loading'
 
@@ -50,7 +50,7 @@
     name: 'Search',
     components: {
       SearchHeader,
-      FilterBy,
+      Filters,
       DocumentList,
       Recommendation,
       Loading
