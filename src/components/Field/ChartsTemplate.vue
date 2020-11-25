@@ -43,6 +43,10 @@
       },
       option: {
         type: Object,
+        grid:{
+          top:'15%',
+          bottom: '8%'
+        },
         default() {
           return {}
         }
