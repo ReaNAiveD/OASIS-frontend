@@ -237,7 +237,7 @@ export default {
 }
 
 .google {
-  z-index: 999;
+  /*z-index: 999;*/
   margin-left: 6px;
 }
 

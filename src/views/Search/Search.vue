@@ -7,8 +7,8 @@
             <Filters v-on:clickFilter="clickFilter"></Filters>
           </el-col>
           <el-col :md="11">
-            <Loading v-if="isLoading" style="position: fixed"></Loading>
-            <div :class="{gray:isLoading}">
+            <Loading v-if="isLoading" style="position: fixed;z-index: 99999"></Loading>
+            <div>
               <DocumentList v-if="documents.length!==0" :documents="documents" :document-count="totalElements"
                             v-on:clickSortBy="clickSortBy" :keyword-limit="10"></DocumentList>
               <el-card v-else-if="!isLoading" style="margin-top: 35px ;color:lightgray">
@@ -34,6 +34,7 @@
           </el-col>
         </el-row>
       </div>
+      <div :class="{loading:isLoading}"></div>
     </div>
 
 </template>
@@ -201,4 +202,15 @@
       padding-right: 40px;
     }
 
+    .loading {
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
 </style>
