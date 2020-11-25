@@ -39,13 +39,13 @@
       },
       height: {
         type: String,
-        default: '30vh'
+        default: '20vh'
       },
       option: {
         type: Object,
         grid:{
           top:'15%',
-          bottom: '8%'
+          bottom: '10%'
         },
         default() {
           return {}

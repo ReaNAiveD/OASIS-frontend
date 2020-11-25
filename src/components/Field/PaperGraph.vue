@@ -34,7 +34,7 @@
           },
           grid:{
             top: '15%',
-            bottom: '8%'
+            bottom: '10%'
           },
           series: [{
             data: [],
