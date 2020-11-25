@@ -102,7 +102,7 @@ export default {
 }
 
 .box-card:hover {
-  background-color: #f3f3f3;
+  background-color: #e8e6e6;
 }
 
 .item-container {
