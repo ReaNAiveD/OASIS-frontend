@@ -15,21 +15,18 @@
     </div>
 
     <div class="list-container">
-      <!--            <div v-if="documents.length!==0">-->
       <DocumentListItem v-for="document in documents" :key="document.id" :title="document.title"
                         :id="document.id"
                         :authors="document.authors" :docu-abstract="document.docuAbstract"
                         :publication-year="document.publicationYear" :keywords="document.keywords.split(';')"
                         :reference-count="document.referenceCount"
                         :keyword-limit="keywordLimit"/>
-      <!--            </div>-->
     </div>
   </div>
 </template>
 
 <script>
 import DocumentListItem from '@/components/DocumentList/DocumentListItem'
-// todo：router-view
 export default {
   name: 'DocumentList',
   components: {DocumentListItem},

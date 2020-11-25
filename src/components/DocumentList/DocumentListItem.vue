@@ -9,7 +9,8 @@
       </div>
 
       <div class="author_year">
-        <el-link>{{ publicationYear }}</el-link>
+        <el-link :underline="false" style="color: #606266;cursor:auto ">{{ publicationYear }}
+        </el-link>
         <el-link :underline="false" v-for="(author, index) in authors" :key="index" @click="authorRedirect(author.id)">
           {{ author.name }}
         </el-link>
@@ -105,9 +106,9 @@ export default {
 }
 
 .item-container {
-  border-bottom-style: solid;
-  border-width: 1px 0;
-  border-color: rgba(105, 105, 105, 0.32);
+  /*border-bottom-style: solid;*/
+  /*border-width: 1px 0;*/
+  /*border-color: rgba(105, 105, 105, 0.32);*/
 }
 
 .document-title {
@@ -161,15 +162,20 @@ export default {
 }
 
 .keywords {
+  margin-top: 10px;
+  padding-top: 10px;
   text-align: left;
   overflow: hidden;
+  border-top-style: solid;
+  border-width: 1px 0;
+  border-color: rgba(105, 105, 105, 0.32);
 }
 
 .keywords span {
-  margin: 5px;
+  margin: 3px;
   font-size: 13px;
-  height: 25px;
-  line-height: 25px;
+  height: 23px;
+  line-height: 23px;
 }
 
 .el-button {

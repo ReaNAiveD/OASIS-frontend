@@ -41,6 +41,7 @@
 
 <style scoped>
     .max-download-container > div:first-child {
+      text-align: left;
         height: 35px;
         line-height: 35px;
         color: darkgray;

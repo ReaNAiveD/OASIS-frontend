@@ -2,7 +2,6 @@
   <div class="filter-by-container">
     <div class="one-line">
       <div>Filter By</div>
-      <el-link icon="el-icon-search" @click="clickFilter">过滤</el-link>
     </div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
@@ -15,14 +14,17 @@
             range
             :marks="marks"
             :format-tooltip="formatTooltip"
-            @change="changeYear">
+            @input="changeYear">
         </el-slider>
         <div class="filter_year">
-          <div class="year_box" style="float:left">
+          <div class="year_box"  style="float: left">
             <i class="el-icon-caret-bottom"></i>
             <div class="year_num">{{ startYear }}</div>
           </div>
-          <div class="year_box" style="float:right">
+          <div  style="float: right; margin-left: 20px;margin-top: 5px">
+            <el-button icon="el-icon-search"  type="primary" size="mini" round @click="clickFilter">过滤</el-button>
+          </div>
+          <div class="year_box"  style="float: right">
             <i class="el-icon-caret-bottom"></i>
             <div class="year_num">{{ endYear }}</div>
           </div>
@@ -98,13 +100,6 @@ export default {
 </script>
 
 <style scoped>
-.filter-by-container div:first-child {
-  /*height: 35px;*/
-  /*line-height: 35px;*/
-  /*color: darkgray;*/
-  /*font-size: 15px;*/
-}
-
 .one-line {
   display: flex;
   height: 35px;
@@ -112,18 +107,6 @@ export default {
   line-height: 35px;
   color: darkgray;
   font-size: 15px;
-}
-
-.one-line .el-link {
-  /*height: 25px;*/
-}
-
-.text {
-  font-size: 16px;
-}
-
-.item {
-  /*margin-bottom: 18px;*/
 }
 
 .clearfix:before,
@@ -142,33 +125,9 @@ export default {
 }
 
 .box-card {
-  /*width: 480px;*/
+  /*width: 100%;*/
+  text-align: left;
   margin-bottom: 10px;
-}
-
-.el-link, .el-radio {
-  /*height: 30px;*/
-  line-height: 40px;
-}
-
-.el-radio {
-  float: right;
-}
-
-.clicked {
-  color: #409EFF;
-}
-
-.demonstration {
-  font-size: 14px;
-  color: #8492a6;
-  text-align: center;
-}
-
-.el-input {
-  /*年份选择框的宽度*/
-  width: 100px;
-  margin-left: 25px;
 }
 
 .block {
@@ -177,13 +136,18 @@ export default {
 
 /* 开始 */
 .filter-by-container {
-  margin: 20px;
+  /*margin: 0;*/
+  /*width: 300px;*/
 }
 
 .filter_year {
   margin-top: 35px;
   padding-bottom: 10px;
 }
+
+/*.filter_year > div {*/
+/*   display: inline;*/
+/*}*/
 
 .year_num {
   font-size: 15px;
@@ -196,6 +160,11 @@ export default {
 }
 
 i {
- color: #409eff;
+  color: #409eff;
 }
+
+/*.el-col {*/
+/*  width: 300px;*/
+/*  min-width: 300px;*/
+/*}*/
 </style>

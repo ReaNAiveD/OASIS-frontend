@@ -1,37 +1,39 @@
 <template>
     <div class="container">
         <SearchHeader v-on:clickSearch="clickSearch"></SearchHeader>
-        <el-container>
-            <el-aside style="width: 250px">
-                <FilterBy v-on:clickFilter="clickFilter"></FilterBy>
-            </el-aside>
-            <el-main>
-                <Loading v-if="isLoading" style="position: fixed"></Loading>
-                <div :class="{gray:isLoading}">
-                    <DocumentList v-if="documents.length!==0" :documents="documents" :document-count="totalElements"
-                                  v-on:clickSortBy="clickSortBy" :keyword-limit="10"></DocumentList>
-                    <el-card v-else-if="!isLoading" style="margin-top: 35px ;color:lightgray">
-                        很抱歉<br/>没有搜索到相关的论文！<br/>
-                        不妨试试别的关键词～
-                    </el-card>
-                </div>
-                <div class="block">
-                    <span class="demonstration"></span>
-                    <el-pagination
-                            @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
-                            :current-page.sync="params.page+1"
-                            :page-size="params.pageSize"
-                            layout="prev, pager, next, jumper"
-                            :total="totalElements"
-                            :small=true>
-                    </el-pagination>
-                </div>
-            </el-main>
-            <el-aside style="width: 290px">
-                <Recommendation></Recommendation>
-            </el-aside>
-        </el-container>
+      <div class="content">
+        <el-row :gutter="30" :justify="center">
+          <el-col :md="5">
+            <FilterBy v-on:clickFilter="clickFilter"></FilterBy>
+          </el-col>
+          <el-col :md="11">
+            <Loading v-if="isLoading" style="position: fixed"></Loading>
+            <div :class="{gray:isLoading}">
+              <DocumentList v-if="documents.length!==0" :documents="documents" :document-count="totalElements"
+                            v-on:clickSortBy="clickSortBy" :keyword-limit="10"></DocumentList>
+              <el-card v-else-if="!isLoading" style="margin-top: 35px ;color:lightgray">
+                很抱歉<br/>没有搜索到相关的论文！<br/>
+                不妨试试别的关键词～
+              </el-card>
+            </div>
+            <div class="block">
+              <span class="demonstration"></span>
+              <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page.sync="params.page+1"
+                  :page-size="params.pageSize"
+                  layout="prev, pager, next, jumper"
+                  :total="totalElements"
+                  :small=true>
+              </el-pagination>
+            </div>
+          </el-col>
+          <el-col :md="6">
+            <Recommendation></Recommendation>
+          </el-col>
+        </el-row>
+      </div>
     </div>
 
 </template>
@@ -154,47 +156,49 @@
 
 <style scoped>
     .el-header, .el-footer {
-        background-color: #B3C0D1;
+        /*background-color: #B3C0D1;*/
         color: #333;
         text-align: center;
         line-height: 60px;
     }
 
-    .el-container {
-        background-color: whitesmoke;
+    .el-row {
+        /*background-color: whitesmoke;*/
         padding-top: 50px;
+      /*margin: auto;*/
+      /*text-align: center;*/
     }
 
-    .el-aside {
-        /*background-color: #D3DCE6;*/
-        color: #333;
-        text-align: left;
-        /*line-height: 200px;*/
-        /*width: 200px;*/
-        margin: 10px;
-    }
-
-    .el-main {
+    .el-col {
         /*background-color: #E9EEF3;*/
         color: #333;
-        text-align: center;
+        /*text-align: center;*/
         /*line-height: 160px;*/
         margin: 10px;
         padding: 0;
-        min-width: 380px;
+        min-width: 280px;
     }
 
-    body > .el-container {
+    body > .el-row {
         margin-bottom: 40px;
-    }
-
-    .block {
-        background-color: whitesmoke;
     }
 
     .gray {
         opacity: 0.15;
         background: whitesmoke;
+    }
+
+    .container {
+      background-color: whitesmoke;
+    }
+
+    .content {
+      position: relative;
+      margin: auto;
+      min-width: 1220px;
+      max-width: 1700px;
+      padding-left: 40px;
+      padding-right: 40px;
     }
 
 </style>
