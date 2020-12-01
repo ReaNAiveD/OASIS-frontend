@@ -6,11 +6,9 @@
 
     <div>
       <el-checkbox-group v-model="checkboxGroup1" size="small">
-        <el-checkbox label="ASE" style="float: left;margin-top: 5px"></el-checkbox>
-        <el-checkbox label="ICSE" style="float: left;margin-top: 5px"></el-checkbox>
+        <el-checkbox label="ASE" style="float: left;margin-bottom: 15px"></el-checkbox>
+        <el-checkbox label="ICSE" style="float: left;margin-bottom: 15px;margin-left: 20px"></el-checkbox>
       </el-checkbox-group>
-      <el-button icon="el-icon-search" type="primary" size="mini" round @click="clickFilter"
-                 style="float: right; margin-left: 20px;margin-bottom: 10px"></el-button>
     </div>
   </el-card>
 </template>
