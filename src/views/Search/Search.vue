@@ -4,7 +4,7 @@
       <div class="content">
         <el-row :gutter="30" :justify="center">
           <el-col :md="5">
-            <Filters v-on:clickFilter="clickFilter"></Filters>
+            <Filters v-on:clickFilter="clickFilter" :start-year="startYear" :end-year="endYear" :check-list="checkList"></Filters>
           </el-col>
           <el-col :md="11">
             <Loading v-if="isLoading" style="position: fixed;z-index: 99999"></Loading>
@@ -66,8 +66,8 @@
           'abstract': '',
           'affiliation': '',
           'publicationTitle': '',
-          'yearFrom': 1970,
-          'yearTo': 2020,
+          'yearFrom': this.startYear,
+          'yearTo': this.endYear,
           'publisher': '',
           'conference': '',
           'orderby': 'default',
@@ -78,7 +78,10 @@
         totalPages: 0,
         totalElements: 0,
         documents: [],
-        isLoading: true
+        isLoading: true,
+        startYear:2008,
+        endYear:2013,
+        checkList:["ASE",""]
       }
     },
     mounted () {

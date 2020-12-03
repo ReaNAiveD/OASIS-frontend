@@ -6,7 +6,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Interval: </span>
-        <span>1970 ~ {{ present_year }}</span>
+        <span class="interval">{{ startYear }} ~ {{ endYear }}</span>
       </div>
       <div class="block">
         <el-slider
@@ -16,19 +16,19 @@
             :format-tooltip="formatTooltip"
             @input="changeYear">
         </el-slider>
-        <div class="filter_year">
-          <div class="year_box"  style="float: left">
-            <i class="el-icon-caret-bottom"></i>
-            <div class="year_num">{{ startYear }}</div>
-          </div>
-          <div  style="float: right; margin-left: 20px;margin-top: 5px">
-            <el-button icon="el-icon-search"  type="primary" size="mini" round @click="clickFilter"></el-button>
-          </div>
-          <div class="year_box"  style="float: right">
-            <i class="el-icon-caret-bottom"></i>
-            <div class="year_num">{{ endYear }}</div>
-          </div>
-        </div>
+<!--        <div class="filter_year">-->
+<!--          <div class="year_box"  style="float: left">-->
+<!--            <i class="el-icon-caret-bottom"></i>-->
+<!--            <div class="year_num">{{ startYear }}</div>-->
+<!--          </div>-->
+<!--          <div  style="float: right; margin-left: 20px;margin-top: 5px">-->
+<!--            <el-button icon="el-icon-search"  type="primary" size="mini" round @click="clickFilter"></el-button>-->
+<!--          </div>-->
+<!--          <div class="year_box"  style="float: right">-->
+<!--            <i class="el-icon-caret-bottom"></i>-->
+<!--            <div class="year_num">{{ endYear }}</div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </el-card>
   </div>
@@ -38,13 +38,30 @@
 export default {
   name: 'index',
   components: {},
+  computed:{
+    value(){
+      let left=Math.floor((this.startYear-1970)/this.gap*100)
+      let right=Math.floor((this.endYear-1970)/this.gap*100)
+      return [left,right]
+    }
+  },
+  props:{
+    startYear:{
+      type: Number,
+      default:1970
+    },
+    endYear:{
+      type:Number,
+      default: 2020
+    }
+  },
   data() {
     return {
       present_year: "2020",
       marks: null,
-      value: [0, 100],
-      startYear: 1970,
-      endYear: 2020
+      // value: [0, 100],
+      // startYear: 1970,
+      // endYear: 2020
     }
   },
   created() {
@@ -167,4 +184,10 @@ i {
 /*  width: 300px;*/
 /*  min-width: 300px;*/
 /*}*/
+
+.interval {
+  /*font-size: larger;*/
+  font-weight: bolder;
+  color: #409eff;
+}
 </style>
