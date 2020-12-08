@@ -4,6 +4,7 @@ pipeline {
         registry = "justdevnoops/frontend-oasis"
     }
     stages {
+    /*
         stage("build") {
             agent {
                 docker {
@@ -15,6 +16,7 @@ pipeline {
                 stash includes: 'dist/**', name: 'distfiles'
             }
         }
+        */
 
         stage("build image") {
             options { timeout(time: 60, unit: 'MINUTES') }
@@ -23,7 +25,7 @@ pipeline {
             }
             steps {
                 script {
-                    unstash 'distfiles'
+                    //unstash 'distfiles'
                     sh 'ls -l -R'
                     sh 'pwd'
                     dockerImage = docker.build registry+":$BUILD_NUMBER"
