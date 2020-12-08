@@ -61,3 +61,16 @@ export function getCooperate(id) {
         }
     })
 }
+
+export function getAll(order="descent", orderBy="documentCount", page=0, pageSize=10) {
+    return request({
+        url: '/aff/list',
+        method: 'post',
+        data: {
+            "direction": order,
+            "orderBy": orderBy,//取值有documentCount，activation，authorCount，name。不写则默认documentCount
+            "page": page,
+            "pageSize": pageSize
+        }
+    })
+}

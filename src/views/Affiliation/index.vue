@@ -3,7 +3,7 @@
         <search-header/>
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{path: '/'}">OASIS</el-breadcrumb-item>
-            <el-breadcrumb-item>Affiliation</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{path: '/aff-all'}">Affiliation</el-breadcrumb-item>
             <el-breadcrumb-item>{{info.name}}</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="aff-content">

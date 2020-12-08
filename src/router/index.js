@@ -14,6 +14,7 @@ import authorPortrait from './Author/portrait'
 // import fieldPaper from "./Author/fieldPaper";
 import fieldPie from './Author/fieldPie'
 import enrich from './Enrich/index'
+import affiliationAll from './Affiliation/all'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,7 @@ const routes = [
   },
   fieldRouter,
   affiliationRouter,
+  affiliationAll,
   enrich
 
 ]
