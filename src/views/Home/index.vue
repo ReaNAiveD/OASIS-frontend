@@ -1,23 +1,26 @@
 <template>
     <div id="home"  class="home-box">
-        <Header></Header>
+<!--        <Header></Header>-->
         <div class="home-header">
                 <div class="note home-header" :style ="note">
                     <div class="search-box">
-                        <h1 class="search-title" >-   C   S   E   I   I   I   -</h1>
+                        <h1 class="search-title " >-   O   A   S   I   S   -</h1>
                     </div>
 
                     <div class="search-body">
-                        <el-input placeholder="请输入作者，作者单位，或论文标题" v-model="searchInput" class="input-with-select" @keyup.enter.native="search">
-                            <el-select v-model="select" slot="prepend" placeholder="混合搜索" style="width: 110px" >
-                                <el-option label="混合搜索" value="0"></el-option>
+
+                        <div class="document-list-head-search">
+                            <el-select v-model="select" slot="prepend" placeholder="混合搜索" style="width: 110px;" class="document-list-search" >
+                                <el-option label="综合搜索" value="0"></el-option>
                                 <el-option label="标题" value="1"></el-option>
                                 <el-option label="作者" value="2"></el-option>
                                 <el-option label="作者机构" value="3"></el-option>
-
                             </el-select>
-                            <el-button slot="append" type="primary" icon="el-icon-search" @click="search"></el-button>
-                        </el-input>
+                            <el-input :placeholder="getplaceholder" v-model="searchInput" class="input-with-select document-list-search search-input" @keyup.enter.native="search">
+                            </el-input>
+                            <el-button class="document-list-search" type="primary" @click="search">搜索</el-button>
+                        </div>
+                        
                     </div>
                 </div>
         </div>
@@ -36,12 +39,11 @@
     </div>
 
 
-
 </template>
 
 <script>
 
-  import Header from '@/components/Header'
+  // import Header from '@/components/Header'
   import { getAuthorTOPList, getDocumentDownloadTopList,getAffiliationActiveTopList } from '@/api/home'
   import TopListCommon from '@/components/TopList/common'
 
@@ -63,10 +65,14 @@
                 select: '0',
                 topAuthors:[],
                 topDownloadDocuments:[],
-                topAffiliationActive:[]
+                topAffiliationActive:[],
+                placeholders:['请输入搜索内容','请输入标题','请输入作者','请输入机构名'],
             }
         },
         computed: {
+            getplaceholder(){
+                return this.placeholders[this.select];
+            },
             topDownloadDocumentsData: function () {
                 return this.topDownloadDocuments.map(function (doc) {
                     return {
@@ -134,7 +140,7 @@
         },
         components: {
             TopListCommon,
-            Header
+            // Header
         }
     }
 </script>
@@ -144,23 +150,14 @@
         box-sizing: border-box;
     }
 .home-header{
-    position:absolute;
+    /*position:absolute;*/
     width:100%;
-    height:600px;
+    height:700px;
     background-size: cover;
 
 }
 .search-box{
     font-size: 50px;
-}
-.search-title{
-    margin-top: 150px;
-    margin-bottom: 70px;
-    width: 100%;
-    font-size: 64px;
-    color: #fff;
-    font-weight: 600;
-    text-align: center;
 }
 
 .input-with-select .el-input-group__prepend {
@@ -175,7 +172,7 @@
 }
 .home-top-list {
     position: relative;
-    margin-top: 500px;
+    margin-top: -100px;
     left: 0px;
     width: 100%;
     height: 500px;
@@ -183,6 +180,31 @@
     height: 500px;
     /*background: #f7f8fa;*/
 }
+    .document-list-search {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .document-list-search.search-input {
+        max-width: 400px;
+        min-width: 200px;
+    }
+
+    .document-list-head-search {
+        /*float: right;*/
+        /*position: fixed;*/
+        width: 100%;
+        /*backgroundn-color: white;*/
+        /*图层置顶*/
+        /*z-index: 999;*/
+        /*display: flex;*/
+        align-items: center;
+        /*padding-left: 30px;*/
+        /*justify-content: center;*/
+    }
+
+    .document-list-head-search > * {
+    }
     .top-list{
         z-index: 2;
         position: absolute;
@@ -197,6 +219,78 @@
         justify-content: space-between;
     }
 
+    .search-title{
+        padding-top: 180px;
+        padding-bottom: 70px;
+        margin-top: 0px;
+        width: 100%;
+        font-size: 64px;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+        animation: changeshadow 2s ease-in infinite;
+        /* 其它浏览器兼容性前缀 */
+        -webkit-animation: changeshadow 2s linear infinite;
+        -moz-animation: changeshadow 2s linear infinite;
+        -ms-animation: changeshadow 2s linear infinite;
+        -o-animation: changeshadow 2s linear infinite;
+    }
+    @keyframes changeshadow {
+        0% {
+            text-shadow: 0 0 4px #fffcfb;
+        }
+        50% {
+            text-shadow: 0 0 40px #e6eb19;
+        }
+        100% {
+            text-shadow: 0 0 4px #f2af3f;
+        }
+    }
+    /* 添加兼容性前缀 */
+    @-webkit-keyframes changeshadow {
+        0% {
+            text-shadow: 0 0 4px #fffcfb;
+        }
+        50% {
+            text-shadow: 0 0 40px #e6eb19;
+        }
+        100% {
+            text-shadow: 0 0 4px #f2af3f;
+        }
+    }
+    @-moz-keyframes changeshadow {
+        0% {
+            text-shadow: 0 0 4px #fffcfb;
+        }
+        50% {
+            text-shadow: 0 0 40px #e6eb19;
+        }
+        100% {
+            text-shadow: 0 0 4px #f2af3f;
+        }
+    }
+    @-ms-keyframes changeshadow {
+        0% {
+            text-shadow: 0 0 4px #fffcfb;
+        }
+        50% {
+            text-shadow: 0 0 40px #e6eb19;
+        }
+        100% {
+            text-shadow: 0 0 4px #f2af3f;
+        }
+    }
+    @-o-keyframes changeshadow {
+        0% {
+            text-shadow: 0 0 4px #fffcfb;
+        }
+        50% {
+            text-shadow: 0 0 40px #e6eb19;
+        }
+        100% {
+            text-shadow: 0 0 4px #f2af3f;
+        }
+    }
 
 </style>
 
