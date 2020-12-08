@@ -146,7 +146,7 @@
         width: 100%;
         background-color: white;
         /*图层置顶*/
-        z-index: 999;
+        z-index: 9999;
         display: flex;
         align-items: center;
         padding-left: 30px;

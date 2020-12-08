@@ -14,21 +14,9 @@
             range
             :marks="marks"
             :format-tooltip="formatTooltip"
-            @input="changeYear">
+            @input="onInput"
+            @change="changeYear">
         </el-slider>
-<!--        <div class="filter_year">-->
-<!--          <div class="year_box"  style="float: left">-->
-<!--            <i class="el-icon-caret-bottom"></i>-->
-<!--            <div class="year_num">{{ startYear }}</div>-->
-<!--          </div>-->
-<!--          <div  style="float: right; margin-left: 20px;margin-top: 5px">-->
-<!--            <el-button icon="el-icon-search"  type="primary" size="mini" round @click="clickFilter"></el-button>-->
-<!--          </div>-->
-<!--          <div class="year_box"  style="float: right">-->
-<!--            <i class="el-icon-caret-bottom"></i>-->
-<!--            <div class="year_num">{{ endYear }}</div>-->
-<!--          </div>-->
-<!--        </div>-->
       </div>
     </el-card>
   </div>
@@ -38,37 +26,30 @@
 export default {
   name: 'index',
   components: {},
-  computed:{
-    value(){
-      let left=Math.floor((this.startYear-1970)/this.gap*100)
-      let right=Math.floor((this.endYear-1970)/this.gap*100)
-      return [left,right]
-    }
-  },
-  props:{
-    startYear:{
-      type: Number,
-      default:1970
-    },
-    endYear:{
-      type:Number,
-      default: 2020
-    }
-  },
   data() {
     return {
+      startYear:1970,
+      endYear:2020,
       present_year: "2020",
       marks: null,
-      // value: [0, 100],
-      // startYear: 1970,
-      // endYear: 2020
+    }
+  },
+  computed:{
+    value:{
+      get(){
+        let left=Math.floor((this.startYear-1970)/this.gap*100)
+        let right=Math.floor((this.endYear-1970)/this.gap*100)
+        return [left,right]
+      },
+      set(value){
+        return value
+      }
     }
   },
   created() {
     let date = new Date()
     this.present_year = date.getFullYear()
     this.gap = this.present_year - 1970
-
     this.marks = {
       0: '1970',
       25: this.computeYear(25) + "",
@@ -76,46 +57,34 @@ export default {
       75: this.computeYear(75) + "",
       100: this.present_year + ""
     }
-
-
     this.yearFrom = localStorage.getItem('yearFrom') || 1970
     this.yearTo = localStorage.getItem('yearTo') || 2020
     console.log('FilterBy Created')
   },
-  mounted() {
-
-  },
   methods: {
-    clickYear(num) {
-      this.year_index = num
-      let params = this.$route.params
-      params.year = num
-      this.$router.params = params
-      console.log(this.$route.params)
-    },
-    clickFilter() {
-      // if (this.yearTo - this.yearFrom < 0) {
-      //   alert("请选择正确的年份范围！")
-      // } else {
-      //   this.$emit('clickFilter', this.yearFrom, this.yearTo)
-      // }
-    },
     formatTooltip(val) {
       return this.computeYear(val)
     },
     computeYear(val) {
       return 1970 + Math.floor(val / 100 * this.gap)
     },
-    changeYear(range) {
+    onInput(range) {
+      console.log("range:",range)
       this.startYear = this.computeYear(range[0])
       this.endYear = this.computeYear(range[1])
-      console.log("startYear: ", this.startYear)
-      console.log("endYear: ", this.endYear)
+      console.log("startYear:", this.startYear)
+      console.log("endYear:", this.endYear)
+      console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+    },
+    changeYear(){
+      // 修改父组件的值
+      console.log("cccccccccccccccccccccccccccccc")
+      this.$emit('changeYear',this.startYear,this.endYear)
     }
+
   }
 }
 </script>
-
 <style scoped>
 .one-line {
   display: flex;

@@ -1,7 +1,7 @@
 <template>
   <div class="filter_container">
-    <FilterByYear :start-year="startYear" :end-year="endYear"></FilterByYear>
-    <FilterByPublicationType :check-list="checkList"></FilterByPublicationType>
+    <FilterByYear @changeYear="changeYear"></FilterByYear>
+    <FilterByPublicationType @changePublishType="changePublishType"></FilterByPublicationType>
   </div>
 </template>
 
@@ -11,24 +11,18 @@ import FilterByPublicationType from "@/components/FilterBy/FilterByPublicationTy
 
 export default {
   name: "index",
-  props:{
-    startYear:{
-      type:Number,
-      default:1970
-    },
-    endYear:{
-      type:Number,
-      default: 2020
-    },
-    checkList:{
-      type:Array,
-      default:()=>["ASE","ICSE"]
-    }
-  },
   components:{
     FilterByYear,
     FilterByPublicationType
-  }
+  },
+  methods: {
+    changeYear(startYear, endYear) {
+      this.$emit("changeYear",startYear,endYear)
+    },
+    changePublishType(checkList){
+      this.$emit("changePublishType",checkList)
+    }
+  },
 }
 </script>
 

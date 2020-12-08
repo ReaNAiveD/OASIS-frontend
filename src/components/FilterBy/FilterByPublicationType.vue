@@ -5,9 +5,9 @@
     </div>
 
     <div>
-      <el-checkbox-group v-model="checkList" size="small">
-        <el-checkbox label="ASE"></el-checkbox>
-        <el-checkbox label="ICSE" style="margin-left: 25px"></el-checkbox>
+      <el-checkbox-group v-model="checkList" size="small" @change="changePublishType">
+        <el-checkbox label="ase"></el-checkbox>
+        <el-checkbox label="icse" style="margin-left: 25px"></el-checkbox>
       </el-checkbox-group>
     </div>
   </el-card>
@@ -16,41 +16,14 @@
 <script>
 export default {
   name: 'FilterByPublicationType',
-  props:{
-    checkList:{
-      type: Array,
-      default:()=>["ASE","ICSE"]
-    }
-  },
   data() {
     return {
-      // checkList: ["ASE","ICSE"]
+      checkList: ["ase", "icse"]
     }
   },
-  created() {
-    // this.getFilterByType()
-  },
   methods: {
-    handleChange(val) {
-      console.log(val)
-    },
-    clickType(id) {
-      console.log("id:", id)
-      let params = this.$route.params
-      params.type = id
-      this.$router.params = params
-      console.log(this.$route.params)
-    },
-    // 获取Type
-    async getFilterByType() {
-      // 解构赋值
-      const {data: res} = await this.$http.get('publicationType')
-      console.log(res)
-      // 将获取到的数据挂载到组件的私有data中
-      if (res.meta.status !== 200) {
-        return this.$message.error(res.meta.msg)
-      }
-      this.publicationTypes = res.data
+    changePublishType(){
+      this.$emit("changePublishType",this.checkList)
     }
   }
 }
