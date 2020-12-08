@@ -39,7 +39,7 @@
       },
       height: {
         type: String,
-        default: '20vh'
+        default: '30vh'
       },
       option: {
         type: Object,
@@ -153,8 +153,8 @@
     }
 
     .charts  *{
-        width: 90%;
-        height: 90%;
+        /*width: 90%;*/
+        /*height: 90%;*/
         /*padding-left: 10px;*/
     }
 

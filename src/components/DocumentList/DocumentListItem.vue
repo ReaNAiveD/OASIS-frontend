@@ -30,15 +30,6 @@
         </el-tag>
       </div>
     </div>
-    <!--下方3个小按钮-->
-    <!--        <div>-->
-    <!--            <el-button type="text"><i class="el-icon-link"></i>Cite</el-button>-->
-    <!--            <el-button type="text"><i class="el-icon-folder"></i>Save</el-button>-->
-    <!--            <el-button type="text" class="citations">Citations ({{referenceCount}})</el-button>-->
-    <!--            <div></div>-->
-    <!--        </div>-->
-    <!--        <div style="height: 26px"></div>-->
-
   </el-card>
 
 
@@ -153,7 +144,7 @@ export default {
   margin: 5px;
   color: dimgrey;
 
-  word-break: break-all;
+  /*word-break: break-all;*/
   text-overflow: ellipsis;
   display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
   -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/

@@ -1,8 +1,8 @@
 <template>
   <div class="document-list-container">
-    <div class="head-container">
+    <div class="head-container" id="test">
       <span class="left">Papers({{ documentCount }})</span>
-      <el-select class="right" size="small" v-model="orderby" placeholder="请选择">
+      <el-select class="right" size="small" v-model="orderby">
         <el-option
             v-for="item in options"
             :key="item.value"
@@ -77,12 +77,13 @@ export default {
       }
     },
     orderby() {
+      console.log("[DocumentList] orderBy:",this.orderby)
       this.$emit('clickSortBy', this.orderby)
     }
   },
   created() {
     this.orderby = localStorage.getItem('orderby') || 'default'
-  }
+  },
 }
 </script>
 
