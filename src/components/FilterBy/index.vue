@@ -1,7 +1,7 @@
 <template>
   <div class="filter_container">
-    <FilterByYear></FilterByYear>
-    <FilterByPublicationType></FilterByPublicationType>
+    <FilterByYear @changeYear="changeYear"></FilterByYear>
+    <FilterByPublicationType @changePublishType="changePublishType"></FilterByPublicationType>
   </div>
 </template>
 
@@ -14,7 +14,15 @@ export default {
   components:{
     FilterByYear,
     FilterByPublicationType
-  }
+  },
+  methods: {
+    changeYear(startYear, endYear) {
+      this.$emit("changeYear",startYear,endYear)
+    },
+    changePublishType(checkList){
+      this.$emit("changePublishType",checkList)
+    }
+  },
 }
 </script>
 

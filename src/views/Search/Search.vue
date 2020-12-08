@@ -2,11 +2,11 @@
     <div class="container">
         <SearchHeader v-on:clickSearch="clickSearch"></SearchHeader>
       <div class="content">
-        <el-row :gutter="30" :justify="center">
-          <el-col :md="5">
-            <Filters v-on:clickFilter="clickFilter"></Filters>
+        <el-row :gutter="5" type="flex" justify="space-around">
+          <el-col :span="5">
+            <Filters @changeYear="changeYear" @changePublishType="changePublishType"></Filters>
           </el-col>
-          <el-col :md="11">
+          <el-col :span="11">
             <Loading v-if="isLoading" style="position: fixed;z-index: 99999"></Loading>
             <div>
               <DocumentList v-if="documents.length!==0" :documents="documents" :document-count="totalElements"
@@ -29,7 +29,7 @@
               </el-pagination>
             </div>
           </el-col>
-          <el-col :md="6">
+          <el-col :span="6">
             <Recommendation></Recommendation>
           </el-col>
         </el-row>
@@ -60,25 +60,27 @@
       return {
         // 查询参数：由子组件来更新这些参数
         params: {
-          'combined': '',
-          'title': '',
-          'author': '',
-          'abstract': '',
-          'affiliation': '',
-          'publicationTitle': '',
-          'yearFrom': 1970,
-          'yearTo': 2020,
-          'publisher': '',
-          'conference': '',
-          'orderby': 'default',
-          'pageSize': 5,
-          'page': 0
+          'combined': '',  // 混合搜索关键词，根据此关键词在包括论文标题、作者、年份等中匹配，可包含多个关键词，空格分隔，作且运算，可选，空为全部
+          'title': '',  // 论文标题搜索关键词，可选，空为全部
+          'author': '',  // 论文作者搜索关键词，可选，空为全部
+          'abstract': '',  // 摘要搜索关键词，可选，空为全部
+          'affiliation': '',  // 论文第一作者所属单位搜索关键词，可选，空为全部
+          'publicationTitle': '',  // 出版物名搜索关键词，可选，空为全部
+          'yearFrom': 1970,  // 出版年份搜索关键词，可选，空为全部
+          'yearTo': 2020,  // 出版年份搜索关键词，可选，空为全部
+          'publisher': '',  // 出版商搜索关键词，可选，空为全部
+          'conference': 'all',  // 会议，"all"，"ase"或"icse"或"others"，默认为"all"
+          'orderby': 'default',  // 排序方式关键词，默认为default，可选值default/early/recent
+          'pageSize': 5,  // 分页大小，可选，默认20
+          'page': 0  // 页号，可选，默认0（也可能是1，最小的那个）
         },
         // pageable:{},
         totalPages: 0,
         totalElements: 0,
         documents: [],
-        isLoading: true
+        isLoading: true,
+        startYear:1970,
+        endYear:2020,
       }
     },
     mounted () {
@@ -97,7 +99,8 @@
       fetchList () {
         this.isLoading = true
 
-        console.log(this.params)
+        console.log("====================fetchList: start====================")
+        console.log("params:" ,this.params)
         this.$api.fetchList(this.params).then(res => {
           this.documents = res.data.content
           this.totalPages = res.data.totalPages
@@ -109,6 +112,7 @@
         }, err => {
           console.log(err)
         })
+        console.log("====================fetchList: end====================")
       },
       clickSearch (combined, title, author, affiliation) {
         this.params.combined = combined
@@ -124,12 +128,8 @@
         this.params.page=0
         this.fetchList()
       },
-      clickFilter (yearFrom, yearTo) {
-        this.params.yearFrom = yearFrom
-        this.params.yearTo = yearTo
+      clickFilter () {
         this.params.page=0
-        console.log(this.params.yearFrom)
-        console.log(this.params.yearTo)
         this.fetchList()
       },
       handleSizeChange (val) {
@@ -150,6 +150,26 @@
             clearInterval(timer)
           }
         }, 30)
+      },
+      changeYear(startYear,endYear){
+        this.params.yearFrom=startYear
+        this.params.yearTo=endYear
+        // todo: 调用fetchList
+        console.log("changeYear--param: ",this.params)
+        this.clickFilter()
+      },
+      changePublishType(checkList){
+        let count=checkList.length
+        if (count===2){
+          this.params.conference='all'
+        }else if(count===1){
+          this.params.conference=checkList[0]
+        }else if(count===0){
+          this.params.conference='others'
+        }
+        // todo: 调用fetchList
+        console.log("changePublishType--param: ",this.params)
+        this.clickFilter()
       }
     }
   }
