@@ -2,7 +2,7 @@ FROM node:15 as build-stage
 WORKDIR /app
 COPY package*.json ./
 COPY ./ .
-RUN npm config set registry https://registry.npm.taobao.org && npm i -g yarn && yarn install
+RUN npm config set registry https://registry.npm.taobao.org && yarn install
 #RUN npm install
 RUN yarn run build
 
