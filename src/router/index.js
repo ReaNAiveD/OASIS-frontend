@@ -15,6 +15,8 @@ import authorPortrait from './Author/portrait'
 // import fieldPaper from "./Author/fieldPaper";
 import fieldPie from './Author/fieldPie'
 import enrich from './Enrich/index'
+import affiliationAll from './Affiliation/all'
+import authorlist from "@/router/Author/authorlist";
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,7 @@ const routes = [
   searchRouter,
   // authorRouter,
   authorRelationship,
+    authorlist,
   fieldPaper,
   authorPortrait,
   // fieldPaper,
@@ -40,6 +43,7 @@ const routes = [
   },
   fieldRouter,
   affiliationRouter,
+  affiliationAll,
   enrich
 
 ]

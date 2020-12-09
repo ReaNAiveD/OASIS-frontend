@@ -50,7 +50,7 @@
 
       <!--        论文列表-->
       <el-row :gutter="40">
-        <el-col class="" :xs="24">
+        <el-col class="" :xs="24" id="mytest">
           <FieldDocuments></FieldDocuments>
         </el-col>
       </el-row>
@@ -101,7 +101,7 @@ export default {
     console.log("created index")
     this.startLoading()
   },
-  mouted(){
+  mounted(){
     this.startLoading()
   },
   methods: {
@@ -121,8 +121,8 @@ export default {
       this.isLoading = false
       console.log("==================================finishLoading")
       clearInterval(this.timer)  // 清除定时器
-      // this.timer=null
-    }
+      this.timer=null
+    },
   },
   watch: {
     '$route': function (to) {

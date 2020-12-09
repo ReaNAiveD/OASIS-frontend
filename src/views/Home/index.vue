@@ -56,8 +56,8 @@
                 note: {
                     backgroundImage: "url(" + require("../../assets/home-background.jpg") + ")",
                     backgroundRepeat: "no-repeat",
-                    backgroundSize: "2000px ",
-                    marginTop: "5px",
+                    backgroundSize: Math.max(2000, window.outerWidth) + "px",
+                    marginTop: "0px",
                 },
                 searchInput: '',
                 combined:'',

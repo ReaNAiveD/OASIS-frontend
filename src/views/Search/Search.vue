@@ -204,11 +204,6 @@
         margin-bottom: 40px;
     }
 
-    .gray {
-        opacity: 0.15;
-        background: whitesmoke;
-    }
-
     .container {
       background-color: whitesmoke;
     }
