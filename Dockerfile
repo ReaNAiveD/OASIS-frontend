@@ -1,11 +1,10 @@
 FROM node:15 as build-stage
-RUN npm config set registry https://registry.npm.taobao.org
-RUN npm config get registry
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
 COPY ./ .
-RUN npm run build
+RUN npm config set registry https://registry.npm.taobao.org && npm i -g yarn && yarn install
+#RUN npm install
+RUN yarn run build
 
 FROM nginx as production-stage
 RUN mkdir /app
