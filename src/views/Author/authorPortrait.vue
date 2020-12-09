@@ -4,7 +4,8 @@
         <SearchHeader></SearchHeader>
         <!--        面包屑-->
         <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">home</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">OASIS</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/author-all'}">Author</el-breadcrumb-item>
             <el-breadcrumb-item>{{authorDetail.name}}</el-breadcrumb-item>
             <el-breadcrumb-item>Portrait</el-breadcrumb-item>
         </el-breadcrumb>
