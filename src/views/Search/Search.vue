@@ -30,6 +30,9 @@
             </div>
           </el-col>
           <el-col :span="6">
+              <AuthorResultInfo v-for="(author, index) in authors" class="author-result-card" :key="index" :id="author.authorId" :name="author.name"
+                                :aff="author.affiliation" :domains="author.domains.split(';').map((d) => {d.slice(0, d.length-3)})"
+                                :doc-count="author.documentCount" :activation="author.activation"/>
             <Recommendation></Recommendation>
           </el-col>
         </el-row>
@@ -45,11 +48,13 @@
   import  Filters from '@/components/FilterBy/index'
   import Recommendation from '@/components/Recommendation/index'
   import Loading from '@/components/Loading'
+  import AuthorResultInfo from "@/views/Search/components/AuthorResultInfo";
 
   //todo: 从path中获取搜索的条件keywords？
   export default {
     name: 'Search',
     components: {
+        AuthorResultInfo,
       SearchHeader,
       Filters,
       DocumentList,
@@ -81,6 +86,7 @@
         isLoading: true,
         startYear:1970,
         endYear:2020,
+          authors: []
       }
     },
     mounted () {
@@ -112,6 +118,22 @@
         }, err => {
           console.log(err)
         })
+          let keyword = ""
+          if (this.params.combined === ""){
+              keyword = this.params.author
+          }
+          else {
+              keyword = this.params.combined
+          }
+          if (keyword !== "") {
+              this.$api.searchAuthor(keyword).then(res => {
+                  console.log("searchAuthor", keyword, "result", res.data)
+                  this.authors = res.data
+              })
+          }
+          else {
+              this.authors = []
+          }
         console.log("====================fetchList: end====================")
       },
       clickSearch (combined, title, author, affiliation) {
@@ -227,5 +249,9 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.6);
+    }
+
+    .author-result-card{
+        margin: 8px 0;
     }
 </style>
