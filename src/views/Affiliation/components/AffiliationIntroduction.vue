@@ -17,7 +17,7 @@
                 </div>
                 <div class="link">
                     <i class="el-icon-link"></i>
-                    <el-link :disabled="site==null||site===''" :href="site">Affiliation Site</el-link>
+                    <el-link :href="site==null||site===''? 'https://www.bing.com/search?q='+name+'&PC=U316&FORM=CHROMN' : site">Affiliation Site</el-link>
                 </div>
             </el-col>
         </el-row>
