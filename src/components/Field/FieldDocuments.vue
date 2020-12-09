@@ -40,9 +40,8 @@ export default {
   },
   computed: {
     displayDocuments: function () {
-      console.log("+++++", this.documents)
-      console.log("=====", this.documents.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1))
-      return this.documents.slice().sort(this.sortFunc)
+      console.log('FieldDocuments: displayDocuments')
+      return this.documents.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1);
     }
   },
   created() {
@@ -64,6 +63,7 @@ export default {
       this.backTop()
     },
     resort: function (sortType) {
+      console.log("FieldDocuments: resort")
       if (sortType === 'recent') {
         this.sortFunc = sortFuncs.recentSort
       } else if (sortType === 'early') {
@@ -90,6 +90,7 @@ export default {
   },
   watch: {
     '$route': function (to) {
+      this.displayDocuments()
       if (to.path.indexOf('/field') !== -1) {
         this.loadData(to)
       }
