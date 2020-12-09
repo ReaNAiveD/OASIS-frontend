@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import homeRouter from './Home'
 import searchRouter from './Search'
 // import authorRouter from './Author/index';
+import viewMore from './Home/viewMore'
 import authorRelationship from './Author/relationShip'
 import fieldPaper from '@/router/Author/fieldPaper'
 import fieldRouter from './Field'
@@ -31,6 +32,7 @@ const routes = [
   authorPortrait,
   // fieldPaper,
   fieldPie,
+  viewMore,
   {
     path: '/document/:id',
     name: 'DocumentDetail',

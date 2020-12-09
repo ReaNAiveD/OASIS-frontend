@@ -1,32 +1,39 @@
 <template>
     <div class="top-item box">
         <div class="top-name">
+            <div style="font-size:50px;width:20%;color: #6b6b6b;line-height: 80px;margin-left: 3%">
+                <i :class="icon" ></i>
+            </div>
+
             <div class="top-name-title">
                 <strong>{{title}}</strong>
-                <!--                <div style="width: 100% ;font-size: 14px;margin-top: 4px"  >view more</div>-->
-                <el-popover
-                        placement="right"
-                        width="300"
-                        trigger="click">
-                    <el-table :data="data"  height="500">
-                        <el-table-column width="150" property="name" :label="labels[0] || '姓名'"   @click="deleteRow(scope.row)"></el-table-column>
-                        <el-table-column width="70" property="count" :label="labels[1] || '论文数'"></el-table-column>
-                        <el-table-column
-                                fixed="right"
-                                :label="labels[2] || '操作'"
-                                width="70">
-                            <template slot-scope="scope">
-                                <el-button
-                                        @click.native.prevent="detail(data[scope.$index].pushPath)"
-                                        type="text"
-                                        size="small">
-                                    查看
-                                </el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <div slot="reference" style="width: 100% ;font-size: 14px;margin-top: 4px"  >view more</div>
-                </el-popover>
+                <div style="width: 100% ;font-size: 14px;margin-top: 4px"  >
+                    <el-button size="mini" round @click="detail()" >view more</el-button>
+                </div>
+
+<!--                <el-popover-->
+<!--                        placement="right"-->
+<!--                        width="300"-->
+<!--                        trigger="click">-->
+<!--                    <el-table :data="data"  height="500">-->
+<!--                        <el-table-column width="150" property="name" :label="labels[0] || '姓名'"   @click="deleteRow(scope.row)"></el-table-column>-->
+<!--                        <el-table-column width="70" property="count" :label="labels[1] || '论文数'"></el-table-column>-->
+<!--                        <el-table-column-->
+<!--                                fixed="right"-->
+<!--                                :label="labels[2] || '操作'"-->
+<!--                                width="70">-->
+<!--                            <template slot-scope="scope">-->
+<!--                                <el-button-->
+<!--                                        @click.native.prevent="detail(data[scope.$index].pushPath)"-->
+<!--                                        type="text"-->
+<!--                                        size="small">-->
+<!--                                    查看-->
+<!--                                </el-button>-->
+<!--                            </template>-->
+<!--                        </el-table-column>-->
+<!--                    </el-table>-->
+<!--                    <div slot="reference" style="width: 100% ;font-size: 14px;margin-top: 4px"  ><a>view more</a></div>-->
+<!--                </el-popover>-->
             </div>
         </div>
         <div class="top-list">
@@ -64,13 +71,21 @@
         data() {
             return {
                 drawer: false,
-                direction: 'rtl',
+                direction: 'rtl'
             };
         },
         props:{
             title: {
                 type: String,
                 default: 'Top'
+            },
+            icon:{
+                type: String,
+                default: 'el-icon-document'
+            },
+            listType:{
+                type: String,
+                default: 'Authors'
             },
             labels: {
                 type: Array,
@@ -96,8 +111,10 @@
             }
         },
         methods: {
+
             detail(path) {
                 // this.$router.push({path: path, query: {}});
+                path='/home/'+this.listType
                 window.open(this.$router.resolve(path).href, '_blank');
             }
         },
@@ -118,9 +135,10 @@
         /*width: 75%;*/
         width: 100%;
         height: 80px;
+        padding-top: 2%;
         /*height: 100%;*/
         font-size: 18px;
-        background: rgba(20, 98, 138, 0.76);
+        background: rgba(255, 255, 255, 0.61);
         display: flex;
         -webkit-box-pack: justify;
         /*-webkit-box-pack: start;*/
@@ -133,8 +151,9 @@
     .top-name-title{
         /*padding-left: 15px;*/
         margin: 6% auto;
+        margin-top: 4%;
         width: 80%;
-        color: white;
+        color: #6b6b6b;
         text-align:left;
         /*box-sizing: border-box;*/
     }
