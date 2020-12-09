@@ -1,4 +1,6 @@
-FROM node:12 as build-stage
+FROM node:15 as build-stage
+RUN npm config set registry https://registry.npm.taobao.org
+RUN npm config get registry
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
