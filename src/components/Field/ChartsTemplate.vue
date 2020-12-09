@@ -39,7 +39,7 @@
       },
       height: {
         type: String,
-        default: '30vh'
+        default: '28vh'
       },
       option: {
         type: Object,

@@ -116,6 +116,7 @@
             pageChange: function (currentPage) {
                 getDocList(this.$route.params.id, currentPage-1, this.pageSize).then(res => {
                     this.displayDocuments = res.data.content;
+                    console.log("ddddddddddddddddddddd",this.displayDocuments)
                 })
             }
         }

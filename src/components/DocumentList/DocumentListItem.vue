@@ -25,7 +25,7 @@
       <div class="keywords" v-if="keywords[0]!==''">
         <span style="line-height: 25px">Keywords: </span>
         <el-tag type="info" effect="plain" :limitSize="keywords.length" :hit=true
-                v-for="(keyword,index) in keywords.slice(0,keywordLimit)" :key="index">
+                v-for="(keyword,index) in keywords.slice(0,keywordLimit)" :key="index" style="background: transparent">
           {{ keyword }}
         </el-tag>
       </div>

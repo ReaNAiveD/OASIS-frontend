@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      pageSize: 5,
+      pageSize: 10,
       currentPage: 1,
       totalPages: 0,
       totalElements: 0,
@@ -41,7 +41,8 @@ export default {
   computed: {
     displayDocuments: function () {
       console.log('FieldDocuments: displayDocuments')
-      return this.documents.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1);
+      console.log("++++++++++++++++++",this.documents[0].title)
+      return this.documents.slice().sort(this.sortFunc)
     }
   },
   created() {
@@ -54,13 +55,12 @@ export default {
         this.documents = res.data.content
         this.totalPages = res.data.totalPages
         this.totalElements = res.data.totalElements
-        console.log("----", this.documents)
+        console.log("------------------------", this.documents)
       })
     },
     pageChange: function (currentPage) {
       this.currentPage = currentPage
       this.loadData(this.$route)
-      this.backTop()
     },
     resort: function (sortType) {
       console.log("FieldDocuments: resort")
@@ -90,11 +90,11 @@ export default {
   },
   watch: {
     '$route': function (to) {
-      this.displayDocuments()
+      console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
       if (to.path.indexOf('/field') !== -1) {
         this.loadData(to)
       }
-    }
+    },
   },
 }
 </script>

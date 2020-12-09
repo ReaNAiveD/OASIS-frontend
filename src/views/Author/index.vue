@@ -56,6 +56,7 @@
         computed: {
             displayDocuments: function () {
                 console.log('Author\\index: displayDocuments')
+                console.log(this.authorDetail.documents)
                 return this.authorDetail.documents.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1);
             }
         },

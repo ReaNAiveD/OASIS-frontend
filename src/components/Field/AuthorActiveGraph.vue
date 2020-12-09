@@ -50,10 +50,20 @@
                 repulsion: 20
               },
               itemStyle: {
-                borderColor: '#fff',
-                borderWidth: 1,
-                shadowBlur: 5,
-                shadowColor: 'rgba(0, 0, 0, 0.3)'
+                normal:{
+                  // borderColor: '#fff',
+                  // borderWidth: 1,
+                  shadowBlur: 10,
+                  shadowColor: 'rgba(0, 0, 0, 0.45)',
+                  label:{
+                    show:true,
+                    formatter: param=>{
+                      if(param.dataIndex<3){
+                        return param.data.name
+                      }
+                    },
+                  },
+                }
               },
               symbolSize: (value) => {
                 return value
@@ -83,7 +93,7 @@
             // softmax
             return {
               name: data.name,
-              value: Math.ceil(data.activation/sum * 350),
+              value: Math.ceil(data.activation/sum * 500),
               activation: data.activation,
               id: data.author_id
             }

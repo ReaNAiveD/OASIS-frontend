@@ -97,6 +97,8 @@
         // console.log("~~~~~~~~~~~~~~~~~~")
         // console.log(this.docs.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1));
         // console.log(this.docCount);
+        console.log("DocumentWithPaper============")
+        console.log(this.docs)
         return this.docs.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1)
       }
     },

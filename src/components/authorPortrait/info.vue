@@ -16,7 +16,7 @@
                     </div>
 <!--                    小tag们-->
                     <div class="author-field">
-                        <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(field, index) in authorFields" :key="index">{{field.field_name}}</el-tag>
+                        <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(field, index) in authorFields" :key="index" style="cursor: pointer">{{field.field_name}}</el-tag>
                     </div>
                     <div class="author-field">
                         <el-tag class="author-keyword" type="info"  size="small" v-for="(keyword, index) in authorKeywords" :key="index">{{keyword}}</el-tag>
