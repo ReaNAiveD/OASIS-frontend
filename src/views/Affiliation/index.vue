@@ -46,7 +46,7 @@
 
       </el-row>
       <div class="doc-list">
-        <DocumentList :documents="displayDocuments" :document-count="info.docCount"></DocumentList>
+        <DocumentList :documents="displayDocuments" :document-count="info.docCount" :can-sort="false"></DocumentList>
         <el-pagination small layout="prev, pager, next" :total="info.docCount" :page-size="pageSize"
                        @current-change="pageChange"></el-pagination>
       </div>
@@ -209,7 +209,7 @@ export default {
 }
 
 .doc-list {
-  padding: 0 10px;
+  padding: 0 10px 20px;
 }
 
 .top-item {

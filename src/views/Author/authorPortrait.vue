@@ -144,6 +144,7 @@
     }
 
     .coworker-rec-head {
+      padding: 6px;
         float: left;
         color: dimgray;
         font-size: 14px;
