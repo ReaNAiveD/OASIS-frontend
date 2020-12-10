@@ -6,6 +6,7 @@
             <el-breadcrumb-item :to="{path: '/aff-all'}">Affiliation</el-breadcrumb-item>
             <el-breadcrumb-item>{{info.name}}</el-breadcrumb-item>
         </el-breadcrumb>
+        <el-image class="nju-img" fit="cover" :src="njuImg"></el-image>
         <div class="aff-content">
             <el-row>
                 <el-col :sm="18" :xs="24">
@@ -61,6 +62,7 @@
     import { basicInfo, getDocList,getCooperate } from '@/api/affiliation'
     import DocumentList from '@/components/DocumentList/index'
     import TopListCommon from '@/components/TopList/common'
+    import njuImg from '@/assets/nju.jpg'
 
     export default {
         name: "Affiliation",
@@ -82,7 +84,8 @@
                 },
                 pageSize: 5,
                 displayDocuments: [],
-                cooperateList:[]
+                cooperateList:[],
+                njuImg: njuImg
             }
         },
         created: function () {
@@ -138,8 +141,12 @@
         border-bottom: 2px solid #3588f5;
     }
 
-    .aff-content{
+    .nju-img{
         padding-top: 100px;
+        width: 100%;
+        height: 150px;
+    }
+    .aff-content{
         position: relative;
         max-width: 1280px;
         margin: auto;
@@ -161,9 +168,6 @@
 
     .el-row {
         margin-bottom: 20px;
-    &:last-child {
-         margin-bottom: 0;
-     }
     }
     .el-col {
         border-radius: 4px;
