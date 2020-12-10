@@ -88,7 +88,7 @@
           tooltip: {
             trigger: 'item',
             formatter (params) {
-              return params.data[3] + '</br>' + '领域活跃度：' + params.data[0] + '</br>' + '文章数：' + params.data[1] + '</br>' + '总引用量：' + params.data[4]
+              return params.data.name + '</br>' + '领域活跃度：' + params.data.activation + '</br>' + '文章数：' + params.data.value + '</br>' + '总引用量：' + params.data.citaions
             }
           },
             //图例
