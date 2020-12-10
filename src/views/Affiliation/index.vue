@@ -45,8 +45,8 @@
         <!--                </el-col>-->
 
       </el-row>
-      <div class="doc-list">
-        <DocumentList :documents="displayDocuments" :document-count="info.docCount" :can-sort="false"></DocumentList>
+      <div ref="docList" class="doc-list">
+        <DocumentList v-loading="docLoading" :documents="displayDocuments" :document-count="info.docCount" :can-sort="false"></DocumentList>
         <el-pagination small layout="prev, pager, next" :total="info.docCount" :page-size="pageSize"
                        @current-change="pageChange"></el-pagination>
       </div>
@@ -84,6 +84,7 @@ export default {
         docCount: 0,
         citationCount: 0
       },
+      docLoading: true,
       pageSize: 5,
       displayDocuments: [],
       cooperateList: [],
@@ -96,6 +97,7 @@ export default {
     });
     getDocList(this.$route.params.id, 0, this.pageSize).then(res => {
       this.displayDocuments = res.data.content;
+      this.docLoading = false
     });
     getCooperate(this.$route.params.id).then(res => {
       if (res.data.data.length > 7)
@@ -119,9 +121,13 @@ export default {
   },
   methods: {
     pageChange: function (currentPage) {
+      this.docLoading = true
       getDocList(this.$route.params.id, currentPage - 1, this.pageSize).then(res => {
         this.displayDocuments = res.data.content;
+        this.docLoading = false
       })
+      this.$refs.docList.scrollIntoView()
+      window.scrollTo(0, window.scrollY-100)
     }
   }
 }
