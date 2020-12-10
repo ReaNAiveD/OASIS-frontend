@@ -114,8 +114,15 @@
 
             detail(path) {
                 // this.$router.push({path: path, query: {}});
-                path='/home/'+this.listType
-                window.open(this.$router.resolve(path).href, '_blank');
+                if(this.listType==='Authors')
+                    window.open(this.$router.resolve('/author-all').href, '_blank');
+                else if(this.listType==='Affiliation')
+                    window.open(this.$router.resolve('/aff-all').href, '_blank');
+                else{
+                    path='/home/'+this.listType
+                    window.open(this.$router.resolve(path).href, '_blank');
+                }
+
             }
         },
         computed:{
