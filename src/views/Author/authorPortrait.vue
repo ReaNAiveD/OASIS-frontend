@@ -23,12 +23,12 @@
                 </div>
 
                 <div @click="authorRelationDetail" class="echartLayout" :relationArray="relationData">
-                    <authorRelation></authorRelation>
+                    <authorRelation :isPrview="true"></authorRelation>
                 </div>
 
             </div>
             <div class="coworker-rec">
-                <div class="coworker-rec-head"><span class="left">潜在合作者推荐</span></div>
+                <div class="coworker-rec-head"><span class="left" style="color: darkgray;">潜在合作者推荐</span></div>
                 <div class="rec-main">
                     <el-card>
                         <SimpleAuthorList :authors="coworkerRecommend"/>
