@@ -36,7 +36,7 @@
                 </div>
             </div>
             <!--        论文列表-->
-            <div class="doc-list">
+            <div class="doc-list" >
                 <documentWithPaper :docs="authorDetail.documents"
                                    :docCount="authorDetail.documentCount"></documentWithPaper>
             </div>
@@ -97,7 +97,7 @@
     mounted () {
       getAuthorDetail(this.$route.params.id).then(response => {
         this.authorDetail = response.data
-        console.log(this.authorDetail)
+        // console.log(this.authorDetail)
       }).catch(error => {
         console.log(error)
       })

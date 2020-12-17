@@ -74,7 +74,7 @@
               "name":field.field_name,
               "citaions":field.total_citations
           })
-            console.log(dataset)
+            // console.log(dataset)
           // dataset.push(field)
         })
         var option = {

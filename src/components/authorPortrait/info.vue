@@ -72,7 +72,7 @@
         },
         methods:{
             toField(tag) {
-                console.log(this.author.fieldList[tag]);
+                // console.log(this.author.fieldList[tag]);
                 window.open(this.$router.resolve('/field/'+this.author.fieldList[tag].field_id).href, '_blank');
             },
         },
