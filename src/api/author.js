@@ -65,3 +65,14 @@ export function authorAll(order="descent", orderBy="documentCount", page=0, page
         }
     })
 }
+
+export function searchAuthor(authorKeywords){
+    return request({
+        url: '/author/fetch',
+        method: 'post',
+        data: {
+            'authorKeywords': authorKeywords,
+            'maxSize': 5
+        }
+    })
+}

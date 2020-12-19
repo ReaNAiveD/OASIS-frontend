@@ -1,8 +1,11 @@
 <template>
-    <el-col class="col-container" :sm="24">
-        <DocumentList :documents="displayDocuments" :document-count="docCount" @clickSortBy="resort"></DocumentList>
-        <el-pagination small layout="prev, pager, next" :total="docCount" :page-size="pageSize" @current-change="pageChange"></el-pagination>
-    </el-col>
+    <div ref="docList">
+        <el-col class="col-container" :sm="24">
+            <DocumentList :documents="displayDocuments" :document-count="docCount" @clickSortBy="resort"></DocumentList>
+            <el-pagination small layout="prev, pager, next" :total="docCount" :page-size="pageSize" @current-change="pageChange"></el-pagination>
+        </el-col>
+    </div>
+
 </template>
 
 <script>
@@ -78,8 +81,9 @@
     },
     methods: {
       pageChange: function (currentPage) {
-        this.currentPage = currentPage
-        scrollTo(0, 0)
+        this.currentPage = currentPage;
+          this.$refs.docList.scrollIntoView();
+          window.scrollTo(0, window.scrollY-100)
       },
       resort: function (sortType) {
         if (sortType === 'recent') {
@@ -94,11 +98,6 @@
     props: ['docs', 'docCount'],
     computed: {
       displayDocuments: function () {
-        // console.log("~~~~~~~~~~~~~~~~~~")
-        // console.log(this.docs.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1));
-        // console.log(this.docCount);
-        console.log("DocumentWithPaper============")
-        console.log(this.docs)
         return this.docs.slice().sort(this.sortFunc).slice(this.pageSize * (this.currentPage - 1), this.pageSize * (this.currentPage) - 1)
       }
     },

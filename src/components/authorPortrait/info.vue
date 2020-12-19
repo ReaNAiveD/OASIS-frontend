@@ -16,7 +16,7 @@
                     </div>
 <!--                    小tag们-->
                     <div class="author-field">
-                        <el-tag class="author-keyword" @click="toField(index)" size="small" v-for="(field, index) in authorFields" :key="index" style="cursor: pointer">{{field.field_name}}</el-tag>
+                        <el-tag class="author-keyword" style="cursor: pointer"  @click="toField(index)" size="small" v-for="(field, index) in authorFields" :key="index">{{field.field_name}}</el-tag>
                     </div>
                     <div class="author-field">
                         <el-tag class="author-keyword" type="info"  size="small" v-for="(keyword, index) in authorKeywords" :key="index">{{keyword}}</el-tag>
@@ -72,7 +72,7 @@
         },
         methods:{
             toField(tag) {
-                console.log(this.author.fieldList[tag]);
+                // console.log(this.author.fieldList[tag]);
                 window.open(this.$router.resolve('/field/'+this.author.fieldList[tag].field_id).href, '_blank');
             },
         },
@@ -114,9 +114,11 @@
     .author-descrip{
         margin: 5px;
         font-size: smaller;
+        margin-top: 10px;
     }
     .author-field{
         margin: 5px;
+        margin-top: 10px;
     }
     .author-keyword{
         float: left;

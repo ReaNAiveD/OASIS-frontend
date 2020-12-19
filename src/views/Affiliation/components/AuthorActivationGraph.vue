@@ -5,7 +5,7 @@
             <span class="title-text">{{title}}</span>
         </div>
         <div class="charts">
-            <CommonCharts ref="bar" :option="option"/>
+            <CommonCharts ref="graph" :option="option"/>
         </div>
     </div>
 </template>
@@ -41,7 +41,7 @@
                             min: 5,
                             max: 90,
                             inRange: {
-                                symbolSize: [5, 20]
+                                symbolSize: [7, 25]
                             }
                         },
                         // {
@@ -78,21 +78,44 @@
         },
         created:function(){
             getAuthorActivation(this.$route.params.id).then(res =>{
-                this.option.series[0].data = res.data.data.slice(0, 50).map(function(data){
+                this.option.series[0].data = res.data.data.slice(0, 50).map(data => {
                     return {
                         name: data.name,
-                        value: Math.ceil(data.activation * 10),
+                        value: data.activation,
                         activation: data.activation,
                         docCount: data.docCount,
-                        id: data.id
+                        id: data.id,
+                        onclick: () => {this.clickNode(data.id)}
                     }
                 });
+                let sorted = this.option.series[0].data.sort((a, b) => a.value - b.value)
+                let min = sorted[0].value
+                let max = sorted[sorted.length - 1].value
+                let initValue = 5
+                if (min === max){
+                    initValue = 20
+                }
+                let before = min
+                sorted.forEach((value) => {
+                    if (value.value > before){
+                        before = value.value
+                        value.value = (value.value - min) / (max - min) * 85 + 5
+                        initValue = value.value
+                    }
+                    else {
+                        value.value = initValue
+                    }
+                })
+                this.option.series[0].data = sorted
                 for (let i = 0; i < this.option.series[0].data.length; i++){
                     this.option.series[0].data[i].itemStyle = {
                         color : this.getRandomColor('#c26eff', '#d41512')
                     }
                 }
-                this.$refs.bar.updateCharts();
+                this.$refs.graph.setOnClick(param => {
+                    param.data.onclick()
+                })
+                this.$refs.graph.updateCharts();
             });
             // this.option.series[0].data = this.option.series[0].data.map(function (a) {
             //     a.itemStyle.color = this.getRandomColor(parseInt('71', 16), parseInt('40', 16), parseInt('96', 16), 1,
@@ -111,6 +134,9 @@
                 const a2 = parseInt(color2.substr(7, 2), 16) | 255;
                 return 'rgba('+Math.floor(r1+(r2-r1)*Math.random())+','+Math.floor(g1+(g2-g1)*Math.random())+','
                     +Math.floor(b1+(b2-b1)*Math.random())+','+Math.floor(a1+(a2-a1)*Math.random())+')'
+            },
+            clickNode(id){
+                window.open(this.$router.resolve('/author/' + id).href, '_blank');
             }
         }
     }

@@ -2,7 +2,7 @@
   <div class="document-list-container">
     <div class="head-container" id="test">
       <span class="left">Papers({{ documentCount }})</span>
-      <el-select class="right" size="small" v-model="orderby">
+      <el-select v-if="canSort" class="right" size="small" v-model="orderby">
         <el-option
             v-for="item in options"
             :key="item.value"
@@ -10,7 +10,7 @@
             :value="item.value">
         </el-option>
       </el-select>
-      <span class="middle">Sort By</span>
+      <span v-if="canSort" class="middle">Sort By</span>
 
     </div>
 
@@ -42,6 +42,10 @@ export default {
     documentCount: {
       type: Number,
       default: 0
+    },
+    canSort: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

@@ -8,6 +8,13 @@
 
   export default {
     name: 'authorRelation',
+      props:{
+          isPrview: {
+              //如果是预览图，不会点击节点跳转
+              type: Boolean,
+              default: false
+          }
+      },
     data () {
       return {
         myChart: null,
@@ -26,19 +33,13 @@
     },
     methods: {
       loadData(){
-        // console.log(this.relationArray);
-        // console.log(this.$route.params.id);
-        for (let i = 0; i < 1000; i++) {
-          this.categoryArray[i] = {
-            name: ''
-          }
-        }
+          this.categoryArray = [];
         // 获取作者关系
         getAuthorRelation(this.$route.params.id).then(response => {
           this.relationArray = response.data
         }).catch(error => {
           console.log(error)
-        })
+        });
 
         // 获取潜在合作者推荐
         getCoworkerRecommend(this.$route.params.id).then(response=>{
@@ -66,10 +67,17 @@
           },
           tooltip: {},
           legend: {
-            x: 'left',
-            data: this.categories.map(function (a) {//显示策略
-              return a.name
-            })
+              // x: "left",
+              type: "scroll",
+              orient: "vertical",
+              left: 10,
+              top: 20,
+              bottom: 20,
+              data: this.categories.map(function(a) {
+                  //显示策略
+                  return a.name;
+              }),
+              selected: this.selectedcategoryArray
           },
           series: [
             {
@@ -82,9 +90,6 @@
                 }
               },
               edgeSymbol: 'circle',
-              // force:{//点之间的距离
-              //     repulsion:3000
-              // },
               force: { //力引导图基本配置
                 //initLayout: ,//力引导的初始化布局，默认使用xy轴的标点
                 repulsion: 800,//节点之间的斥力因子。支持数组表达斥力范围，值越大斥力越大。
@@ -96,9 +101,7 @@
               layout: 'force',//点之间的距离
               roam: true,
               itemStyle: {//球颜色
-                normal: {
-                  //color: '#ed3e5e'
-                },
+                normal: {},
 
                 //鼠标放上去有阴影效果
                 emphasis: {
@@ -132,21 +135,14 @@
           ]
         }
         this.myChart.setOption(option)
-        // this.myChart.on('click', function (params) {
-        //     console.log(params.data.id)//获取点击的人或关系的数据信息
-        //         // console.log(this.$route.params.id)
-        //         // this.goAuthor(params.data.id)
-        //     window.open(routeTemp.resolve('/author/'+params.data.id).href, '_blank');
-        // });
         this.myChart.on('click', param => {
-          // console.log("func:",this.clickItem)
-          // console.log(param);
-          console.log(param.data.authorId)
-          // this.$router.push({ path: '/author/' + param.data.authorId })
-          let routeData=this.$router.resolve({
-             path: '/author/' + param.data.authorId
-          })
-          window.open(routeData.href, '_blank')
+
+            if (!this.isPrview && param.dataType === "node") {
+                let routeData = this.$router.resolve({
+                    path: '/author/' + param.data.authorId
+                });
+                window.open(routeData.href, '_blank');
+            }
         })
 
       },
@@ -154,8 +150,9 @@
         window.open(this.$router.resolve('/author/' + id).href, '_blank')
       },
       getData (input) {
-        let data = []
-        let item
+        let data = [];
+        let categoryArrayTemp = [];
+        let item;
         // 作者关系数据
         for (item of input) {
           data.push({
@@ -164,37 +161,56 @@
             value: item.content.activation,
             id: item.id,
             authorId: item.content.id
-          })
+          });
+          // console.log(item)
+            if (item.content.affiliation.length > 0) {
+                categoryArrayTemp.push(item.content.affiliation);
+            }
+            else {
+                categoryArrayTemp.push("暂无机构信息");
+            }
         }
 
         const scale=10
-        // data.push({
-        //   category:0,
-        //   name: 'Yang Liu',
-        //   value: scale,
-        //   id: 0,
-        //   authorId: 10551
-        // })
-
+          let categorytempcount = [...new Set(categoryArrayTemp)].length;
         let id=data.length
         // 潜在合作者数据
         this.coworkerRecommend.map(recommend=>{
           data.push({
-            category: 0,
+            category: categorytempcount,
             name: recommend.authorName,
             value:(recommend.score*scale).toFixed(2),
             id: id++,
-            authorId: recommend.id
-          })
-        })
-        // console.log(input)
-        console.log("getData()")
-        console.log(data)
-        return data
+            authorId: recommend.id,
+              symbol: "pin"
+          });
+            categoryArrayTemp.push("潜在合作者");
+        });
+          // console.log(categoryArrayTemp)
+          let temp = [...new Set(categoryArrayTemp)];
+          this.selectedcategoryArray = {};
+          // console.log(temp);
+          // console.log(this.categoryArray)
+          for (item of temp) {
+              this.categoryArray.push({ name: item });
+          }
+          // 预览只显示0个图例
+          if (this.isPrview && this.categoryArray.length > 0) {
+              for (var i = 0; i < this.categoryArray.length; i++)
+                  this.categoryArray[i] = "";
+          }
+          //第10个机构及之后初加载不显示
+          for (let i = 0; i < this.categoryArray.length; i++) {
+              // console.log("i:",i,this.categoryArray[i].name)
+              this.selectedcategoryArray[this.categoryArray[i].name] = i < 10;
+          }
+          // console.log(this.categoryArray)
+          // console.log(this.selectedcategoryArray)
+        return data;
       },
       getRelation (input) {
-        let data = []
-        let item
+        let data = [];
+        let item;
         for (item of input) {
           data.push({
             source: item.v1,
@@ -211,24 +227,10 @@
             weight: 5,
             value: '潜在合作者关系',
           })
-        })
-        console.log("getRelation()")
-        console.log(data)
+        });
         return data
       },
 
-      // dataEChart () {
-      //   let data = [
-      //     { category: 0, name: '乔布斯', value: 10, label: '乔布斯', id: 1 },
-      //   ]
-      //   return data
-      // },
-      // linkEChart () {
-      //   let dataLink = [
-      //     { source: '2', target: '1', weight: 1, value: '女儿\r' },
-      //   ]
-      //   return dataLink
-      // },
     },
     watch:{
       '$route'(){

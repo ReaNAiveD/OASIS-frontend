@@ -23,12 +23,12 @@
                 </div>
 
                 <div @click="authorRelationDetail" class="echartLayout" :relationArray="relationData">
-                    <authorRelation></authorRelation>
+                    <authorRelation :isPrview="true"></authorRelation>
                 </div>
 
             </div>
             <div class="coworker-rec">
-                <div class="coworker-rec-head"><span class="left">潜在合作者推荐</span></div>
+                <div class="coworker-rec-head"><span class="left" style="color: darkgray;">潜在合作者推荐</span></div>
                 <div class="rec-main">
                     <el-card>
                         <SimpleAuthorList :authors="coworkerRecommend"/>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <!--        论文列表-->
-            <div class="doc-list">
+            <div class="doc-list" >
                 <documentWithPaper :docs="authorDetail.documents"
                                    :docCount="authorDetail.documentCount"></documentWithPaper>
             </div>
@@ -97,7 +97,7 @@
     mounted () {
       getAuthorDetail(this.$route.params.id).then(response => {
         this.authorDetail = response.data
-        console.log(this.authorDetail)
+        // console.log(this.authorDetail)
       }).catch(error => {
         console.log(error)
       })
@@ -144,6 +144,7 @@
     }
 
     .coworker-rec-head {
+      padding: 6px;
         float: left;
         color: dimgray;
         font-size: 14px;

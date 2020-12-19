@@ -27,11 +27,13 @@
         <div class="home-top-list">
             <div class="top-list">
 <!--                <TopList v-bind:authors="topAuthors" ></TopList>-->
-                <TopListCommon :title="'Top Authors'" :measure="'papers'"
+                <TopListCommon :title="'Top Authors'" :measure="'papers'" :icon="'el-icon-user'" :listType="'Authors'"
                                :data="topAuthorsData"></TopListCommon>
-                <TopListCommon :title="'Top Download Documents'" :measure="'downloads'" :labels="['标题', '下载量', '操作']"
+                <TopListCommon :title="'Top Download Documents'" :measure="'downloads'" :listType="'Download'"
+                               :icon="'el-icon-document'" :labels="['标题', '下载量', '操作']"
                                :data="topDownloadDocumentsData"></TopListCommon>
-                <TopListCommon :title="'Top Affiliation'" :measure="'activation'" :labels="['标题', '下载量', '操作']"
+                <TopListCommon :title="'Top Affiliation'" :measure="'activation'" :listType="'Affiliation'"
+                               :icon="'el-icon-office-building'" :labels="['标题', '下载量', '操作']"
                                :data="topAffiliationActiveData"></TopListCommon>
             </div>
         </div>
@@ -173,6 +175,7 @@
 .home-top-list {
     position: relative;
     margin-top: -100px;
+    margin-bottom: 200px;
     left: 0px;
     width: 100%;
     height: 500px;

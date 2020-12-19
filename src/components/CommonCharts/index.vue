@@ -30,11 +30,16 @@
         },
         methods: {
             drawChart () {
-                this.charts = echarts.init(this.$refs.charts)
+                if (!this.charts) this.charts = echarts.init(this.$refs.charts)
                 this.charts.setOption(this.option)
             },
             updateCharts(){
+                if (!this.charts) this.charts = echarts.init(this.$refs.charts)
                 this.charts.setOption(this.option)
+            },
+            setOnClick(event){
+                if (!this.charts) this.charts = echarts.init(this.$refs.charts)
+                this.charts.on('click', event)
             }
         }
     }
