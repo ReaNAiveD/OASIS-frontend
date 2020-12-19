@@ -1,5 +1,5 @@
 <template>
-  <div v-if="documents.length!==0">
+  <div v-if="documents.length!==0" ref="docList">
     <DocumentList :documents="displayDocuments" :document-count="totalElements" @clickSortBy="resort"></DocumentList>
     <el-pagination small layout="prev, pager, next" :total="totalElements" :page-size="pageSize"
                    @current-change="pageChange"></el-pagination>
@@ -61,6 +61,9 @@ export default {
     pageChange: function (currentPage) {
       this.currentPage = currentPage
       this.loadData(this.$route)
+      // this.backTop()
+      this.$refs.docList.scrollIntoView()
+      window.scrollTo(0, window.scrollY-100)
     },
     resort: function (sortType) {
       console.log("FieldDocuments: resort")
@@ -72,15 +75,14 @@ export default {
         this.sortFunc = sortFuncs.defaultSort
       }
     },
-    // todo: qiao~为什么获取的test.scrollTop一直是0呢？？？
-    backTop() {
+    backTop () {
       let timer = setInterval(function () {
-        let osTop = document.documentElement.scrollTop || document.body.scrollTop
-        // let test = document.querySelector('#test').scrollTop
-        console.log("osTop:", osTop)
-        // console.log("test:", test)
+        this.$refs.docList.scrollIntoView()
+        let osTop = window.scrollY-100
         let speed = Math.floor(-osTop / 5)
-        document.documentElement.scrollTop = document.body.scrollTop = osTop + speed
+        console.log(osTop+speed)
+        window.scrollTo(0, osTop + speed)
+        // document.documentElement.scrollTop = document.body.scrollTop = osTop + speed
         this.isTop = true
         if (osTop === 0) {
           clearInterval(timer)
