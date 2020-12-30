@@ -58,7 +58,7 @@
                   label:{
                     show:true,
                     formatter: param=>{
-                      if(param.dataIndex<3){
+                      if(param.dataIndex>this.option.series[0].data.length-4){
                         return param.data.name
                       }
                     },
@@ -97,11 +97,11 @@
               activation: data.activation,
               id: data.id
             }
-          })
+          }).reverse()
           this.affiliationIds = res.data.data.slice(0, size).map(function (data) {
             return data.affiliation_id
           })
-          let colors = gradientColor('#d700f5', '#fff709', size)
+          let colors = gradientColor('#fff709', '#d700f5', size)
           for (let i = 0; i < size; i++) {
             this.option.series[0].data[i].itemStyle = {
               color: colors[i]

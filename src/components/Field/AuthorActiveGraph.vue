@@ -14,6 +14,7 @@
     },
     data () {
       return {
+        pointNum:0,
         authorIds:[],
         title: '学者活跃度统计',
         option: {
@@ -58,7 +59,7 @@
                   label:{
                     show:true,
                     formatter: param=>{
-                      if(param.dataIndex<3){
+                      if(param.dataIndex>this.option.series[0].data.length-4){
                         return param.data.name
                       }
                     },
@@ -97,11 +98,11 @@
               activation: data.activation,
               id: data.author_id
             }
-          })
+          }).reverse()
           this.authorIds=res.data.data.slice(0, size).map(function (data) {
             return data.author_id
           })
-          let colors = gradientColor('#3399FF', '#5aff00', size)
+          let colors = gradientColor('#5aff00', '#3399FF', size)
           for (let i = 0; i < size; i++) {
             this.option.series[0].data[i].itemStyle = {
               color: colors[i]
