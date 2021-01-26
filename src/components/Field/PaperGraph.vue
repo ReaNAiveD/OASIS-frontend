@@ -32,6 +32,10 @@
           yAxis: {
             type: 'value'
           },
+          grid:{
+            top: '15%',
+            bottom: '10%'
+          },
           series: [{
             data: [],
             type: 'line'

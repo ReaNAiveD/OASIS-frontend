@@ -50,10 +50,20 @@
                 repulsion: 20
               },
               itemStyle: {
-                borderColor: '#fff',
-                borderWidth: 1,
-                shadowBlur: 5,
-                shadowColor: 'rgba(0, 0, 0, 0.3)'
+                normal:{
+                  // borderColor: '#fff',
+                  // borderWidth: 1,
+                  shadowBlur: 10,
+                shadowColor: 'rgba(0, 0, 0, 0.45)',
+                  label:{
+                    show:true,
+                    formatter: param=>{
+                      if(param.dataIndex>this.option.series[0].data.length-4){
+                        return param.data.name
+                      }
+                    },
+                  },
+                }
               },
               symbolSize: (value) => {
                 return value
@@ -73,18 +83,25 @@
           let limitSize = 30
           let totalSize = res.data.data.length
           let size = totalSize > limitSize ? limitSize : totalSize
-          this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
+          let activation_list=res.data.data.slice(0, size)
+          // 统计前size个活跃度的总和
+          let sum=0
+          for (let i = 0; i < size; i++) {
+            sum+=activation_list[i].activation
+          }
+          this.option.series[0].data = activation_list.map(function (data) {
+            // softmax
             return {
               name: data.affiliation,
-              value: Math.ceil(data.activation * 5),
+              value: Math.ceil(data.activation/sum * 500),
               activation: data.activation,
               id: data.id
             }
-          })
+          }).reverse()
           this.affiliationIds = res.data.data.slice(0, size).map(function (data) {
             return data.affiliation_id
           })
-          let colors = gradientColor('#d700f5', '#fff709', size)
+          let colors = gradientColor('#fff709', '#d700f5', size)
           for (let i = 0; i < size; i++) {
             this.option.series[0].data[i].itemStyle = {
               color: colors[i]
@@ -97,7 +114,7 @@
         console.log("click")
         let temp=this.$router.resolve({ path: '/aff/' + this.affiliationIds[param.dataIndex] })
         window.open(temp.href, '_blank');
-      }
+      },
     },
     watch:{
       '$route': function (to) {

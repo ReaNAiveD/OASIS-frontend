@@ -2,29 +2,6 @@
     <!--    被下载次数最多的作者-->
     <div class="recommendation-container">
         <div>Recommendation</div>
-<!--        <el-card class="box-card" v-for="(item,index) in recommendations" :key="index">-->
-<!--            <div slot="header" class="clearfix">-->
-<!--                <span>{{item.name}}</span>-->
-<!--            </div>-->
-<!--            <div class="statistic">-->
-<!--                <div class="left">-->
-<!--                    <div>{{item.papers_count}}</div>-->
-<!--                    <div>Papers</div>-->
-<!--                </div>-->
-<!--                <div class="right">-->
-<!--                    <div>{{item.h_index}}</div>-->
-<!--                    <div>H-index</div>-->
-<!--                </div>-->
-<!--                <div class="middle">-->
-<!--                    <div>{{item.citations_count}}</div>-->
-<!--                    <div>Citations</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="introduction">-->
-<!--                <strong>Introduction: </strong>-->
-<!--                {{item.introduction}}-->
-<!--            </div>-->
-<!--        </el-card>-->
         <MaxDownload></MaxDownload>
     </div>
 
@@ -69,6 +46,7 @@
 
 <style scoped>
     .recommendation-container> div:first-child {
+      text-align: left;
         height: 35px;
         line-height: 35px;
         color: darkgray;

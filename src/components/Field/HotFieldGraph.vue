@@ -1,5 +1,5 @@
 <template>
-    <ChartsTemplate :title="title" :clickItem="clickItem" height="400px" ref="chartsTemplate"></ChartsTemplate>
+    <ChartsTemplate :title="title" :clickItem="clickItem" height="300px" ref="chartsTemplate"></ChartsTemplate>
 </template>
 
 <script>
@@ -30,10 +30,10 @@
             data: ['领域活跃度', '文章数量']
           },
           grid: {
-            left: '8%',
-            right: '3%',
-            bottom: '3%',
-            // top:'20%',
+            left: '13%',
+            right: '4%',
+            bottom: '0%',
+            top:'10%',
             containLabel: true
           },
           xAxis: {

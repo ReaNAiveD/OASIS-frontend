@@ -1,37 +1,43 @@
 <template>
     <div class="container">
         <SearchHeader v-on:clickSearch="clickSearch"></SearchHeader>
-        <el-container>
-            <el-aside style="width: 250px">
-                <FilterBy v-on:clickFilter="clickFilter"></FilterBy>
-            </el-aside>
-            <el-main>
-                <Loading v-if="isLoading" style="position: fixed"></Loading>
-                <div :class="{gray:isLoading}">
-                    <DocumentList v-if="documents.length!==0" :documents="documents" :document-count="totalElements"
-                                  v-on:clickSortBy="clickSortBy"></DocumentList>
-                    <el-card v-else-if="!isLoading" style="margin-top: 35px ;color:lightgray">
-                        很抱歉<br/>没有搜索到相关的论文！<br/>
-                        不妨试试别的关键词～
-                    </el-card>
-                </div>
-                <div class="block">
-                    <span class="demonstration"></span>
-                    <el-pagination
-                            @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
-                            :current-page.sync="params.page+1"
-                            :page-size="params.pageSize"
-                            layout="prev, pager, next, jumper"
-                            :total="totalElements"
-                            :small=true>
-                    </el-pagination>
-                </div>
-            </el-main>
-            <el-aside style="width: 290px">
-                <Recommendation></Recommendation>
-            </el-aside>
-        </el-container>
+      <div class="content">
+        <el-row :gutter="5" type="flex" justify="space-around">
+          <el-col :span="5">
+            <Filters @changeYear="changeYear" @changePublishType="changePublishType"></Filters>
+          </el-col>
+          <el-col :span="11">
+            <Loading v-if="isLoading" style="position: fixed;z-index: 99999"></Loading>
+            <div>
+              <DocumentList v-if="documents.length!==0" :documents="documents" :document-count="totalElements"
+                            v-on:clickSortBy="clickSortBy" :keyword-limit="10"></DocumentList>
+              <el-card v-else-if="!isLoading" style="margin-top: 35px ;color:lightgray">
+                很抱歉<br/>没有搜索到相关的论文！<br/>
+                不妨试试别的关键词～
+              </el-card>
+            </div>
+            <div class="block">
+              <span class="demonstration"></span>
+              <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page.sync="params.page+1"
+                  :page-size="params.pageSize"
+                  layout="prev, pager, next, jumper"
+                  :total="totalElements"
+                  :small=true>
+              </el-pagination>
+            </div>
+          </el-col>
+          <el-col :span="6">
+              <AuthorResultInfo v-for="(author, index) in authors" class="author-result-card" :key="index" :id="author.authorId" :name="author.name"
+                                :aff="author.affiliation" :domains="author.domains.split(';').map((d) => {d.slice(0, d.length-3)})"
+                                :doc-count="author.documentCount" :activation="author.activation"/>
+            <Recommendation></Recommendation>
+          </el-col>
+        </el-row>
+      </div>
+      <div :class="{loading:isLoading}"></div>
     </div>
 
 </template>
@@ -39,16 +45,18 @@
 <script>
   import SearchHeader from '@/components/SearchHeader/SearchHeader'
   import DocumentList from '@/components/DocumentList/index'
-  import FilterBy from '@/components/FilterBy/index'
+  import  Filters from '@/components/FilterBy/index'
   import Recommendation from '@/components/Recommendation/index'
   import Loading from '@/components/Loading'
+  import AuthorResultInfo from "@/views/Search/components/AuthorResultInfo";
 
   //todo: 从path中获取搜索的条件keywords？
   export default {
     name: 'Search',
     components: {
+        AuthorResultInfo,
       SearchHeader,
-      FilterBy,
+      Filters,
       DocumentList,
       Recommendation,
       Loading
@@ -57,25 +65,28 @@
       return {
         // 查询参数：由子组件来更新这些参数
         params: {
-          'combined': '',
-          'title': '',
-          'author': '',
-          'abstract': '',
-          'affiliation': '',
-          'publicationTitle': '',
-          'yearFrom': 1970,
-          'yearTo': 2020,
-          'publisher': '',
-          'conference': '',
-          'orderby': 'default',
-          'pageSize': 5,
-          'page': 0
+          'combined': '',  // 混合搜索关键词，根据此关键词在包括论文标题、作者、年份等中匹配，可包含多个关键词，空格分隔，作且运算，可选，空为全部
+          'title': '',  // 论文标题搜索关键词，可选，空为全部
+          'author': '',  // 论文作者搜索关键词，可选，空为全部
+          'abstract': '',  // 摘要搜索关键词，可选，空为全部
+          'affiliation': '',  // 论文第一作者所属单位搜索关键词，可选，空为全部
+          'publicationTitle': '',  // 出版物名搜索关键词，可选，空为全部
+          'yearFrom': 1970,  // 出版年份搜索关键词，可选，空为全部
+          'yearTo': 2020,  // 出版年份搜索关键词，可选，空为全部
+          'publisher': '',  // 出版商搜索关键词，可选，空为全部
+          'conference': 'all',  // 会议，"all"，"ase"或"icse"或"others"，默认为"all"
+          'orderby': 'default',  // 排序方式关键词，默认为default，可选值default/early/recent
+          'pageSize': 5,  // 分页大小，可选，默认20
+          'page': 0  // 页号，可选，默认0（也可能是1，最小的那个）
         },
         // pageable:{},
         totalPages: 0,
         totalElements: 0,
         documents: [],
-        isLoading: true
+        isLoading: true,
+        startYear:1970,
+        endYear:2020,
+          authors: []
       }
     },
     mounted () {
@@ -94,7 +105,8 @@
       fetchList () {
         this.isLoading = true
 
-        console.log(this.params)
+        console.log("====================fetchList: start====================")
+        console.log("params:" ,this.params)
         this.$api.fetchList(this.params).then(res => {
           this.documents = res.data.content
           this.totalPages = res.data.totalPages
@@ -106,6 +118,23 @@
         }, err => {
           console.log(err)
         })
+          let keyword = ""
+          if (this.params.combined === ""){
+              keyword = this.params.author
+          }
+          else {
+              keyword = this.params.combined
+          }
+          if (keyword !== "") {
+              this.$api.searchAuthor(keyword).then(res => {
+                  console.log("searchAuthor", keyword, "result", res.data)
+                  this.authors = res.data
+              })
+          }
+          else {
+              this.authors = []
+          }
+        console.log("====================fetchList: end====================")
       },
       clickSearch (combined, title, author, affiliation) {
         this.params.combined = combined
@@ -121,12 +150,8 @@
         this.params.page=0
         this.fetchList()
       },
-      clickFilter (yearFrom, yearTo) {
-        this.params.yearFrom = yearFrom
-        this.params.yearTo = yearTo
+      clickFilter () {
         this.params.page=0
-        console.log(this.params.yearFrom)
-        console.log(this.params.yearTo)
         this.fetchList()
       },
       handleSizeChange (val) {
@@ -147,6 +172,26 @@
             clearInterval(timer)
           }
         }, 30)
+      },
+      changeYear(startYear,endYear){
+        this.params.yearFrom=startYear
+        this.params.yearTo=endYear
+        // todo: 调用fetchList
+        console.log("changeYear--param: ",this.params)
+        this.clickFilter()
+      },
+      changePublishType(checkList){
+        let count=checkList.length
+        if (count===2){
+          this.params.conference='all'
+        }else if(count===1){
+          this.params.conference=checkList[0]
+        }else if(count===0){
+          this.params.conference='others'
+        }
+        // todo: 调用fetchList
+        console.log("changePublishType--param: ",this.params)
+        this.clickFilter()
       }
     }
   }
@@ -154,47 +199,59 @@
 
 <style scoped>
     .el-header, .el-footer {
-        background-color: #B3C0D1;
+        /*background-color: #B3C0D1;*/
         color: #333;
         text-align: center;
         line-height: 60px;
     }
 
-    .el-container {
-        background-color: whitesmoke;
+    .el-row {
+        /*background-color: whitesmoke;*/
         padding-top: 50px;
+      /*margin: auto;*/
+      /*text-align: center;*/
     }
 
-    .el-aside {
-        /*background-color: #D3DCE6;*/
-        color: #333;
-        text-align: left;
-        /*line-height: 200px;*/
-        /*width: 200px;*/
-        margin: 10px;
-    }
-
-    .el-main {
+    .el-col {
         /*background-color: #E9EEF3;*/
         color: #333;
-        text-align: center;
+        /*text-align: center;*/
         /*line-height: 160px;*/
         margin: 10px;
         padding: 0;
-        min-width: 380px;
+        min-width: 280px;
     }
 
-    body > .el-container {
+    body > .el-row {
         margin-bottom: 40px;
     }
 
-    .block {
-        background-color: whitesmoke;
+    .container {
+      background-color: whitesmoke;
     }
 
-    .gray {
-        opacity: 0.15;
-        background: whitesmoke;
+    .content {
+      position: relative;
+      margin: auto;
+      min-width: 1220px;
+      max-width: 1700px;
+      padding-left: 40px;
+      padding-right: 40px;
     }
 
+    .loading {
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .author-result-card{
+        margin: 8px 0;
+    }
 </style>

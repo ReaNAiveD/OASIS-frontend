@@ -59,7 +59,7 @@ export function get_field_document(id,pagesize,page) {
     method: 'get',
     params: {
       id: id,
-      pagesize:pagesize,
+      pageSize:pagesize,
       page:page
     }
   })

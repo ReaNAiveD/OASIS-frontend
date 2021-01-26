@@ -9,6 +9,7 @@
                                   :authors="document.authors" :docu-abstract="document.docuAbstract"
                                   :publication-year="document.publicationYear" :keywords="document.keywords.split(';')"
                                   :reference-count="document.referenceCount"
+                                  :keyword-limit="3"
                                   />
             </div>
         </div>
@@ -40,6 +41,7 @@
 
 <style scoped>
     .max-download-container > div:first-child {
+      text-align: left;
         height: 35px;
         line-height: 35px;
         color: darkgray;

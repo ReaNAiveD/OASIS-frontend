@@ -58,18 +58,17 @@
                             data: ['ASE', 'ICSE']//图例上显示的饼图各模块上的名字
                         },
                         //饼图中各模块的颜色
-                        //color: ['#dd4838', '#b6a2de', '#5ab1ef'],
+                        color: ['#dd2131', '#c24a0e', '#efb80e'],
                         // 饼图数据
                         visualMap: {
                             show: false,
-                            // min: 80,
-                            // max: 600,
+                            min: 80,
+                            max: 600,
                             inRange: {
                                 colorLightness: [0.5, 1]
                             }
                         },
                         itemStyle: {
-                            color: '#c23531',
                             shadowBlur: 10,
                             shadowColor: 'rgba(68,122,191,0.5)'
                         },

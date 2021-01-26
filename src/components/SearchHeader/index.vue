@@ -13,7 +13,7 @@
 
 <script>
   export default {
-    name: 'SearchHeader',
+    name: 'SearchHeader-index',
     data () {
       return {
         combined: '',

@@ -14,6 +14,7 @@
     },
     data () {
       return {
+        pointNum:0,
         authorIds:[],
         title: '学者活跃度统计',
         option: {
@@ -50,13 +51,22 @@
                 repulsion: 20
               },
               itemStyle: {
-                borderColor: '#fff',
-                borderWidth: 1,
-                shadowBlur: 5,
-                shadowColor: 'rgba(0, 0, 0, 0.3)'
+                normal:{
+                  // borderColor: '#fff',
+                  // borderWidth: 1,
+                  shadowBlur: 10,
+                  shadowColor: 'rgba(0, 0, 0, 0.45)',
+                  label:{
+                    show:true,
+                    formatter: param=>{
+                      if(param.dataIndex>this.option.series[0].data.length-4){
+                        return param.data.name
+                      }
+                    },
+                  },
+                }
               },
               symbolSize: (value) => {
-                // console.log("activation: ",value)
                 return value
               },
               data: []
@@ -74,18 +84,25 @@
           let limitSize=30
           let totalSize=res.data.data.length
           let size=totalSize>limitSize?limitSize:totalSize
-          this.option.series[0].data = res.data.data.slice(0, size).map(function (data) {
+          let activation_list=res.data.data.slice(0, size)
+          // 统计前size个活跃度的总和
+          let sum=0
+          for (let i = 0; i < size; i++) {
+            sum+=activation_list[i].activation
+          }
+          this.option.series[0].data = activation_list.map(function (data) {
+            // softmax
             return {
               name: data.name,
-              value: Math.ceil(data.activation * 5),
+              value: Math.ceil(data.activation/sum * 500),
               activation: data.activation,
               id: data.author_id
             }
-          })
+          }).reverse()
           this.authorIds=res.data.data.slice(0, size).map(function (data) {
             return data.author_id
           })
-          let colors = gradientColor('#3399FF', '#5aff00', size)
+          let colors = gradientColor('#5aff00', '#3399FF', size)
           for (let i = 0; i < size; i++) {
             this.option.series[0].data[i].itemStyle = {
               color: colors[i]

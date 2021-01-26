@@ -1,5 +1,5 @@
 <template>
-    <div class="graph-container" :style="{width:width,height:height}">
+    <div class="graph-container">
         <div class="title">
             <i class="el-icon-data-line"></i>
             <el-link :underline="false">{{title}}</el-link>
@@ -25,47 +25,91 @@
   export default {
     name: 'Charts',
     props: {
-      clickItem:{
-        type:Function,
-        default:null
+      clickItem: {
+        type: Function,
+        default: null
       },
       title: {
         type: String,
         default: ''
       },
-      width:{
-        type:String,
-        default:'100%'
+      width: {
+        type: String,
+        default: '100%'
       },
-      height:{
-        type:String,
-        default:'300px'
+      height: {
+        type: String,
+        default: '28vh'
       },
       option: {
         type: Object,
-        default () {
+        grid:{
+          top:'15%',
+          bottom: '10%'
+        },
+        default() {
           return {}
         }
       }
     },
-    mounted(){
+    mounted() {
       this.initChart()
+      // window.onresize=()=>{
+      //   console.log("++++++++++++++++++++++++++++resize")
+      //   this.charts.resize()
+      // }
+      // 处理在多个echarts图表下 resize()方法只生效一个
+      // 在使用window.onresize监听窗口变化时，要使用DOM二级绑定方式：addEventListener方式。
+      window.addEventListener(
+          'resize',
+          () =>{this.charts.resize()}
+      )
+    },
+    destroyed() {
+      window.removeEventListener('resize', () =>{this.charts.resize()})
     },
     methods: {
-      initChart () {
+      initChart() {
         this.charts = echarts.init(this.$refs.charts)
         //添加点击事件
-        this.charts.on('click',param=>{
+        this.charts.on('click', param => {
           // console.log("func:",this.clickItem)
-          if(this.clickItem){
+          if (this.clickItem) {
             this.clickItem(param)
           }
         })
       },
-      drawChart(option){
+      drawChart(option) {
         this.charts.setOption(option)
-      }
-    }
+      },
+    },
+    screenAdapter() {
+      console.log("===============================screenAdapter")
+    //   // this.titleFontSize = this.$refs.hot_ref.offsetWidth / 100 * 3.6
+    //   // const adapterOption = {
+    //   //   title: {
+    //   //     textStyle: {
+    //   //       fontSize: this.titleFontSize
+    //   //     }
+    //   //   },
+    //   //   legend: {
+    //   //     itemWidth: this.titleFontSize / 2,
+    //   //     itemHeight: this.titleFontSize / 2,
+    //   //     itemGap: this.titleFontSize / 2,
+    //   //     textStyle: {
+    //   //       fontSize: this.titleFontSize / 2
+    //   //     }
+    //   //   },
+    //   //   series: [
+    //   //     {
+    //   //       radius: this.titleFontSize * 4.5,
+    //   //       center: ['50%', '60%']
+    //   //     }
+    //   //   ]
+    //   // }
+    //   this.charts.setOption(this.option)
+    //   this.charts.resize()
+    },
   }
 </script>
 
@@ -104,13 +148,13 @@
         transform: translateY(-50px);
         /*width: 90%;*/
         /*height: 90%;*/
-        /*margin-left: 10px;*/
+        margin-top: 100px;
         /*padding-left: 10px;*/
     }
 
     .charts  *{
-        width: 90%;
-        height: 90%;
+        /*width: 90%;*/
+        /*height: 90%;*/
         /*padding-left: 10px;*/
     }
 

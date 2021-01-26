@@ -52,3 +52,27 @@ export function authorRelation(id) {
         }
     })
 }
+
+export function authorAll(order="descent", orderBy="documentCount", page=0, pageSize=10){
+    return request({
+        url: '/author/list',
+        method: 'post',
+        data: {
+            "direction": order,
+            "orderBy": orderBy,
+            "page": page,
+            "pageSize": pageSize
+        }
+    })
+}
+
+export function searchAuthor(authorKeywords){
+    return request({
+        url: '/author/fetch',
+        method: 'post',
+        data: {
+            'authorKeywords': authorKeywords,
+            'maxSize': 5
+        }
+    })
+}
